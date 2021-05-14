@@ -1,0 +1,15 @@
+// src/sass/variables.scss'
+
+// Globals
+$body-font-family: "Nunito", -apple-system, BlinkMacSystemFont, "PingFang SC",
+  "Helvetica Neue", Roboto, Oxygen, sans-serif;
+
+// Variables must come before the import
+
+// Any component modifications must be imported at the bottom
+
+// If you need to extend Vuetify SASS lists
+// @import '~vuetify/src/styles/styles.sass';
+
+// $material-light: map-merge($material-light, ( 'background': #E5E5E5 ));
+// $material-dark: map-merge($material-dark, ( 'background': #424242 ));

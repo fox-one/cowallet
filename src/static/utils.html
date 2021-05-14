@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CoWallet Utils</title>
+    <style>
+      button,
+      input {
+        height: 44px;
+        width: 200px;
+        margin: 16px;
+      }
+    </style>
+    <script>
+      function clear() {
+        localStorage.clear();
+      }
+      function resetAPIBase() {
+        localStorage.setItem("cowallet_api_base", "");
+      }
+      function applyAPIBase() {
+        const api = document.getElementById("api");
+        localStorage.setItem("cowallet_api_base", api.value);
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="clear()">Clear Localstorage</button>
+    <button onclick="resetAPIBase()">Reset API base</button>
+    <input id="api" />
+    <button onclick="applyAPIBase()">Change API base</button>
+  </body>
+</html>
