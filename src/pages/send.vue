@@ -29,7 +29,10 @@
               </template>
               <template #title> {{ $t("select_a_receiver") }} </template>
               <template #subheader>
-                <f-input v-model="personFilter" :label="$t("common.filter")"></f-input>
+                <f-input
+                  v-model="personFilter"
+                  :label="$t('common.filter')"
+                ></f-input>
               </template>
               <div class="wrapper" style="height: 400px">
                 <f-list class="mb-4">
@@ -123,7 +126,7 @@ class SendPage extends Mixins(mixins.page) {
   loading = false;
 
   get title() {
-    return this.$t('common.send') as string;
+    return this.$t("common.send") as string;
   }
 
   get appbar() {

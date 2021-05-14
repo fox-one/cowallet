@@ -59,7 +59,7 @@
   "manage_vault.vault_name": "钱包名字",
   "manage_vault.vault_config": "钱包配置",
 
-  "vault_item.threshold": "{m} 分之 {n}",
+  "vault_item.threshold": "{m} / {n}",
   "vault_item.vault": "多重签名钱包",
   "vault_item.total_balance": "总余额",
 

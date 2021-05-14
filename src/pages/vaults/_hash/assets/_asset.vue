@@ -16,7 +16,7 @@
           v-for="(tran, ix) in transactions"
           :key="`trans-${ix}`"
           :title="tran.amount"
-          :subtitle="tran.memo || $t("common.empty")"
+          :subtitle="tran.memo || $t('common.empty')"
         >
           <template #head>
             <v-icon :color="getTransColor(tran)">{{
