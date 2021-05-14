@@ -20,10 +20,13 @@ Visit https://cowallet.firesbox.com
 - [x] Dark theme
 - [x] Import and export vaults
 - [x] Create wallet with Mixin Messenger Friends
-- [ ] Beancount Support
-- [ ] Fennec Support
-- [ ] Revoke signature request
+- [ ] Kernel v1 transaction support
+- [ ] Beancount support
+- [ ] Fennec support
+- [ ] Revoke signature requests
 - [ ] Better cache
+- [ ] Fiat currency config
+- [ ] Desktop layout
 
 ## Build Setup
 
