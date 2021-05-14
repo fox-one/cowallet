@@ -117,7 +117,7 @@ class IndexPage extends Mixins(mixins.page) {
         return x !== CLIENT_ID;
       });
     const m: any = /(.+)\^(\d+)/.exec(conv.name);
-    if (m.length !== 3) {
+    if (m === null || m.length !== 3) {
       this.$router.push("/onboarding/open?method=friends");
       return;
     }
