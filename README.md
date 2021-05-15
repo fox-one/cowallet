@@ -6,7 +6,7 @@ CoWallet is a cooperative crypto wallet on Mixin Network.
 
 ### Use CoWallet in Mixin Messenger
 
-- Search '7000103970' at Mixin Messenger, add it as contact;
+- Search '7000103970' at [Mixin Messenger](https://mixin.one/messenger), add it as contact;
 - Create a group and add it as a group member.
 
 ### Use CoWallet in a web browser
@@ -23,7 +23,7 @@ Visit https://cowallet.firesbox.com
 - [x] Revoke signature requests
 - [ ] Kernel v1 transaction support
 - [ ] Beancount support
-- [ ] Fennec support
+- [ ] [Fennec](https://github.com/fox-one/fennec) support
 - [ ] Better cache
 - [ ] Better error handlers
 - [ ] Fiat currency config
