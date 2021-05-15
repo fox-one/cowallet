@@ -7,7 +7,7 @@
           :icon="asset.icon_url"
           :symbol="asset.symbol"
           :amount="asset.amount"
-          :fiat-amount="asset.amount"
+          :fiat-amount="asset.price_usd"
         />
       </f-panel>
 

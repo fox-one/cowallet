@@ -109,10 +109,6 @@ class VaultPage extends Mixins(mixins.page) {
     });
   }
 
-  gotoAuth() {
-    this.$utils.helper.requestLogin(this);
-  }
-
   deleteVault() {
     this.removeVault(this.vault);
     this.$router.push("/");

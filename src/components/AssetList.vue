@@ -5,7 +5,7 @@
       <f-panel padding="0" class="mx-4">
         <f-list>
           <f-list-item
-            v-for="item in position"
+            v-for="item in sortedPosition"
             :key="item.asset_id"
             :title="`${item.amount.toString()} ${item.symbol}`"
             :subtitle="`$${item.totalUsd.toFixed(2)}`"
@@ -35,6 +35,18 @@ import { Mutation, State } from "vuex-class";
 @Component
 class AssetList extends Vue {
   @State((state) => state.global.position) position;
+
+  get sortedPosition() {
+    const ret = this.position.slice();
+    return ret.sort((a, b) => {
+      if (a.totalUsd > b.totalUsd) {
+        return -1;
+      } else if (a.totalUsd < b.totalUsd) {
+        return 1;
+      }
+      return 0;
+    });
+  }
 
   handleClick(item) {
     this.$emit("click", item);

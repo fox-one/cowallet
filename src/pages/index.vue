@@ -76,11 +76,6 @@ class IndexPage extends Mixins(mixins.page) {
     //   const vconsole = new VConsole();
     // }
     setTimeout(async () => {
-      if (!this.isLogged) {
-        console.log("no token");
-        this.$router.push("/onboarding");
-        return;
-      }
       // in a conversation?
       let ctx: any = null;
       try {
@@ -91,7 +86,6 @@ class IndexPage extends Mixins(mixins.page) {
       if (ctx) {
         const conv = await this.$apis.getConv(ctx.conversation_id);
         if (conv && conv.category === "GROUP") {
-          // console.log(conv);
           this.openVaultForConv(conv);
           return;
         } else {
@@ -105,7 +99,7 @@ class IndexPage extends Mixins(mixins.page) {
           return;
         }
       }
-    }, 200);
+    }, 100);
   }
 
   openVaultForConv(conv) {

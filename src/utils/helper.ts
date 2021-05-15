@@ -36,7 +36,6 @@ export async function getAssetInfo(store, assetId) {
   if (asset === null) {
     // asset = await vm.$apis.getAsset(assetId);
     asset = await store.dispatch("cache/loadAsset", assetId);
-    console.log(asset);
   }
   return asset;
 }
@@ -197,4 +196,39 @@ export function isDesktop() {
   return !navigator.userAgent.match(
     /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i,
   );
+}
+
+export function formatCurrency(
+  vm: Vue,
+  fiatSymbol: string,
+  amount: number | string,
+  fraction = -1,
+) {
+  let ret = "";
+  let amountNum = 0;
+  if (amount.constructor === String) {
+    amountNum = parseFloat(amount);
+  } else {
+    amountNum = amount as number;
+  }
+  if (window.Intl) {
+    const opts: any = {
+      style: "currency",
+      currency: fiatSymbol.toUpperCase(),
+      // comment it because iOS do not support it
+      // currencyDisplay: "narrowSymbol",
+    };
+    if (fraction !== -1) {
+      opts["minimumFractionDigits"] = fraction;
+    }
+    // if the amount is too small but still greater than zero, try to calculate a better fraction.
+    if (amountNum < 0.01 && 0 < amountNum) {
+      const zeroCount = -Math.floor(Math.log(amountNum) / Math.log(10) + 1);
+      opts["minimumFractionDigits"] = zeroCount + 2;
+    }
+    ret = new Intl.NumberFormat(vm.$i18n.locale, opts).format(amountNum);
+  } else {
+    ret = fiatSymbol + amountNum.toFixed(2);
+  }
+  return ret;
 }

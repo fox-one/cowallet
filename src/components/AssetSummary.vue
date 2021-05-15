@@ -8,7 +8,7 @@
       <span class="f-body-1">{{ symbol }}</span>
     </div>
     <div class="d-flex align-center">
-      <span class="f-caption">{{ fiatAmount }}</span>
+      <span class="f-caption">${{ fiatAmount }}</span>
     </div>
   </div>
 </template>

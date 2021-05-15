@@ -98,11 +98,12 @@
               @error="error"
               @paid="sign"
             />
+            <!-- <f-button v-else @click="cancel"> Cancel </f-button> -->
             <br />
             <f-button
               v-if="isDesktop"
               type="subtitle"
-              v-clipboard:copy="payUrl"
+              v-clipboard:copy="shareUrl"
               >{{ $t("common.copy_url") }}</f-button
             >
             <f-button v-else type="subtitle" class="" @click="share">{{
@@ -213,6 +214,10 @@ class RequestDetailPage extends Mixins(mixins.page) {
     return `mixin://codes/${this.multisig.code_id}`;
   }
 
+  get shareUrl() {
+    return window.location.href;
+  }
+
   @Watch("multisig")
   async handleUsers() {
     if (this.multisig) {
@@ -268,6 +273,18 @@ class RequestDetailPage extends Mixins(mixins.page) {
     invoke(this.multisig.code_id);
   }
 
+  async cancel() {
+    const resp = await this.$apis.createMultisig(
+      this.multisig.raw_transaction,
+      "unlock",
+    );
+    console.log("cancel", resp);
+    if (resp.request_id) {
+      const canceled = await this.$apis.cancelMultisig(resp.request_id);
+      console.log(canceled);
+    }
+  }
+
   async submit() {
     this.loading = true;
 
@@ -302,9 +319,8 @@ class RequestDetailPage extends Mixins(mixins.page) {
   }
 
   share() {
-    console.log("share", this.payUrl);
     window.location.href = `mixin://send?text=${encodeURIComponent(
-      this.payUrl,
+      this.shareUrl,
     )}`;
   }
 }

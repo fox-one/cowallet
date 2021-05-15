@@ -61,10 +61,12 @@ export default function (http: Http) {
       return http.post("/multisigs", { data: { raw: raw, action: action } });
     },
 
-    createMultisigsRequests(raw, action): Promise<any> {
-      return http.post("/multisigs/requests", {
-        data: { raw: raw, action: action },
-      });
+    cancelMultisig(requestId): Promise<any> {
+      return http.post(`/multisigs/${requestId}/cancel`, {});
+    },
+
+    unlockMultisig(requestId): Promise<any> {
+      return http.post(`/multisigs/${requestId}/unlock`, {});
     },
 
     postSignature(data): Promise<any> {
