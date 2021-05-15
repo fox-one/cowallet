@@ -301,6 +301,7 @@ class RequestDetailPage extends Mixins(mixins.page) {
   }
 
   async submit() {
+    // keep the submit operation because it may signed by other wallets
     this.loading = true;
     try {
       const resp = await this.$utils.helper.submitSignatures(
