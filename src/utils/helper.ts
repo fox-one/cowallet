@@ -165,7 +165,7 @@ export function requestLogin(vue) {
   window.location.href = path;
 }
 
-export function genCheckResultProc(codeId, done, error) {
+export function genCheckResultProc(codeId, state, done, error) {
   const proc = async (vm) => {
     let resp: any = null;
     try {
@@ -175,10 +175,7 @@ export function genCheckResultProc(codeId, done, error) {
       error(e);
       return null;
     }
-    if (
-      (resp.type === "payment" && resp.status === "paid") ||
-      (resp.type === "multisig_request" && resp.state === "signed")
-    ) {
+    if (resp.status === state || resp.state === state) {
       console.log("get the final state ", resp.type, resp.state || resp.status);
       done(resp);
       return null;
@@ -231,4 +228,21 @@ export function formatCurrency(
     ret = fiatSymbol + amountNum.toFixed(2);
   }
   return ret;
+}
+
+export async function submitSignatures(vm, multisig) {
+  const params = {
+    method: "sendrawtransaction",
+    params: [multisig.raw_transaction],
+  };
+
+  const resp = await vm.$apis.postSignature(params);
+  return new Promise((resolve, reject) => {
+    if (resp.hash === multisig.transaction_hash) {
+      resolve(resp);
+    } else {
+      reject(resp);
+    }
+    return;
+  });
 }

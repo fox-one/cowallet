@@ -28,7 +28,8 @@
             <payment-action
               :label="$t('common.deposit')"
               :disabled="!validated"
-              @final="final"
+              check-state="paid"
+              @done="done"
               @error="error"
               @paid="deposit"
             />
@@ -86,7 +87,7 @@ class DepositPage extends Mixins(mixins.page) {
     this.asset = this.myAssets[0];
   }
 
-  final() {
+  done() {
     // goto success page
     console.log("ok!");
     this.$router.back();

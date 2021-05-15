@@ -84,21 +84,37 @@
           <template v-if="!needToSign">
             {{ $t("hint.collected_enough_signatures") }}
           </template>
-          <template v-else-if="meSigned">
+          <template v-if="meSigned">
             {{ $t("hint.already_signed") }}
           </template>
-          <template v-else> {{ $t("hint.already_signed") }} </template>
+          <template v-else>
+            {{
+              $t("hint.please_sign", {
+                m: multisig.signers.length,
+                n: multisig.threshold,
+              })
+            }}
+          </template>
         </div>
         <div class="buttons text-center mt-4">
           <template v-if="needToSign">
             <payment-action
               v-if="!meSigned"
-              :label="'Sign'"
-              @final="final"
+              :label="$t('common.sign')"
+              check-state="signed"
+              @done="done"
               @error="error"
               @paid="sign"
             />
-            <!-- <f-button v-else @click="cancel"> Cancel </f-button> -->
+            <br />
+            <payment-action
+              check-state="unlocked"
+              button-type="subtitle"
+              :label="$t('common.revoke')"
+              @done="done"
+              @error="error"
+              @paid="cancel"
+            />
             <br />
             <f-button
               v-if="isDesktop"
@@ -266,6 +282,7 @@ class RequestDetailPage extends Mixins(mixins.page) {
   }
 
   mounted() {
+    // load current multisig to show details
     this.triggerLoadMultisig();
   }
 
@@ -273,44 +290,50 @@ class RequestDetailPage extends Mixins(mixins.page) {
     invoke(this.multisig.code_id);
   }
 
-  async cancel() {
+  async cancel(invoke) {
     const resp = await this.$apis.createMultisig(
       this.multisig.raw_transaction,
       "unlock",
     );
-    console.log("cancel", resp);
-    if (resp.request_id) {
-      const canceled = await this.$apis.cancelMultisig(resp.request_id);
-      console.log(canceled);
+    if (resp.code_id) {
+      invoke(resp.code_id);
     }
   }
 
   async submit() {
     this.loading = true;
-
-    const params = {
-      method: "sendrawtransaction",
-      params: [this.multisig.raw_transaction],
-    };
-
-    const resp = await this.$apis.postSignature(params);
-    if (resp.hash === this.multisig.transaction_hash) {
+    try {
+      const resp = await this.$utils.helper.submitSignatures(
+        this,
+        this.multisig,
+      );
       console.log(resp);
-    } else {
-      // error
       this.loading = false;
-      console.log("error", resp);
-      return;
+      this.$router.back();
+    } catch (e) {
+      console.log("error", e);
+      this.loading = false;
     }
-
-    this.loading = false;
-    this.$router.back();
   }
 
-  final() {
+  async done(multisig) {
     // goto success page
-    console.log("ok!");
-    this.$router.back();
+    console.log("ok!", multisig);
+    if (multisig.threshold === multisig.signers.length) {
+      // enough signatures, submit it
+      this.loading = true;
+      try {
+        const resp = await this.$utils.helper.submitSignatures(this, multisig);
+        console.log(resp);
+        this.loading = false;
+        this.$router.back();
+      } catch (e) {
+        console.log("error", e);
+        this.loading = false;
+      }
+    } else {
+      this.$router.back();
+    }
   }
 
   error() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <f-button type="primary" @click="pay" :disabled="disabled">{{
+    <f-button :type="buttonType || 'primary'" @click="pay" :disabled="disabled">{{
       label
     }}</f-button>
     <qrcode-pay-modal ref="QRCodePayModal" @paid="handleConfirmPaid" />
@@ -19,8 +19,9 @@ import QRCodePayModal from "@/components/QRCodePayModal.vue";
 })
 class PaymentAction extends Vue {
   @Prop({ default: "" }) label;
-  @Prop({ default: "paid" }) finalState;
+  @Prop({ default: "paid" }) checkState;
   @Prop({ default: false }) disabled;
+  @Prop({ default: 'primary' }) buttonType;
 
   showPaying = false;
 
@@ -42,10 +43,11 @@ class PaymentAction extends Vue {
 
     const proc = this.$utils.helper.genCheckResultProc(
       codeId,
+      this.checkState,
       (resp) => {
         this.showPaying = false;
         this.hideModal();
-        this.$emit("final", resp);
+        this.$emit("done", resp);
       },
       (e) => {
         this.showPaying = false;

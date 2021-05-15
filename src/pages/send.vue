@@ -82,7 +82,8 @@
             <payment-action
               :label="$t('common.send')"
               :disabled="!validated"
-              @final="final"
+              check-state="signed"
+              @done="done"
               @error="error"
               @paid="send"
             />
@@ -186,10 +187,24 @@ class SendPage extends Mixins(mixins.page) {
     console.log(this.personFilter);
   }
 
-  final() {
+  async done(multisig) {
     // goto success page
-    console.log("ok!");
-    this.$router.back();
+    console.log("ok!", multisig);
+    if (multisig.threshold === multisig.signers.length) {
+      // enough signatures, submit it
+      this.loading = true;
+      try {
+        const resp = await this.$utils.helper.submitSignatures(this, multisig);
+        console.log(resp);
+        this.loading = false;
+        this.$router.back();
+      } catch (e) {
+        console.log("error", e);
+        this.loading = false;
+      }
+    } else {
+      this.$router.back();
+    }
   }
 
   error() {
@@ -234,6 +249,7 @@ class SendPage extends Mixins(mixins.page) {
     if (inputAmount.isLessThan(this.amount)) {
       alert("TOO MUCH");
       console.log("ERROR: not enough to pay");
+      this.loading = false;
       return;
     }
 

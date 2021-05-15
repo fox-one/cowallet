@@ -3,6 +3,8 @@
   "common.memo": "备注",
   "common.send": "转出",
   "common.open": "打开",
+  "common.sign": "签名",
+  "common.revoke": "撤销",
   "common.deposit": "存入",
   "common.amount": "数额",
   "common.authing": "授权中",
@@ -30,7 +32,7 @@
 
   "hint.collected_enough_signatures": "已经收集到了足够多的签名，可提交了。",
   "hint.already_signed": "你已经签名了，请分享给其他签名人",
-  "hint.please_sign": "本次请求需要你的签名",
+  "hint.please_sign": "{n} 人中的 {m} 人已经签名。如果你同意本交易，请签名；否则，请撤销。",
   "hint.you_have_no_vault": "你还没有群组钱包",
   "hint.please_auth": "授权来创建或打开群组钱包",
   "hint.please_create_or_open_vault_1": "创建一个新群组钱包",
