@@ -33,7 +33,10 @@ Visit https://cowallet.firesbox.com
 
 ```bash
 # install dependencies
-$ yarn install
+$ yarn
+
+# load env
+$ source .env
 
 # serve with hot reload at localhost:3000
 $ yarn dev
