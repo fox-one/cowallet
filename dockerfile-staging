@@ -1,0 +1,21 @@
+FROM node:14.0.0 as builder
+
+WORKDIR /usr/share/nginx/html
+
+COPY . .
+
+ENV APP_ENV="prod"
+ENV API_BASE="https://api.mixin.one"
+ENV CLIENT_ID="5e4af079-5f4a-42e1-a1b7-38081d311cc6"
+
+RUN yarn
+RUN yarn generate
+
+
+FROM nginx:1.12-alpine
+
+WORKDIR /usr/share/nginx/html
+COPY --from=0 /usr/share/nginx/html/umd .
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,60 @@
+steps:
+- id: 'build image image'
+  name: gcr.io/cloud-builders/docker
+  args: ['build', '-f', 'dockerfile-staging', '-t', 'gcr.io/mixin-japan/github.com/links-japan/cowallet-staging:latest', '.']
+
+- id: 'push image'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/mixin-japan/github.com/links-japan/cowallet-staging:latest']
+
+- id:  'make sure kubectl can connect'
+  name: 'gcr.io/cloud-builders/kubectl'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-east1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=links-cluster-staging'
+  - 'KUBECONFIG=/workspace/.kube/config'
+  args: ['cluster-info']
+
+- id:  'get devops@eoslaomao.com github private key from gcp ksm for accessing github'
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args: [ '-c', 'gcloud secrets versions access latest --secret=staging-auto-deploy > /root/.ssh/id_github' ]
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+- id:  'set up git withu key and domain'
+  name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    chmod 600 /root/.ssh/id_github
+    cat <<EOF >/root/.ssh/config
+    Hostname github.com
+    IdentityFile /root/.ssh/id_github
+    EOF
+    ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+- id: 'clone Charts repo from github'
+  name: 'gcr.io/cloud-builders/git'
+  args:
+  - clone
+  - -b
+  - master
+  - --single-branch
+  - git@github.com:links-japan/Charts.git
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+- id: 'deploy backend to the cluster' 
+  name: 'alpine/helm:3.3.0-rc.2'
+  args: ['-n','staging','upgrade','--set','cowallet.image.shortsha=$SHORT_SHA','--set','cowallet.image.shortsha=$SHORT_SHA','-f','/workspace/Charts/links/values-staging.yaml','staging-links','/workspace/Charts/links']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-east1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=links-cluster-staging'
+  - 'KUBECONFIG=/workspace/.kube/config'
