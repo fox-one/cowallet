@@ -183,7 +183,7 @@ class SendPage extends Mixins(mixins.page) {
     const asset = this.$store.getters["global/getPosition"](
       this.asset?.asset_id,
     );
-    return asset ? asset.balance : "0.00";
+    return asset ? asset.amount : "0.00";
   }
 
   mounted() {
