@@ -7,6 +7,7 @@
         :name.sync="formName"
         :members.sync="formMembers"
         :threshold.sync="formThreshold"
+        :beancount.sync="formBeancount"
         :validated.sync="formValidated"
       />
       <div v-if="method !== 'friends'" class="text-center mt-6">
@@ -50,6 +51,8 @@ class OpenVaultPage extends Mixins(mixins.page) {
 
   formValidated = false;
 
+  formBeancount = null;
+
   get title() {
     return this.$t("create_or_open_vault") as string;
   }
@@ -89,6 +92,7 @@ class OpenVaultPage extends Mixins(mixins.page) {
       name: this.formName,
       members: this.formMembers.slice(),
       threshold: this.formThreshold,
+      beancount: this.formBeancount,
     };
     vault.members.sort();
     vault.membersHash = this.$utils.helper.sha3_256(vault.members.join(""));

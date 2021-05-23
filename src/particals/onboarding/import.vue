@@ -24,6 +24,7 @@ class ImportAndOpenVault extends Vue {
   @PropSync("name") bindName;
   @PropSync("members") bindMembers;
   @PropSync("threshold") bindThreshold;
+  @PropSync("beancount") bindBeancount;
 
   importJson = "";
 
@@ -44,6 +45,7 @@ class ImportAndOpenVault extends Vue {
     this.bindName = vault?.name || this.$t("common.unnamed");
     this.bindMembers = vault?.members;
     this.bindThreshold = vault?.threshold;
+    this.bindBeancount = vault?.beancount || null;
     this.bindValidated = true;
   }
 }
