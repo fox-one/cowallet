@@ -21,7 +21,7 @@ Visit https://cowallet.firesbox.com
 - [x] Import and export vaults
 - [x] Create wallet with Mixin Messenger Friends
 - [x] Revoke signature requests
-- [ ] Beancount support
+- [x] Beancount support
 - [ ] Kernel v1 transaction support
 - [ ] [Fennec](https://github.com/fox-one/fennec) support
 - [ ] Better cache
