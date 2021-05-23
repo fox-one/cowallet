@@ -14,6 +14,14 @@
               :label="$t('common.amount')"
             >
             </f-asset-amount-input>
+            <balance-field
+              v-if="asset"
+              :is-logged="true"
+              :balance="currentBalance"
+              :symbol="asset.symbol"
+              :prefix="$t('balance_prefix')"
+              @click:balance="fillBalance"
+            />
           </v-col>
         </v-row>
 
@@ -45,10 +53,12 @@ import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { State } from "vuex-class";
 import PaymentAction from "@/components/PaymentAction.vue";
+import BalanceField from "@/components/BalanceField.vue";
 
 @Component({
   components: {
     PaymentAction,
+    BalanceField,
   },
 })
 class DepositPage extends Mixins(mixins.page) {
@@ -83,6 +93,13 @@ class DepositPage extends Mixins(mixins.page) {
     return Boolean(this.value && this.asset?.asset_id);
   }
 
+  get currentBalance() {
+    const asset = this.$store.getters["global/getMyAsset"](
+      this.asset?.asset_id,
+    );
+    return asset ? asset.balance : "0.00";
+  }
+
   mounted() {
     this.asset = this.myAssets[0];
   }
@@ -110,6 +127,10 @@ class DepositPage extends Mixins(mixins.page) {
 
       invoke(resp.code_id);
     }
+  }
+
+  fillBalance(val) {
+    this.value = val;
   }
 }
 export default DepositPage;

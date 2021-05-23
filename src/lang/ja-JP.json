@@ -74,7 +74,7 @@
   "beancount.expense_name": "Beancount費用名",
   "beancount.liability_name": "Beancount責任者",
 
-  "onboarding": "Getting Started",
+  "onboarding": "入門",
   "onboarding.friend.title": "友だちと共同で暗号資産を管理するための手順",
   "onboarding.friend.step_1": "ステップ1 : このロボをコンタクトに追加",
   "onboarding.friend.step_1.tap": "ここをタップ",
@@ -90,6 +90,8 @@
 
   "onboarding.manually.user_ids": "ユーザーID 一行に一つ",
   "onboarding.manually.threshold": "しきい値 メンバーより少なく",
+
+  "balance_prefix": "残高：",
 
   "errorcode.-1": "ネットワークエラー",
   "errorcode.404": "404NotFound",

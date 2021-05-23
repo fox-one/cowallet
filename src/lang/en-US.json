@@ -91,6 +91,8 @@
   "onboarding.manually.user_ids": "User ids, one per line",
   "onboarding.manually.threshold": "Threshold, less than participants",
 
+  "balance_prefix": "Bal.",
+
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",
   "errorcode.fallback": "NETWORK ERROR"

@@ -82,6 +82,8 @@
   "onboarding.manually.user_ids": "User ID，每行一个",
   "onboarding.manually.threshold": "Threshold",
 
+  "balance_prefix": "余额：",
+
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",
   "errorcode.fallback": "NETWORK ERROR"

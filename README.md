@@ -21,22 +21,23 @@ Visit https://cowallet.firesbox.com
 - [x] Import and export vaults
 - [x] Create wallet with Mixin Messenger Friends
 - [x] Revoke signature requests
-- [ ] Kernel v1 transaction support
 - [ ] Beancount support
+- [ ] Kernel v1 transaction support
 - [ ] [Fennec](https://github.com/fox-one/fennec) support
 - [ ] Better cache
 - [ ] Better error handlers
 - [ ] Fiat currency config
 - [ ] Desktop layout
 
-## Build Setup
+## How to Build
 
 ```bash
 # install dependencies
 $ yarn
 
-# load env
-$ source .env
+# load env, see https://github.com/fox-one/cowallet/blob/master/src/.env.example
+# change the file to .env modify the API_BASE and CLIENT_ID
+$ source src/.env
 
 # serve with hot reload at localhost:3000
 $ yarn dev
