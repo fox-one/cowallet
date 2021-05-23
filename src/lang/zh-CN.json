@@ -24,6 +24,7 @@
   "common.paid": "已支付",
   "common.manage": "管理",
   "common.save": "保存",
+  "common.unnamed": "未命名",
 
   "roles.receiver": "接收人",
   "roles.receivers": "接收人",
@@ -55,6 +56,9 @@
   "select_a_receiver": "选择接收人",
 
   "manage_vault": "管理钱包",
+  "manage_vault.general": "General",
+  "manage_vault.beancount": "Beancount",
+  "manage_vault.operation": "Operation",
   "manage_vault.change_name": "修改钱包名字",
   "manage_vault.export": "导出",
   "manage_vault.delete": "删除",
@@ -64,6 +68,18 @@
   "vault_item.threshold": "{m} / {n}",
   "vault_item.vault": "多重签名钱包",
   "vault_item.total_balance": "总余额",
+
+  "vault.name": "Vault Name",
+  "vault.threshold": "Multisig Threshold",
+
+  "beancount.asset_name": "Asset Name",
+  "beancount.income_name": "Income Name",
+  "beancount.expense_name": "Expense Name",
+  "beancount.liability_name": "Liability Name",
+  "beancount.variables": "Beancount Variables",
+  "beancount.templates": "Beancount Templates",
+  "beancount.income_tpl": "Income Template",
+  "beancount.expense_tpl": "Expense Template",
 
   "onboarding": "开始使用群组钱包",
   "onboarding.friend.title": "简单三步，和朋友一起管理资产",

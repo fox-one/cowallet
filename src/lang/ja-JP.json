@@ -56,6 +56,9 @@
   "select_a_receiver": "受信者選択",
 
   "manage_vault": "金庫管理",
+  "manage_vault.general": "General",
+  "manage_vault.beancount": "Beancount",
+  "manage_vault.operation": "Operation",
   "manage_vault.change_name": "金庫名編集",
   "manage_vault.export": "金庫エクスポート",
   "manage_vault.delete": "金庫削除",
@@ -72,7 +75,11 @@
   "beancount.asset_name": "Beancount資産名",
   "beancount.income_name": "Beancount収入名",
   "beancount.expense_name": "Beancount費用名",
-  "beancount.liability_name": "Beancount責任者",
+  "beancount.liability_name": "Beancount責任名",
+  "beancount.variables": "Beancount Variables",
+  "beancount.templates": "Beancount Templates",
+  "beancount.income_tpl": "Income Template",
+  "beancount.expense_tpl": "Expense Template",
 
   "onboarding": "入門",
   "onboarding.friend.title": "友だちと共同で暗号資産を管理するための手順",
