@@ -68,6 +68,14 @@
               :label="$t('common.amount')"
             >
             </f-asset-amount-input>
+            <balance-field
+              v-if="asset"
+              :is-logged="true"
+              :balance="currentBalance"
+              :symbol="asset.symbol"
+              :prefix="$t('balance_prefix')"
+              @click:balance="fillBalance"
+            />
           </v-col>
         </v-row>
 
@@ -100,10 +108,12 @@ import mixins from "@/mixins";
 import { State } from "vuex-class";
 import BigNumber from "bignumber.js";
 import PaymentAction from "@/components/PaymentAction.vue";
+import BalanceField from "@/components/BalanceField.vue";
 
 @Component({
   components: {
     PaymentAction,
+    BalanceField,
   },
 })
 class SendPage extends Mixins(mixins.page) {
@@ -167,6 +177,13 @@ class SendPage extends Mixins(mixins.page) {
 
   get validated() {
     return Boolean(this.amount && this.asset?.asset_id && this.receiver);
+  }
+
+  get currentBalance() {
+    const asset = this.$store.getters["global/getPosition"](
+      this.asset?.asset_id,
+    );
+    return asset ? asset.balance : "0.00";
   }
 
   mounted() {
@@ -284,6 +301,10 @@ class SendPage extends Mixins(mixins.page) {
     if (result.code_id) {
       invoke(result.code_id);
     }
+  }
+
+  fillBalance(val) {
+    this.amount = val;
   }
 }
 export default SendPage;

@@ -77,6 +77,18 @@ const getters: GetterTree<GlobalState, any> = {
       return null;
     };
   },
+
+  getPosition(state) {
+    return (assetId) => {
+      for (let ix = 0; ix < state.position.length; ix++) {
+        const x = state.position[ix];
+        if (x.asset_id === assetId) {
+          return x;
+        }
+      }
+      return null;
+    };
+  },
 };
 
 const mutations: MutationTree<GlobalState> = {
