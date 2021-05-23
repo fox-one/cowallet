@@ -56,7 +56,6 @@ class OpenVaultPage extends Mixins(mixins.page) {
 
   get appbar() {
     return {
-      title: this.$t("create_or_open_vault") as string,
       align: "center",
     };
   }

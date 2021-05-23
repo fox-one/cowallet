@@ -13,13 +13,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, PropSync, Watch } from "vue-property-decorator";
+import { Component, Vue, PropSync, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 
 @Component({
   components: {},
 })
-class ImportAndOpenVault extends Mixins(mixins.page) {
+class ImportAndOpenVault extends Vue {
   @PropSync("validated") bindValidated;
   @PropSync("name") bindName;
   @PropSync("members") bindMembers;

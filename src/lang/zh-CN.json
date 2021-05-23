@@ -65,11 +65,12 @@
   "vault_item.vault": "多重签名钱包",
   "vault_item.total_balance": "总余额",
 
+  "onboarding": "开始使用群组钱包",
   "onboarding.friend.title": "简单三步，和朋友一起管理资产",
   "onboarding.friend.step_1": "第一步：把群组钱包加为好友",
   "onboarding.friend.step_1.tap": "点击这里",
   "onboarding.friend.step_1.text": "，然后点击 \"添加联系人\"",
-  "onboarding.friend.step_2": "第二部：创建一个群聊",
+  "onboarding.friend.step_2": "第二步：创建一个群聊",
   "onboarding.friend.step_2.text_1": "点击左上角你的头像，然后点击 \"新群聊\"。",
   "onboarding.friend.step_2.text_2": "把你的朋友和本钱包机器人添加到群聊",
   "onboarding.friend.step_2.text_3": "把这个群聊命名为\"群名称^N\"的形式。在这里，`群名称` 是任意名称，N 是 N/M 多重签名中的 N。",

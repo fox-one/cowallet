@@ -44,6 +44,10 @@ class OnboardingPage extends Mixins(mixins.page) {
 
   logo = require("@/assets/images/logo.svg");
 
+  get title() {
+    return this.$t('onboarding') as string;
+  }
+
   get appbar() {
     return {
       align: "center",

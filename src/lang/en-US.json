@@ -74,6 +74,7 @@
   "beancount.expense_name": "Beancount Expense Name",
   "beancount.liability_name": "Beancount Liability Name",
 
+  "onboarding": "Getting Started",
   "onboarding.friend.title": "Follow the steps to manage crypto with friends",
   "onboarding.friend.step_1": "Step 1: Add this bot as contact",
   "onboarding.friend.step_1.tap": "Tap Here",

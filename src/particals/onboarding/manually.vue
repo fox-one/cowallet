@@ -26,14 +26,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, PropSync, Watch } from "vue-property-decorator";
+import { Component, Vue, PropSync, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { State } from "vuex-class";
 
 @Component({
   components: {},
 })
-class ManuallyOpenVault extends Mixins(mixins.page) {
+class ManuallyOpenVault extends Vue {
   @State((state) => state.vault.vaults) vaults;
 
   @PropSync("validated") bindValidated;
