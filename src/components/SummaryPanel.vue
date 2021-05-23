@@ -27,92 +27,6 @@
         </v-btn>
       </div>
     </div>
-
-    <f-bottom-sheet v-model="dialog">
-      <template #title>
-        {{ $t("manage_vault") }}
-      </template>
-      <v-list>
-        <v-list-item @click="openNameDialog" :ripple="false">
-          <v-list-item-content>
-            <v-list-item-title>{{
-              $t("manage_vault.change_name")
-            }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item @click="exportVault" :ripple="false">
-          <v-list-item-content>
-            <v-list-item-title>{{
-              $t("manage_vault.export")
-            }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item @click="deleteVault" :ripple="false">
-          <v-list-item-content>
-            <v-list-item-title class="f-error">{{
-              $t("manage_vault.delete")
-            }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </f-bottom-sheet>
-
-    <f-bottom-sheet v-model="nameDialog">
-      <template #title>
-        {{ $t("manage_vault.change_name") }}
-      </template>
-      <div class="pa-4">
-        <v-row>
-          <v-col>
-            <f-input
-              v-model="changeNameValue"
-              :label="$t('manage_vault.vault_name')"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="text-center">
-            <f-button
-              type="primary"
-              @click="saveName"
-              :disabled="!Boolean(changeNameValue)"
-              >{{ $t("common.save") }}</f-button
-            >
-          </v-col>
-        </v-row>
-      </div>
-    </f-bottom-sheet>
-
-    <f-bottom-sheet v-model="exportDialog">
-      <template #title>
-        {{ $t("manage_vault.export") }}
-      </template>
-      <div class="pa-4 mb-4">
-        <v-row>
-          <v-col>
-            <f-input
-              v-model="vaultJsonContent"
-              textarea
-              :label="$t('manage_vault.vault_config')"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="text-center">
-            <f-button type="primary" v-clipboard:copy="vaultJsonContent">{{
-              $t("common.copy")
-            }}</f-button>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="text-center">
-            <f-button type="subtitle" @click="exportDialog = false">{{
-              $t("common.close")
-            }}</f-button>
-          </v-col>
-        </v-row>
-      </div>
-    </f-bottom-sheet>
   </div>
 </template>
 
@@ -134,16 +48,6 @@ class SummaryPanel extends Vue {
   @Prop({ default: [] }) assets;
 
   @Prop({ default: [] }) vault;
-
-  dialog = false;
-
-  nameDialog = false;
-
-  exportDialog = false;
-
-  changeNameValue = "";
-
-  vaultJsonContent = "";
 
   get btns() {
     return [
@@ -198,34 +102,14 @@ class SummaryPanel extends Vue {
     });
   }
 
-  openNameDialog() {
-    this.dialog = false;
-    this.changeNameValue = this.vault.name;
-    this.nameDialog = true;
-  }
-
-  exportVault() {
-    this.vaultJsonContent = JSON.stringify(this.vault);
-    this.dialog = false;
-    this.exportDialog = true;
-  }
-
-  deleteVault() {
-    this.$emit("delete");
-    this.nameDialog = false;
-  }
-
-  saveName() {
-    const newVault = Object.assign({}, this.vault);
-    newVault.name = this.changeNameValue.trim();
-    this.$emit("update", newVault);
-    this.nameDialog = false;
+  gotoSettings() {
+    this.$emit("settings");
   }
 
   handleButtonClick(btn) {
     switch (btn.id) {
       case "manage":
-        this.dialog = true;
+        this.gotoSettings();
         break;
       case "send":
         this.gotoSend();

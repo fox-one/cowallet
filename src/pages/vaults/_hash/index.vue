@@ -1,12 +1,7 @@
 <template>
   <v-container class="pa-0">
     <template v-if="vault">
-      <summary-panel
-        :assets="assets"
-        :vault="vault"
-        @delete="deleteVault"
-        @update="updateVaultInfo"
-      />
+      <summary-panel :assets="assets" :vault="vault" @settings="gotoSettings" />
       <div
         v-if="loadingUTXO && position.length === 0"
         class="text-center mt-10 f-body-2 f-greyscale-3"
@@ -42,8 +37,6 @@ class VaultPage extends Mixins(mixins.page) {
   @State((state) => state.global.loadingUTXO) loadingUTXO;
   @Mutation("global/setPosition") setPosition;
   @Mutation("global/setPendingRequests") setPendingRequests;
-  @Mutation("vault/removeVault") removeVault;
-  @Mutation("vault/updateVault") updateVault;
   @Mutation("vault/setCurrentVault") setCurrentVault;
 
   assets: any = [];
@@ -109,17 +102,6 @@ class VaultPage extends Mixins(mixins.page) {
     });
   }
 
-  deleteVault() {
-    this.removeVault(this.vault);
-    this.$router.push("/");
-  }
-
-  updateVaultInfo(vault) {
-    console.log(vault);
-    this.vault = vault;
-    this.updateVault(vault);
-  }
-
   gotoRequestPage(request) {
     this.$router.push(
       `/vaults/${this.vault.membersHash}-${this.vault.threshold}/requests/${request.signed_by}`,
@@ -129,6 +111,12 @@ class VaultPage extends Mixins(mixins.page) {
   gotoTransactionsPage(asset) {
     this.$router.push(
       `/vaults/${this.vault.membersHash}-${this.vault.threshold}/assets/${asset.asset_id}`,
+    );
+  }
+
+  gotoSettings() {
+    this.$router.push(
+      `/vaults/${this.vault.membersHash}-${this.vault.threshold}/settings`,
     );
   }
 }
