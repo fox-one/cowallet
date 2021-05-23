@@ -15,8 +15,11 @@
         <f-list-item
           v-for="(tran, ix) in transactions"
           :key="`trans-${ix}`"
-          :title="tran.amount"
+          :title="`${tran.type === 'expense' ? '-' : '+'} ${tran.amount} ${
+            tran.symbol
+          }`"
           :subtitle="tran.memo || $t('common.empty')"
+          @click="detail(tran)"
         >
           <template #head>
             <v-icon :color="getTransColor(tran)">{{
@@ -34,6 +37,59 @@
         </f-list-item>
       </f-list>
     </template>
+
+    <f-bottom-sheet v-model="detailDialog">
+      <template #title>
+        {{ $t("transaction.detail") }}
+      </template>
+      <div v-if="current" class="pa-4">
+        <div class="mb-2">
+          <div class="f-caption f-greyscale-3">
+            {{ $t("transaction.detail.amount") }}
+          </div>
+          <div class="f-body-2">{{ current.amount }}</div>
+        </div>
+        <div class="mb-2">
+          <div class="f-caption f-greyscale-3">
+            {{ $t("transaction.detail.datetime") }}
+          </div>
+          <div class="f-body-2">{{ current.datetime_display }}</div>
+        </div>
+        <div class="mb-2">
+          <div class="f-caption f-greyscale-3">
+            {{ $t("transaction.detail.id") }}
+          </div>
+          <div class="f-body-2" v-clipboard:copy="current.utxo_id">
+            <pre class="code f-bg-greyscale-5 my-1">{{ current.utxo_id }}</pre>
+          </div>
+        </div>
+        <div class="mb-2">
+          <div class="f-caption f-greyscale-3">
+            {{ $t("transaction.detail.memo") }}
+          </div>
+          <div class="f-body-2" v-clipboard:copy="current.memo">
+            <pre class="code f-bg-greyscale-5 my-1">{{ current.memo }}</pre>
+          </div>
+        </div>
+        <div v-if="vault.beancount" class="mb-2">
+          <div class="f-caption f-greyscale-3">
+            {{ $t("transaction.detail.beancount") }}
+          </div>
+          <div class="f-body-2" v-clipboard:copy="currentBeancountStm">
+            <pre class="code f-bg-greyscale-5 my-1">{{
+              currentBeancountStm
+            }}</pre>
+          </div>
+        </div>
+        <div class="mt-4">
+          <div class="text-center">
+            <f-button type="primary" @click="detailDialog = false">{{
+              $t("common.close")
+            }}</f-button>
+          </div>
+        </div>
+      </div>
+    </f-bottom-sheet>
   </v-container>
 </template>
 
@@ -51,6 +107,10 @@ class AssetsPage extends Mixins(mixins.page) {
   @State((state) => state.global.position) position;
 
   loading = false;
+
+  current = null;
+
+  detailDialog = false;
 
   get title() {
     return this.$t("common.transactions") as string;
@@ -78,17 +138,18 @@ class AssetsPage extends Mixins(mixins.page) {
     for (let ix = 0; ix < incomeUTXOs.length; ix++) {
       const item = incomeUTXOs[ix];
       incomes.push({
-        amount: `+${item.amount}`,
+        amount: `${item.amount}`,
         memo: item.memo,
         datetime: item.created_at,
         utxo_id: item.utxo_id,
+        type: "income",
       });
     }
     for (let ix = 0; ix < spent.length; ix++) {
       // all spent items are incoming
       const item = spent[ix];
       incomes.push({
-        amount: `+${item.amount}`,
+        amount: `${item.amount}`,
         memo: item.memo,
         datetime: item.created_at,
         utxo_id: item.utxo_id,
@@ -106,11 +167,10 @@ class AssetsPage extends Mixins(mixins.page) {
         console.log("failed to decode signed_tx, ignore");
         return [];
       }
-      console.log(decodedTx);
       for (let iy = 0; iy < decodedTx.outputs.length; iy++) {
         const output = decodedTx.outputs[iy];
         expenses.push({
-          amount: `-${output.amount}`,
+          amount: `${output.amount}`,
           memo: item.memo,
           datetime: item.updated_at,
           utxo_id: item.utxo_id,
@@ -132,6 +192,8 @@ class AssetsPage extends Mixins(mixins.page) {
     console.log(result);
     return result.map((x) => {
       x.datetime_display = dayjs(x.datetime).format("YYYY/MM/DD HH:mm:ss");
+      x.datetime_beancount = dayjs(x.datetime).format("YYYY-MM-DD");
+      x.symbol = this.asset.symbol;
       return x;
     });
   }
@@ -167,6 +229,11 @@ class AssetsPage extends Mixins(mixins.page) {
     };
   }
 
+  get currentBeancountStm() {
+    const stm = this.$utils.helper.genBeancount(this.vault, this.current);
+    return stm;
+  }
+
   mounted() {
     this.$store.dispatch("cache/loadAsset", this.assetId);
   }
@@ -179,8 +246,21 @@ class AssetsPage extends Mixins(mixins.page) {
       ? this.$icons.mdiArrowUpCircle
       : this.$icons.mdiArrowDownCircle;
   }
+
+  detail(tran) {
+    this.current = tran;
+    this.detailDialog = true;
+  }
 }
 export default AssetsPage;
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.code {
+  overflow: auto;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+</style>

@@ -246,3 +246,31 @@ export async function submitSignatures(vm, multisig) {
     return;
   });
 }
+
+function fillTemplate(_tpl, vault, tran) {
+  const vars = {
+    VAULT_NAME: vault.name,
+    ASSET_NAME: vault.beancount?.asset_name,
+    EXPENSE_NAME: vault.beancount?.expense_name,
+    INCOME_NAME: vault.beancount?.income_name,
+    DATE: tran.datetime_beancount,
+    MEMO: tran.memo,
+    AMOUNT: tran.amount,
+    SYMBOL: tran.symbol,
+  };
+  let tpl = _tpl;
+  for (const key in vars) {
+    const re = new RegExp(`{${key}}`, "g");
+    tpl = tpl.replace(re, vars[key]);
+  }
+  return tpl;
+}
+
+export function genBeancount(vault, tran) {
+  if (tran.type === "expense") {
+    return fillTemplate(vault.beancount.expense_tpl, vault, tran);
+  } else if (tran.type === "income") {
+    return fillTemplate(vault.beancount.income_tpl, vault, tran);
+  }
+  return "";
+}
