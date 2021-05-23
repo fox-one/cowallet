@@ -100,6 +100,13 @@
 
   "balance_prefix": "Bal.",
 
+  "transaction.detail": "Transaction",
+  "transaction.detail.amount": "Amount",
+  "transaction.detail.datetime": "Datetime",
+  "transaction.detail.id": "UXTO ID",
+  "transaction.detail.memo": "Memo",
+  "transaction.detail.beancount": "Beancount",
+
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",
   "errorcode.fallback": "NETWORK ERROR"

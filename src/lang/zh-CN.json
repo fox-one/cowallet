@@ -100,6 +100,13 @@
 
   "balance_prefix": "余额：",
 
+  "transaction.detail": "交易",
+  "transaction.detail.amount": "金额",
+  "transaction.detail.datetime": "时间",
+  "transaction.detail.id": "UXTO ID",
+  "transaction.detail.memo": "备注",
+  "transaction.detail.beancount": "Beancount",
+
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",
   "errorcode.fallback": "NETWORK ERROR"

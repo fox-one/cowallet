@@ -100,6 +100,13 @@
 
   "balance_prefix": "残高：",
 
+  "transaction.detail": "Transaction",
+  "transaction.detail.amount": "Amount",
+  "transaction.detail.datetime": "Datetime",
+  "transaction.detail.id": "UXTO ID",
+  "transaction.detail.memo": "Memo",
+  "transaction.detail.beancount": "Beancount",
+
   "errorcode.-1": "ネットワークエラー",
   "errorcode.404": "404NotFound",
   "errorcode.fallback": "ネットワークエラー"
