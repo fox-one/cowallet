@@ -4,6 +4,10 @@ export const GA = "";
 
 export const API_BASE =
   process.env.API_BASE || "https://xuexi-api.firesbox.com";
+
+export const OAUTH_URL =
+  process.env.OAUTH_URL || "https://mixin-oauth.firesbox.com";
+
 // export const API_BASE = "https://api.mixin.one";
 
 export const CLIENT_ID =

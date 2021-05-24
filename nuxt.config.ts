@@ -75,6 +75,7 @@ const config: NuxtConfig = {
     TOKEN: process.env.TOKEN || "",
     APP_ENV: process.env.APP_ENV || "",
     API_BASE: process.env.API_BASE || "",
+    OAUTH_URL: process.env.OAUTH_URL || "",
     CLIENT_ID: process.env.CLIENT_ID || "",
   },
   pwa: {

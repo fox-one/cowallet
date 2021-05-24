@@ -1,4 +1,4 @@
-import { CLIENT_ID } from "~/constants";
+import { CLIENT_ID, OAUTH_URL } from "~/constants";
 import crypto from "crypto";
 import { SHA3 } from "sha3";
 import Bridge from "@foxone/mixin-sdk-jsbridge";
@@ -160,7 +160,7 @@ export function requestLogin(vue) {
   const host = window.location.origin;
   const redirectUrl = encodeURIComponent(host + "/#/auth/");
   localStorage.setItem("authPath", window.location.href);
-  let path = `https://mixin-oauth.firesbox.com/?client_id=${CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ+CONTACTS:READ&code_challenge=${challenge}&response_type=code&code_challenge_method=S256`;
+  let path = `${OAUTH_URL}/?client_id=${CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ+CONTACTS:READ&code_challenge=${challenge}&response_type=code&code_challenge_method=S256`;
   path += `&redirect_url=${redirectUrl}`;
   window.location.href = path;
 }
