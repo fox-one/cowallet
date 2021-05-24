@@ -227,6 +227,12 @@ class VaultSettingsPage extends Mixins(mixins.page) {
   updateBeancount() {
     if (this.vault?.beancount) {
       this.beancount = Object.assign({}, this.vault.beancount);
+      if (this.beancount.income_tpl === undefined) {
+        this.beancount.income_tpl = income_tpl;
+      }
+      if (this.beancount.expense_tpl === undefined) {
+        this.beancount.expense_tpl = expense_tpl;
+      }
     }
   }
 
@@ -274,12 +280,12 @@ class VaultSettingsPage extends Mixins(mixins.page) {
   }
 
   showBeancountVariableDialog() {
-    this.beancount = Object.assign({}, this.vault.beancount);
+    this.updateBeancount();
     this.beancountVariableDialog = true;
   }
 
   showBeancountTplDialog() {
-    this.beancount = Object.assign({}, this.vault.beancount);
+    this.updateBeancount();
     this.beancountTplDialog = true;
   }
 
