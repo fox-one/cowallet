@@ -1,4 +1,4 @@
-import { CLIENT_ID, OAUTH_URL } from "~/constants";
+import { CLIENT_ID, OAUTH_URL, INCOME_TPL, EXPENSE_TPL } from "~/constants";
 import crypto from "crypto";
 import { SHA3 } from "sha3";
 import Bridge from "@foxone/mixin-sdk-jsbridge";
@@ -268,9 +268,13 @@ function fillTemplate(_tpl, vault, tran) {
 
 export function genBeancount(vault, tran) {
   if (tran.type === "expense") {
-    return fillTemplate(vault.beancount.expense_tpl, vault, tran);
+    return fillTemplate(
+      vault.beancount.expense_tpl || EXPENSE_TPL,
+      vault,
+      tran,
+    );
   } else if (tran.type === "income") {
-    return fillTemplate(vault.beancount.income_tpl, vault, tran);
+    return fillTemplate(vault.beancount.income_tpl || INCOME_TPL, vault, tran);
   }
   return "";
 }

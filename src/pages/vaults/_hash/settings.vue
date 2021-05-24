@@ -182,16 +182,7 @@
 import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { Mutation, State } from "vuex-class";
-
-const income_tpl = `{DATE} * "{VAULT_NAME}" "{MEMO}"
-  {INCOME_NAME}        -{AMOUNT} {SYMBOL}
-  {ASSET_NAME}         +{AMOUNT} {SYMBOL}
-`;
-
-const expense_tpl = `{DATE} * "{VAULT_NAME}" "{MEMO}"
-  {ASSET_NAME}         -{AMOUNT} {SYMBOL}
-  {EXPENSE_NAME}       +{AMOUNT} {SYMBOL}
-`;
+import { INCOME_TPL, EXPENSE_TPL } from "@/constants";
 
 @Component({
   components: {},
@@ -217,8 +208,8 @@ class VaultSettingsPage extends Mixins(mixins.page) {
     asset_name: "Assets:YourName",
     income_name: "Income:YourName",
     expense_name: "Expenses:YourName",
-    income_tpl,
-    expense_tpl,
+    income_tpl: INCOME_TPL,
+    expense_tpl: EXPENSE_TPL,
   };
 
   vaultJsonContent = "";
@@ -228,10 +219,10 @@ class VaultSettingsPage extends Mixins(mixins.page) {
     if (this.vault?.beancount) {
       this.beancount = Object.assign({}, this.vault.beancount);
       if (this.beancount.income_tpl === undefined) {
-        this.beancount.income_tpl = income_tpl;
+        this.beancount.income_tpl = INCOME_TPL;
       }
       if (this.beancount.expense_tpl === undefined) {
-        this.beancount.expense_tpl = expense_tpl;
+        this.beancount.expense_tpl = EXPENSE_TPL;
       }
     }
   }
