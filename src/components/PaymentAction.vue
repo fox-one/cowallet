@@ -1,8 +1,11 @@
 <template>
   <div>
-    <f-button :type="buttonType || 'primary'" @click="pay" :disabled="disabled">{{
-      label
-    }}</f-button>
+    <f-button
+      :type="buttonType || 'primary'"
+      @click="pay"
+      :disabled="disabled"
+      >{{ label }}</f-button
+    >
     <qrcode-pay-modal ref="QRCodePayModal" @paid="handleConfirmPaid" />
     <f-paying-modal :show="showPaying" :text="''" @cancel="handleCancel" />
   </div>
@@ -21,7 +24,7 @@ class PaymentAction extends Vue {
   @Prop({ default: "" }) label;
   @Prop({ default: "paid" }) checkState;
   @Prop({ default: false }) disabled;
-  @Prop({ default: 'primary' }) buttonType;
+  @Prop({ default: "primary" }) buttonType;
 
   showPaying = false;
 

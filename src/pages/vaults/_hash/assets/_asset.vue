@@ -7,7 +7,7 @@
           :icon="asset.icon_url"
           :symbol="asset.symbol"
           :amount="asset.amount"
-          :fiat-amount="asset.price_usd"
+          :fiat-amount="meta.totalUsd"
         />
       </f-panel>
 
@@ -15,7 +15,7 @@
         <f-list-item
           v-for="(tran, ix) in transactions"
           :key="`trans-${ix}`"
-          :title="`${tran.type === 'expense' ? '-' : '+'} ${tran.amount} ${
+          :title="`${tran.type === 'expense' ? '-' : '+'}${tran.amount} ${
             tran.symbol
           }`"
           :subtitle="tran.memo || $t('common.empty')"
@@ -28,7 +28,7 @@
           </template>
           <template #tail>
             <div class="tail text-right">
-              <div class="f-body-2">～</div>
+              <div class="f-body-2">${{ tran.usd }}</div>
               <div class="f-caption datetime">
                 {{ tran.datetime_display }}
               </div>
@@ -99,6 +99,7 @@ import mixins from "@/mixins";
 import { State } from "vuex-class";
 import AssetSummary from "@/components/AssetSummary.vue";
 import dayjs from "dayjs";
+import BigNumber from "bignumber.js";
 
 @Component({
   components: { AssetSummary },
@@ -194,24 +195,19 @@ class AssetsPage extends Mixins(mixins.page) {
       x.datetime_display = dayjs(x.datetime).format("YYYY/MM/DD HH:mm:ss");
       x.datetime_beancount = dayjs(x.datetime).format("YYYY-MM-DD");
       x.symbol = this.asset.symbol;
+      x.usd = new BigNumber(x.amount).times(this.asset.price_usd).toFixed(2);
       return x;
     });
   }
 
-  // get meta() {
-  //   let usd = new BigNumber(0);
-  //   let amount = new BigNumber(0);
-  //   for (let ix = 0; ix < this.position.length; ix++) {
-  //     const ele = this.position[ix];
-  //     usd = usd.plus(ele.totalUsd);
-  //     amount = amount.plus(ele.amount);
-  //   }
-  //   const meta = {
-  //     totalUsd: totalUsd.toString()
-  //     amount: totalAmount
-  //   }
-  //   return meta;
-  // }
+  get meta() {
+    let totalUsd = new BigNumber(this.asset.amount);
+    totalUsd = totalUsd.times(this.asset.price_usd);
+    const meta = {
+      totalUsd: totalUsd.toFixed(2),
+    };
+    return meta;
+  }
 
   get assetId() {
     return this.$route.params.asset;

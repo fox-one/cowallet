@@ -79,7 +79,7 @@ class SummaryPanel extends Vue {
       const ele = this.position[ix];
       total = total.plus(ele.totalUsd);
     }
-    return total.toString();
+    return total.toFixed(2);
   }
 
   gotoDeposit() {

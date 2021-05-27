@@ -135,7 +135,7 @@
         <!-- <div v-else>All signed!</div> -->
       </template>
       <template v-else>
-        <div class="text-center">{{ $t("common.loading") }}</div>
+        <div class="text-center">{{ $t("common.empty") }}</div>
       </template>
     </f-panel>
     <f-bottom-sheet v-model="rawDialog">
