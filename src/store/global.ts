@@ -229,14 +229,16 @@ const actions: ActionTree<GlobalState, any> = {
           positionMap[ele.asset_id] = asset;
           positionMap[ele.asset_id].amount = new BigNumber(0);
         }
+
         if (ele.state === "unspent" || ele.state === "signed") {
           positionMap[ele.asset_id].amount = positionMap[
             ele.asset_id
           ].amount.plus(ele.amount);
-          positionMap[ele.asset_id].totalUsd = positionMap[
-            ele.asset_id
-          ].amount.times(positionMap[ele.asset_id].price_usd);
         }
+        positionMap[ele.asset_id].totalUsd = positionMap[
+          ele.asset_id
+        ].amount.times(positionMap[ele.asset_id].price_usd);
+
         positionMap[ele.asset_id].logo = positionMap[ele.asset_id].icon_url;
 
         // arrage pending requests: group related otxos by signed_by.

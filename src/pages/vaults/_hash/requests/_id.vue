@@ -1,7 +1,7 @@
 <template>
   <v-container class="">
     <f-loading :loading="loading" :fullscreen="true" />
-    <f-panel padding="0" class="pa-4">
+    <f-panel v-if="!loading" padding="0" class="pa-4">
       <template v-if="multisig && asset && requests">
         <div class="transfer">
           <div class="asset mb-2">
@@ -258,6 +258,7 @@ class RequestDetailPage extends Mixins(mixins.page) {
         this.$store,
         this.multisig.asset_id,
       );
+      this.loading = false;
     }
   }
 
@@ -283,7 +284,11 @@ class RequestDetailPage extends Mixins(mixins.page) {
 
   mounted() {
     // load current multisig to show details
+    this.loading = true;
     this.triggerLoadMultisig();
+    setTimeout(() => {
+      this.loading = false;
+    }, 10000);
   }
 
   sign(invoke) {
