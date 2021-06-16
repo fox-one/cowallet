@@ -78,7 +78,8 @@ const config: NuxtConfig = {
     OAUTH_URL: process.env.OAUTH_URL || "",
     CLIENT_ID: process.env.CLIENT_ID || "",
     // split with ','
-    INCLUDE_ASSET_IDS: process.env.INCLUDE_ASSET_IDS || "",
+    INCLUDE_ASSET_IDS:
+      process.env.INCLUDE_ASSET_IDS || "",
   },
   pwa: {
     workbox: {

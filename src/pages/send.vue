@@ -270,9 +270,11 @@ class SendPage extends Mixins(mixins.page) {
       return;
     }
 
+    // console.log(this.amount.toString());
+
     // create an otxo which specify the receiver
     const output1 = await this.$apis.loadGhostKeys([this.receiver.user_id], 0);
-    output1.amount = this.amount.trim();
+    output1.amount = this.amount.toString();
     output1.script = this.$utils.helper.buildThresholdScript(parseInt("1"));
     output1.type = 0;
     tx.outputs.push(output1);
@@ -281,7 +283,7 @@ class SendPage extends Mixins(mixins.page) {
       // need to return change?
       // create another otxo which specify the money for return change
       const output2 = await this.$apis.loadGhostKeys(this.vault.members, 1);
-      output2.amount = inputAmount.minus(this.amount.trim()).toString();
+      output2.amount = inputAmount.minus(this.amount).toString();
       output2.script = this.$utils.helper.buildThresholdScript(
         this.vault.threshold,
       );
