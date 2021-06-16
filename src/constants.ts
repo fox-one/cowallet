@@ -10,6 +10,8 @@ export const OAUTH_URL =
 
 // export const API_BASE = "https://api.mixin.one";
 
+export const INCLUDE_ASSET_IDS = process.env.INCLUDE_ASSET_IDS || "";
+
 export const CLIENT_ID =
   process.env.CLIENT_ID ||
   (isProduct

@@ -2,6 +2,7 @@
 import Vue from "vue";
 import { MutationTree, GetterTree, ActionTree } from "vuex";
 import BigNumber from "bignumber.js";
+import { INCLUDE_ASSET_IDS } from "@/constants";
 
 const UTXOS_PER_PAGE = 200;
 
@@ -151,19 +152,30 @@ const actions: ActionTree<GlobalState, any> = {
   async loadMyAssets({ commit, state }) {
     const result = await this.$apis.getMyAssets();
     const ret: any = [];
+    let includeIDs: Array<any> = [];
+    if (INCLUDE_ASSET_IDS !== "") {
+      includeIDs = INCLUDE_ASSET_IDS.split(",");
+    }
     for (let ix = 0, len = result.length; ix < len; ix++) {
       const item = result[ix];
-      // all ERC20 token is available at Kernel
-      if (
-        item.chain_id === "43d61dcd-e413-450d-80b8-101d5e903357" ||
-        Object.prototype.hasOwnProperty.call(
-          state.multisigAssets,
-          item.asset_id,
-        )
-      ) {
-        item.logo = item.icon_url;
-        ret.push(item);
-        continue;
+      if (includeIDs.length) {
+        if (includeIDs.includes(item.asset_id)) {
+          item.logo = item.icon_url;
+          ret.push(item);
+        }
+      } else {
+        if (
+          item.chain_id === "43d61dcd-e413-450d-80b8-101d5e903357" ||
+          Object.prototype.hasOwnProperty.call(
+            state.multisigAssets,
+            item.asset_id,
+          )
+        ) {
+          // all ERC20 token is available at Kernel
+          item.logo = item.icon_url;
+          ret.push(item);
+          continue;
+        }
       }
     }
     commit("setMyAssets", ret);
