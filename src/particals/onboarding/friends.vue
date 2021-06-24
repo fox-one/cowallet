@@ -9,7 +9,7 @@
         <p>
           <a
             color="text--primary"
-            href="mixin://apps/8e9e520c-b002-4bfe-b989-3f18d8d6e273"
+            :href="appUrl"
             style="text-decoration: underline"
             >{{ $t("onboarding.friend.step_1.tap") }}</a
           >{{ $t("onboarding.friend.step_1.text") }}
@@ -52,7 +52,7 @@
 <script lang="ts">
 import { Component, Vue, PropSync, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
-
+import { CLIENT_ID } from "@/constants";
 @Component({
   components: {},
 })
@@ -61,6 +61,10 @@ class FriendsVault extends Vue {
   @PropSync("name") bindName;
   @PropSync("members") bindMembers;
   @PropSync("threshold") bindThreshold;
+
+  get appUrl() {
+    return `mixin://apps/${CLIENT_ID}`;
+  }
 
   mounted() {
     this.bindValidated = false;
