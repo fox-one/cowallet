@@ -56,7 +56,7 @@ class SummaryPanel extends Vue {
         color: "purple",
         label: this.$t("common.send"),
         icon: this.$icons.mdiArrowUpCircle,
-        disabled: this.requests.length !== 0 || this.position.length === 0,
+        disabled: this.position.length === 0,
       },
       {
         id: "deposit",

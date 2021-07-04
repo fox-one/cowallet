@@ -19,7 +19,7 @@
                       <v-img :src="receiver.avatar_url" />
                     </v-avatar>
                     <div class="f-body-1 font-weight-bold">
-                      {{ receiver.full_name }}
+                      {{ receiver.full_name || "" }}
                     </div>
                   </div>
                   <span v-else class="f-greyscale-3">
