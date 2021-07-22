@@ -11,7 +11,7 @@ CoWallet is a cooperative crypto wallet on Mixin Network.
 
 ### Use CoWallet in a web browser
 
-Visit https://cowallet.firesbox.com
+Visit https://cowallet.fox.one/
 
 ## Features
 
