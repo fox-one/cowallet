@@ -2,6 +2,7 @@ import { CLIENT_ID, OAUTH_URL, INCOME_TPL, EXPENSE_TPL } from "~/constants";
 import crypto from "crypto";
 import { SHA3 } from "sha3";
 import Bridge from "@foxone/mixin-sdk-jsbridge";
+import { Base64 } from "js-base64";
 
 export const jsbridge = new Bridge({
   client_id: CLIENT_ID,
@@ -141,6 +142,20 @@ export function base64URLEncode(str) {
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=/g, "");
+}
+
+export function shareCard(title, description, icon_url, url) {
+  const data = {
+    action: url,
+    app_id: CLIENT_ID,
+    description,
+    icon_url,
+    title,
+  };
+
+  window.location.href =
+    "mixin://send?category=app_card&data=" +
+    encodeURIComponent(Base64.encode(JSON.stringify(data)));
 }
 
 export function requestLogin(vue) {

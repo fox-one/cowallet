@@ -122,9 +122,14 @@
               v-clipboard:copy="shareUrl"
               >{{ $t("common.copy_url") }}</f-button
             >
-            <f-button v-else type="subtitle" class="" @click="share">{{
-              $t("common.share")
-            }}</f-button>
+            <f-button
+              v-else
+              type="subtitle"
+              class=""
+              @click="share"
+              :disabled="!validatedShareButton"
+              >{{ $t("common.share") }}</f-button
+            >
           </template>
           <template v-else>
             <f-button type="primary" class="mb-4" @click="submit">{{
@@ -231,7 +236,12 @@ class RequestDetailPage extends Mixins(mixins.page) {
   }
 
   get shareUrl() {
-    return window.location.href;
+    const url = `${window.location.origin}/#/vaults/${this.vault.membersHash}-${this.vault.threshold}`;
+    return url;
+  }
+
+  get validatedShareButton() {
+    return this.asset && this.multisig;
   }
 
   @Watch("multisig")
@@ -307,7 +317,6 @@ class RequestDetailPage extends Mixins(mixins.page) {
 
   async submit() {
     // keep the submit operation because it may signed by other wallets
-
     this.loading = true;
     try {
       const resp = await this.$utils.helper.submitSignatures(
@@ -349,9 +358,15 @@ class RequestDetailPage extends Mixins(mixins.page) {
   }
 
   share() {
-    window.location.href = `mixin://send?text=${encodeURIComponent(
-      this.shareUrl,
-    )}`;
+    const asset: any = this.asset as any;
+    if (asset && this.multisig) {
+      this.$utils.helper.shareCard(
+        `${this.multisig.amount} ${asset.symbol}`,
+        this.$t("common.tap_to_review"),
+        asset.icon_url,
+        this.shareUrl,
+      );
+    }
   }
 }
 export default RequestDetailPage;
