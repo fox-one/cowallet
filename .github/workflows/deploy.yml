@@ -1,7 +1,6 @@
 name: Build and deploy to production.
 
 env:
-  OSS_ENDPOINT: oss-cn-beijing.aliyuncs.com
   AWS_REGION: us-east-1
   APP_ENV: prod
 
@@ -32,15 +31,6 @@ jobs:
       - run: yarn --frozen-lockfile --non-interactive
 
       - run: APP_ENV=${{ env.APP_ENV }} yarn build
-
-      # upload to aliyun
-      - uses: manyuanrong/setup-ossutil@v2.0
-        with:
-          endpoint: ${{ env.OSS_ENDPOINT }}
-          access-key-id: ${{ secrets.GLOBAL_OSS_ACCESS_KEY_ID }}
-          access-key-secret: ${{ secrets.GLOBAL_OSS_ACCESS_KEY_SECRET }}
-      - run: ossutil cp -r -u -f dist ${{ secrets.OSS_URL_PROD }} -e ${{ env.OSS_ENDPOINT }}
-      - run: ossutil set-meta ${{ secrets.OSS_URL_PROD }}/index.html Cache-Control:no-cache --update -e ${{ env.OSS_ENDPOINT }}
 
       # upload to aws
       - uses: aws-actions/configure-aws-credentials@v1
