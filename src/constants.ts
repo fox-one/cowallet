@@ -2,11 +2,9 @@ export const isProduct = process.env.APP_ENV === "prod";
 
 export const GA = "";
 
-export const API_BASE =
-  process.env.API_BASE || "https://xuexi-api.firesbox.com";
+export const API_BASE = process.env.API_BASE || "https://api.mixin.one";
 
-export const OAUTH_URL =
-  process.env.OAUTH_URL || "https://mixin-oauth.fox.one";
+export const OAUTH_URL = process.env.OAUTH_URL || "https://mixin-oauth.fox.one";
 
 // export const API_BASE = "https://api.mixin.one";
 
