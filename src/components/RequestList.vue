@@ -6,7 +6,8 @@
         <f-list-item
           v-for="(item, ix) in requests"
           :key="`request-${ix}`"
-          :title="`Send ${item.asset.symbol}`"
+          :title="`${item.asset.symbol} ${$t('common.requests')}`"
+          :subtitle="`${$t('common.tap_to_review')}`"
           @click="gotoRequestPage(item)"
         >
           <template #head>

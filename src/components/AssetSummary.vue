@@ -4,11 +4,11 @@
       <v-img :src="icon" />
     </v-avatar>
     <div class="d-flex align-center mb-1">
-      <span class="f-body-1 font-weight-bold mr-1">{{ amount }}</span>
+      <span class="f-body-1 font-weight-bold mr-1">{{ amountDisplay }}</span>
       <span class="f-body-1">{{ symbol }}</span>
     </div>
     <div class="d-flex align-center">
-      <span class="f-caption">${{ fiatAmount }}</span>
+      <span class="f-caption">{{ usdDisplay }}</span>
     </div>
   </div>
 </template>
@@ -25,6 +25,20 @@ class AssetSummary extends Vue {
   @Prop() fiatAmount;
   @Prop() symbol;
   @Prop() amount;
+
+  get amountDisplay() {
+    if (this.amount) {
+      return this.$utils.helper.formatCurrency(this, "", this.amount);
+    }
+    return "";
+  }
+
+  get usdDisplay() {
+    if (this.fiatAmount) {
+      return this.$utils.helper.formatCurrency(this, "USD", this.fiatAmount);
+    }
+    return "";
+  }
 }
 export default AssetSummary;
 </script>

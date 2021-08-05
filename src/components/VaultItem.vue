@@ -21,7 +21,7 @@
           <div class="f-caption opacity-80">
             {{ $t("vault_item.total_balance") }}
           </div>
-          <div class="f-title-1 font-weight-bold">${{ balance }}</div>
+          <div class="f-title-1 font-weight-bold">{{ balanceDisplay }}</div>
         </div>
       </div>
 
@@ -74,6 +74,10 @@ class VaultItem extends Vue {
       background: `linear-gradient(260deg, ${colors[0]} 0%, ${lighterColor0} 100%)`,
       boxShadow: `0 2px 6px ${colors[1]}`,
     };
+  }
+
+  get balanceDisplay() {
+    return this.$utils.helper.formatCurrency(this, "USD", this.balance);
   }
 
   gotoDeposit() {

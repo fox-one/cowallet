@@ -224,12 +224,13 @@ export function formatCurrency(
     amountNum = amount as number;
   }
   if (window.Intl) {
-    const opts: any = {
-      style: "currency",
-      currency: fiatSymbol.toUpperCase(),
+    const opts: any = {};
+    if (fiatSymbol) {
+      opts.style = "currency";
+      opts.currency = fiatSymbol.toUpperCase();
       // comment it because iOS do not support it
       // currencyDisplay: "narrowSymbol",
-    };
+    }
     if (fraction !== -1) {
       opts["minimumFractionDigits"] = fraction;
     }

@@ -10,7 +10,7 @@
             </v-avatar>
             <div class="d-flex align-center">
               <span class="f-body-1 font-weight-bold mr-1">{{
-                multisig.amount
+                amountDisplay
               }}</span>
               <span class="f-body-1">{{ asset.symbol }}</span>
             </div>
@@ -242,6 +242,13 @@ class RequestDetailPage extends Mixins(mixins.page) {
 
   get validatedShareButton() {
     return this.asset && this.multisig;
+  }
+
+  get amountDisplay() {
+    if (this.multisig) {
+      return this.$utils.helper.formatCurrency(this, "", this.multisig.amount);
+    }
+    return "";
   }
 
   @Watch("multisig")

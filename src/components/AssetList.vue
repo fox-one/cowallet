@@ -7,8 +7,8 @@
           <f-list-item
             v-for="item in sortedPosition"
             :key="item.asset_id"
-            :title="`${item.amount.toString()} ${item.symbol}`"
-            :subtitle="`$${item.totalUsd.toFixed(2)}`"
+            :title="`${totalAmount(item.amount.toString())} ${item.symbol}`"
+            :subtitle="`${totalUsd(item.totalUsd)}`"
             @click="handleClick(item)"
           >
             <template #head>
@@ -50,6 +50,14 @@ class AssetList extends Vue {
 
   handleClick(item) {
     this.$emit("click", item);
+  }
+
+  totalUsd(num) {
+    return this.$utils.helper.formatCurrency(this, "USD", num);
+  }
+
+  totalAmount(num) {
+    return this.$utils.helper.formatCurrency(this, "", num);
   }
 }
 export default AssetList;
