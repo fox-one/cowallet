@@ -3,6 +3,7 @@ import Vue from "vue";
 import { MutationTree, GetterTree, ActionTree } from "vuex";
 import BigNumber from "bignumber.js";
 import { INCLUDE_ASSET_IDS } from "@/constants";
+import { Base64 } from "js-base64";
 
 const UTXOS_PER_PAGE = 200;
 
@@ -41,6 +42,7 @@ export type GlobalState = {
 
   myAssets: Array<any>;
   currentMultisig: any | null;
+  transactions: Array<any>;
 };
 
 const getters: GetterTree<GlobalState, any> = {
@@ -90,6 +92,19 @@ const getters: GetterTree<GlobalState, any> = {
       return null;
     };
   },
+
+  getTransactionsByAsset(state) {
+    return (assetId) => {
+      const ret: any = [];
+      for (let ix = 0; ix < state.transactions.length; ix++) {
+        const x = state.transactions[ix];
+        if (x.asset_id === assetId) {
+          ret.push(x);
+        }
+      }
+      return ret;
+    };
+  },
 };
 
 const mutations: MutationTree<GlobalState> = {
@@ -133,6 +148,9 @@ const mutations: MutationTree<GlobalState> = {
   },
   setCurrentMultisig(state, value) {
     state.currentMultisig = value;
+  },
+  setTransactions(state, value) {
+    state.transactions = value;
   },
 };
 
@@ -193,6 +211,119 @@ const actions: ActionTree<GlobalState, any> = {
     const multisig = await this.$apis.createMultisig(raw, "sign");
     commit("setCurrentMultisig", multisig);
     return;
+  },
+
+  async loadUTXOs2({ commit, state }, payload) {
+    const { members, threshold } = payload;
+    const membersCopy = members.slice();
+    membersCopy.sort();
+
+    const hash = this.$utils.helper.sha3_256(membersCopy.join(""));
+
+    // let offset = 0;
+    // let UTXOCount = 0;
+
+    const utxos = await this.$apis.getUTXOs(hash, threshold, 0, UTXOS_PER_PAGE);
+
+    utxos.sort((a: any, b: any) => {
+      if (a.created_at < b.created_at) {
+        return 1;
+      } else if (a.created_at > b.created_at) {
+        return -1;
+      }
+      return 0;
+    });
+
+    const snapshots: any = {};
+    for (let ix = 0; ix < utxos.length; ix++) {
+      const utxo = utxos[ix];
+      // 找零
+      if (
+        Object.prototype.hasOwnProperty.call(snapshots, utxo.transaction_hash)
+      ) {
+        const arr: any = [];
+        for (let iy = 0; iy < snapshots[utxo.transaction_hash].length; iy++) {
+          const item = snapshots[utxo.transaction_hash][iy];
+          if (utxo.ouput_index === item.index) {
+            continue;
+          }
+          item.memo = utxo.memo;
+          item.created_at = utxo.created_at;
+          arr.push(item);
+        }
+        snapshots[utxo.transaction_hash] = arr;
+        continue;
+      }
+      //
+      snapshots[utxo.transaction_hash] = [
+        {
+          asset_id: utxo.asset_id,
+          created_at: utxo.created_at,
+          hash: utxo.transaction_hash,
+          index: utxo.output_index,
+          amount: utxo.amount,
+          memo: utxo.memo,
+          sender: utxo.sender,
+          state: "DONE",
+          type: "income",
+        },
+      ];
+
+      if (utxo.signed_tx) {
+        const decodedTx: any = this.$utils.helper.decodeSignedTx(
+          utxo.signed_tx,
+        );
+        if (decodedTx === null) {
+          console.log("failed to decode signed_tx, ignore");
+          continue;
+        }
+
+        let state = "PENDING";
+        if (utxo.state == "spent") {
+          state = "DONE";
+        }
+
+        const items: any = [];
+        for (let iy = 0; iy < decodedTx.outputs.length; iy++) {
+          items.push({
+            asset_id: utxo.asset_id,
+            created_at: utxo.updated_at,
+            hash: utxo.signed_by,
+            index: iy,
+            amount: decodedTx.outputs[iy].amount,
+            state: state,
+            memo: utxo.memo,
+            type: "expense",
+          });
+        }
+
+        snapshots[utxo.signed_by] = items;
+      }
+    }
+
+    let result = [];
+    for (const key in snapshots) {
+      if (Object.prototype.hasOwnProperty.call(snapshots, key)) {
+        const items = snapshots[key];
+        result = result.concat(items);
+      }
+    }
+
+    result.sort((a: any, b: any) => {
+      if (a.created_at < b.created_at) {
+        return 1;
+      } else if (a.created_at > b.created_at) {
+        return -1;
+      }
+      return 0;
+    });
+
+    for (let ix = 0; ix < result.length; ix++) {
+      const item = result[ix];
+      console.log(item);
+    }
+
+    commit("setTransactions", result);
   },
 
   async loadUTXOs({ commit, state }, payload) {
@@ -279,8 +410,8 @@ const actions: ActionTree<GlobalState, any> = {
 
     commit("setLoadingUTXO", false);
     commit("setPosition", Object.values(positionMap));
-    commit("setSpentUTXOs", spentUTXOs);
     commit("setUnspentUTXOs", unspentUTXOs);
+    commit("setSpentUTXOs", spentUTXOs);
     commit("setSignedUTXOs", signedUTXOs);
     commit("setPendingRequests", Object.values(requestMap));
     return;

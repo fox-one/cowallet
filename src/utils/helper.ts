@@ -32,6 +32,20 @@ export function getLocale() {
   return locale;
 }
 
+export function decodeSignedTx(signedTx) {
+  let tx = null
+  try {
+    const result = (window as any).mixinGo.decodeTransaction(
+      signedTx,
+    );
+    tx = JSON.parse(result);
+  } catch (e) {
+    console.log("failed to decode signed_tx, ignore", signedTx);
+    return [];
+  }
+  return tx
+}
+
 export async function getAssetInfo(store, assetId) {
   let asset = store!.getters["cache/getAsset"](assetId);
   if (asset === null) {

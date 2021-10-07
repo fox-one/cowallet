@@ -98,6 +98,14 @@ class VaultPage extends Mixins(mixins.page) {
           }),
         );
       }, 200);
+      setTimeout(() => {
+        resolve(
+          this.$store.dispatch("global/loadUTXOs2", {
+            members: this.vault.members,
+            threshold: this.vault.threshold,
+          }),
+        );
+      }, 200);
       resolve(null);
     });
   }

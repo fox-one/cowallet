@@ -13,7 +13,7 @@
 
       <f-list>
         <f-list-item
-          v-for="(tran, ix) in transactions"
+          v-for="(tran, ix) in transactions2"
           :key="`trans-${ix}`"
           :title="`${tran.type === 'expense' ? '-' : '+'}${tran.amount} ${
             tran.symbol
@@ -128,6 +128,20 @@ class AssetsPage extends Mixins(mixins.page) {
     });
   }
 
+  get transactions2() {
+    const tx = this.$store.getters["global/getTransactionsByAsset"](
+      this.assetId,
+    );
+    const result = tx.map((x) => {
+      x.datetime_display = dayjs(x.datetime).format("YYYY/MM/DD HH:mm:ss");
+      x.datetime_beancount = dayjs(x.datetime).format("YYYY-MM-DD");
+      x.symbol = this.asset.symbol;
+      x.usd = new BigNumber(x.amount).times(this.asset.price_usd).toFixed(2);
+      return x;
+    });
+    return result;
+  }
+
   get transactions() {
     const { signed, unspent, spent } = this.$store.getters[
       "global/getUTXOsByAssetId"
@@ -158,13 +172,8 @@ class AssetsPage extends Mixins(mixins.page) {
       });
       // console.log(item.signed_tx);
       // decode signed_tx, and consider all outputs as expenses
-      let decodedTx: any = null;
-      try {
-        const result = (window as any).mixinGo.decodeTransaction(
-          item.signed_tx,
-        );
-        decodedTx = JSON.parse(result);
-      } catch (e) {
+      let decodedTx: any = this.$utils.helper.decodeSignedTx(item.signed_tx);
+      if (decodedTx === null) {
         console.log("failed to decode signed_tx, ignore");
         return [];
       }
