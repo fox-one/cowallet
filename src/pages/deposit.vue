@@ -11,6 +11,7 @@
               :precision="8"
               :selectable="true"
               border
+              :singleLine="false"
               :label="$t('common.amount')"
             >
             </f-asset-amount-input>

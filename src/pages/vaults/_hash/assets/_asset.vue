@@ -133,8 +133,8 @@ class AssetsPage extends Mixins(mixins.page) {
       this.assetId,
     );
     const result = tx.map((x) => {
-      x.datetime_display = dayjs(x.datetime).format("YYYY/MM/DD HH:mm:ss");
-      x.datetime_beancount = dayjs(x.datetime).format("YYYY-MM-DD");
+      x.datetime_display = dayjs(x.created_at).format("YYYY/MM/DD HH:mm:ss");
+      x.datetime_beancount = dayjs(x.created_at).format("YYYY-MM-DD");
       x.symbol = this.asset.symbol;
       x.usd = new BigNumber(x.amount).times(this.asset.price_usd).toFixed(2);
       return x;

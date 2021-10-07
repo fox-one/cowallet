@@ -18,6 +18,14 @@
                 class="mt-1"
               />
             </template>
+            <template #tail>
+              <div class="">
+                <div class="f-body-1">&nbsp;</div>
+                <div class="f-caption f-greyscale-3">
+                  {{ totalUsd(item.price_usd) }}
+                </div>
+              </div>
+            </template>
           </f-list-item>
         </f-list>
       </f-panel>
@@ -57,7 +65,7 @@ class AssetList extends Vue {
   }
 
   totalAmount(num) {
-    return this.$utils.helper.formatCurrency(this, "", num);
+    return this.$utils.helper.formatCurrency(this, "", num, 8);
   }
 }
 export default AssetList;

@@ -28,7 +28,7 @@ class AssetSummary extends Vue {
 
   get amountDisplay() {
     if (this.amount) {
-      return this.$utils.helper.formatCurrency(this, "", this.amount);
+      return this.$utils.helper.formatCurrency(this, "", this.amount, 8);
     }
     return "";
   }

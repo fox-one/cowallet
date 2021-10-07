@@ -1,4 +1,10 @@
-import { CLIENT_ID, OAUTH_URL, INCOME_TPL, EXPENSE_TPL } from "~/constants";
+import {
+  CLIENT_ID,
+  OAUTH_URL,
+  INCOME_TPL,
+  EXPENSE_TPL,
+  ASSET_UPDATE_TIMEOUT,
+} from "~/constants";
 import crypto from "crypto";
 import { SHA3 } from "sha3";
 import Bridge from "@foxone/mixin-sdk-jsbridge";
@@ -33,23 +39,22 @@ export function getLocale() {
 }
 
 export function decodeSignedTx(signedTx) {
-  let tx = null
+  let tx = null;
   try {
-    const result = (window as any).mixinGo.decodeTransaction(
-      signedTx,
-    );
+    const result = (window as any).mixinGo.decodeTransaction(signedTx);
     tx = JSON.parse(result);
   } catch (e) {
     console.log("failed to decode signed_tx, ignore", signedTx);
     return [];
   }
-  return tx
+  return tx;
 }
 
 export async function getAssetInfo(store, assetId) {
   let asset = store!.getters["cache/getAsset"](assetId);
-  if (asset === null) {
-    // asset = await vm.$apis.getAsset(assetId);
+  const dur = Date.now() - (asset?.last_updated_at || 0);
+  // no such an asset, or it's timeout.
+  if (asset === null || dur < ASSET_UPDATE_TIMEOUT) {
     asset = await store.dispatch("cache/loadAsset", assetId);
   }
   return asset;

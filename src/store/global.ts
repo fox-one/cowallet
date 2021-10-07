@@ -176,6 +176,10 @@ const actions: ActionTree<GlobalState, any> = {
     }
     for (let ix = 0, len = result.length; ix < len; ix++) {
       const item = result[ix];
+
+      // add all my assets to the cache
+      commit("cache/addAsset", item, { root: true });
+
       if (includeIDs.length) {
         if (includeIDs.includes(item.asset_id)) {
           item.logo = item.icon_url;
@@ -196,6 +200,17 @@ const actions: ActionTree<GlobalState, any> = {
         }
       }
     }
+    // sort by the total usd
+    ret.sort((a, b) => {
+      const ta = a.balance * a.price_usd;
+      const tb = b.balance * b.price_usd;
+      if (ta > tb) {
+        return -1;
+      } else if (ta < tb) {
+        return 1;
+      }
+      return 0;
+    });
     commit("setMyAssets", ret);
     console.log("load my assets", ret.length);
     return;
@@ -237,13 +252,14 @@ const actions: ActionTree<GlobalState, any> = {
     const snapshots: any = {};
     for (let ix = 0; ix < utxos.length; ix++) {
       const utxo = utxos[ix];
-      // 找零
+      // 处理找零
       if (
         Object.prototype.hasOwnProperty.call(snapshots, utxo.transaction_hash)
       ) {
         const arr: any = [];
         for (let iy = 0; iy < snapshots[utxo.transaction_hash].length; iy++) {
           const item = snapshots[utxo.transaction_hash][iy];
+          // 发现是找零的 item，就抛弃掉
           if (utxo.ouput_index === item.index) {
             continue;
           }
@@ -254,7 +270,7 @@ const actions: ActionTree<GlobalState, any> = {
         snapshots[utxo.transaction_hash] = arr;
         continue;
       }
-      //
+      // 否则，就处理正常的 snapshots
       snapshots[utxo.transaction_hash] = [
         {
           asset_id: utxo.asset_id,
@@ -318,10 +334,10 @@ const actions: ActionTree<GlobalState, any> = {
       return 0;
     });
 
-    for (let ix = 0; ix < result.length; ix++) {
-      const item = result[ix];
-      console.log(item);
-    }
+    // for (let ix = 0; ix < result.length; ix++) {
+    //   const item = result[ix];
+    //   console.log(item);
+    // }
 
     commit("setTransactions", result);
   },

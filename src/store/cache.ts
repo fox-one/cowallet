@@ -46,6 +46,7 @@ const mutations: MutationTree<CacheState> = {
   addAsset(state, asset) {
     const um = Object.assign({}, state.assets);
     um[asset.asset_id] = asset;
+    um[asset.asset_id]["last_updated_at"] = Date.now();
     state.assets = um;
   },
 };
