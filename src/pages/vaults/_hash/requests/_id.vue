@@ -258,6 +258,8 @@ class RequestDetailPage extends Mixins(mixins.page) {
         console.log(this.multisig);
         return;
       }
+      this.receivers = [];
+      this.signers = [];
       let allUserIDs = this.multisig.receivers.slice();
       allUserIDs = allUserIDs.concat(this.multisig.signers);
       allUserIDs.sort();

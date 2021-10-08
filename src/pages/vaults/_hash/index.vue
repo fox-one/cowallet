@@ -90,14 +90,14 @@ class VaultPage extends Mixins(mixins.page) {
 
   async loadPosition() {
     return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(
-          this.$store.dispatch("global/loadUTXOs", {
-            members: this.vault.members,
-            threshold: this.vault.threshold,
-          }),
-        );
-      }, 200);
+      // setTimeout(() => {
+      //   resolve(
+      //     this.$store.dispatch("global/loadUTXOs", {
+      //       members: this.vault.members,
+      //       threshold: this.vault.threshold,
+      //     }),
+      //   );
+      // }, 200);
       setTimeout(() => {
         resolve(
           this.$store.dispatch("global/loadUTXOs2", {

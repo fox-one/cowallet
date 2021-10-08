@@ -235,11 +235,35 @@ const actions: ActionTree<GlobalState, any> = {
 
     const hash = this.$utils.helper.sha3_256(membersCopy.join(""));
 
-    // let offset = 0;
-    // let UTXOCount = 0;
+    const spentUTXOs: any = [];
+    const unspentUTXOs: any = [];
+    const signedUTXOs: any = [];
 
-    const utxos = await this.$apis.getUTXOs(hash, threshold, 0, UTXOS_PER_PAGE);
+    const positionMap = {};
+    const requestMap = {};
 
+    let utxos: any = [];
+
+    let offset = 0;
+    let UTXOCount = 0;
+
+    // fetch utxos
+    commit("setLoadingUTXO", true);
+    let resp = await this.$apis.getUTXOs(hash, threshold, 0, UTXOS_PER_PAGE);
+    utxos = utxos.concat(resp);
+
+    while (resp) {
+      if (resp.length < UTXOS_PER_PAGE) {
+        break;
+      }
+      offset = resp[resp.length - 1].updated_at;
+      UTXOCount += resp.length;
+      commit("setUTXOCount", UTXOCount);
+      resp = await this.$apis.getUTXOs(hash, threshold, offset, UTXOS_PER_PAGE);
+      utxos = utxos.concat(resp);
+    }
+
+    // sort utxos
     utxos.sort((a: any, b: any) => {
       if (a.created_at < b.created_at) {
         return 1;
@@ -249,20 +273,72 @@ const actions: ActionTree<GlobalState, any> = {
       return 0;
     });
 
+    for (let ix = 0; ix < utxos.length; ix++) {
+      const utxo = utxos[ix];
+
+      // classify utxos
+      if (utxo.state === "unspent") {
+        unspentUTXOs.push(utxo);
+      } else if (utxo.state === "signed") {
+        signedUTXOs.push(utxo);
+      } else {
+        spentUTXOs.push(utxo);
+      }
+
+      // arrange wallet position
+      if (!Object.prototype.hasOwnProperty.call(positionMap, utxo.asset_id)) {
+        const asset = await this.$utils.helper.getAssetInfo(
+          this,
+          utxo.asset_id,
+        );
+        if (asset === undefined) {
+          continue;
+        }
+        positionMap[utxo.asset_id] = asset;
+        positionMap[utxo.asset_id].amount = new BigNumber(0);
+      }
+
+      if (utxo.state === "unspent" || utxo.state === "signed") {
+        positionMap[utxo.asset_id].amount = positionMap[
+          utxo.asset_id
+        ].amount.plus(utxo.amount);
+      }
+      positionMap[utxo.asset_id].totalUsd = positionMap[
+        utxo.asset_id
+      ].amount.times(positionMap[utxo.asset_id].price_usd);
+
+      positionMap[utxo.asset_id].logo = positionMap[utxo.asset_id].icon_url;
+
+      // arrage pending requests: group related otxos by signed_by.
+      if (utxo.state === "signed") {
+        if (!Object.prototype.hasOwnProperty.call(requestMap, utxo.signed_by)) {
+          requestMap[utxo.signed_by] = {
+            asset_id: utxo.asset_id,
+            asset: positionMap[utxo.asset_id],
+            signed_by: utxo.signed_by,
+            utxos: [],
+          };
+        }
+        requestMap[utxo.signed_by].utxos.push(utxo);
+      }
+    }
+
+    // build transaction from utxos
     const snapshots: any = {};
     for (let ix = 0; ix < utxos.length; ix++) {
       const utxo = utxos[ix];
-      // 处理找零
+      // handle change utxo
       if (
         Object.prototype.hasOwnProperty.call(snapshots, utxo.transaction_hash)
       ) {
         const arr: any = [];
         for (let iy = 0; iy < snapshots[utxo.transaction_hash].length; iy++) {
           const item = snapshots[utxo.transaction_hash][iy];
-          // 发现是找零的 item，就抛弃掉
+          // ignore all utxo with a change
           if (utxo.ouput_index === item.index) {
             continue;
           }
+          item.utxo_id = utxo.utxo_id;
           item.memo = utxo.memo;
           item.created_at = utxo.created_at;
           arr.push(item);
@@ -270,9 +346,10 @@ const actions: ActionTree<GlobalState, any> = {
         snapshots[utxo.transaction_hash] = arr;
         continue;
       }
-      // 否则，就处理正常的 snapshots
+      // other utxo, create snapshots
       snapshots[utxo.transaction_hash] = [
         {
+          utxo_id: utxo.utxo_id,
           asset_id: utxo.asset_id,
           created_at: utxo.created_at,
           hash: utxo.transaction_hash,
@@ -340,6 +417,12 @@ const actions: ActionTree<GlobalState, any> = {
     // }
 
     commit("setTransactions", result);
+    commit("setLoadingUTXO", false);
+    commit("setPosition", Object.values(positionMap));
+    commit("setUnspentUTXOs", unspentUTXOs);
+    commit("setSpentUTXOs", spentUTXOs);
+    commit("setSignedUTXOs", signedUTXOs);
+    commit("setPendingRequests", Object.values(requestMap));
   },
 
   async loadUTXOs({ commit, state }, payload) {
