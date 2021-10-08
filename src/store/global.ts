@@ -377,17 +377,19 @@ const actions: ActionTree<GlobalState, any> = {
         }
 
         const items: any = [];
-        for (let iy = 0; iy < decodedTx.outputs.length; iy++) {
-          items.push({
-            asset_id: utxo.asset_id,
-            created_at: utxo.updated_at,
-            hash: utxo.signed_by,
-            index: iy,
-            amount: decodedTx.outputs[iy].amount,
-            state: state,
-            memo: utxo.memo,
-            type: "expense",
-          });
+        if (decodedTx.outputs) {
+          for (let iy = 0; iy < decodedTx.outputs.length; iy++) {
+            items.push({
+              asset_id: utxo.asset_id,
+              created_at: utxo.updated_at,
+              hash: utxo.signed_by,
+              index: iy,
+              amount: decodedTx.outputs[iy].amount,
+              state: state,
+              memo: utxo.memo,
+              type: "expense",
+            });
+          }
         }
 
         snapshots[utxo.signed_by] = items;
