@@ -4,11 +4,11 @@
       <v-img :src="icon" />
     </v-avatar>
     <div class="d-flex align-center mb-1">
-      <span class="f-body-1 font-weight-bold mr-1">{{ amountDisplay }}</span>
-      <span class="f-body-1">{{ symbol }}</span>
+      <span class="body-1 font-weight-bold mr-1">{{ amountDisplay }}</span>
+      <span class="body-1">{{ symbol }}</span>
     </div>
     <div class="d-flex align-center">
-      <span class="f-caption">{{ usdDisplay }}</span>
+      <span class="caption">{{ usdDisplay }}</span>
     </div>
   </div>
 </template>

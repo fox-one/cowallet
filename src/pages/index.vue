@@ -1,25 +1,35 @@
 <template>
-  <v-container class="index-page px-8 pt-4">
+  <v-container class="index-page">
     <f-loading :loading="loading" :fullscreen="true" />
     <template v-if="!loading">
-      <vault-item
-        v-for="(vault, ix) in vaults"
-        :key="`vault-${ix}`"
-        :vault="vault"
-        class="mb-4"
-      />
-      <f-bottom-sheet>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+          lg="4"
+          v-for="(vault, ix) in vaults"
+          :key="`vault-${ix}`"
+        >
+          <vault-item :vault="vault" class="mb-4" />
+        </v-col>
+      </v-row>
+
+      <f-bottom-sheet :title="$t('create_or_open_vault')">
         <template #activator="{ on }">
-          <div class="empty-vault f-bg-greyscale-5 f-greyscale-3" v-on="on">
-            {{ $t("create_or_open_vault") }}
+          <div class="">
+            <f-button
+              class="empty-vault greyscale_6 greyscale_3--text"
+              v-on="on"
+            >
+              {{ $t("create_or_open_vault") }}
+            </f-button>
           </div>
         </template>
-        <template #title>
-          <div class="f-title-1">{{ $t("create_or_open_vault") }}</div>
-        </template>
-        <create-vault-list />
+        <div class="pb-5">
+          <create-vault-list />
+        </div>
       </f-bottom-sheet>
-      <div class="version f-caption f-greyscale-3 mt-10 text-center">
+      <div class="version caption greyscale_3--text mt-10 text-center">
         {{ version }}
       </div>
     </template>
@@ -43,8 +53,6 @@ import p from "../../package.json";
 })
 class IndexPage extends Mixins(mixins.page) {
   @State((state) => state.vault.vaults) vaults;
-
-  @Mutation("vault/addVault") addVault;
 
   assets: any = [];
 
@@ -130,7 +138,7 @@ class IndexPage extends Mixins(mixins.page) {
     vault.membersHash = this.$utils.helper.sha3_256(vault.members.join(""));
     console.log(vault);
     this.$store.dispatch("cache/loadUsers", vault.members);
-    this.addVault(vault);
+    this.$store.commit("vault/addVault", vault);
 
     this.$router.push(`/vaults/${vault.membersHash}-${vault.threshold}?back=0`);
     // this.loading = false;

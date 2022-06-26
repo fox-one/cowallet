@@ -1,6 +1,6 @@
 import { isDarkTheme } from "@/utils/helper";
 
-export const state = () => ({
+const state = () => ({
   dark: isDarkTheme(),
   snackbar: {
     show: false,
@@ -17,7 +17,7 @@ export const state = () => ({
   },
 });
 
-export const mutations = {
+const mutations = {
   toast(state, { message, color }) {
     state.snackbar.show = true;
     state.snackbar.message = message;
@@ -37,4 +37,10 @@ export const mutations = {
     };
     state.appbar = { ...defaultValue, ...value };
   },
+};
+
+export default {
+  namespaced: true,
+  state,
+  mutations,
 };

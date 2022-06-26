@@ -4,7 +4,7 @@
       <summary-panel :assets="assets" :vault="vault" @settings="gotoSettings" />
       <div
         v-if="loadingUTXO && position.length === 0"
-        class="text-center mt-10 f-body-2 f-greyscale-3"
+        class="text-center mt-10 body-2 greyscale_3--text"
       >
         {{ $t("common.loading") }} {{ UTXOCount || "" }}
       </div>

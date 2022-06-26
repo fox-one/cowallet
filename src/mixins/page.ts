@@ -12,9 +12,6 @@ export interface Page extends Vue {
 @Component({
   head() {
     const vm = this as Page;
-    setTimeout(() => {
-      console.log(vm.title);
-    }, 100);
     return {
       title: "CoWallet - " + (vm.htmlTitle || vm.title),
       meta: [
@@ -52,8 +49,7 @@ export default class PageView extends Vue {
   }
 
   setPageConfig() {
-    console.log(this.title);
-    this.setAppbar({ title: this.title, ...this.appbar });
+    this.$store.commit("app/SET_APPBAR", { title: this.title, ...this.appbar });
     // setTimeout(() => {
     //   this.$utils.helper.loadMixinTheme();
     // }, 50);

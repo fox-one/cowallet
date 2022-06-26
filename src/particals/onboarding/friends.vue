@@ -1,11 +1,11 @@
 <template>
   <div padding="0" class="mb-4 no-border-radius text-left">
-    <div class="f-title-1 mb-4">
+    <div class="title mb-4">
       {{ $t("onboarding.friend.title") }}
     </div>
     <div class="sec mb-4">
-      <div class="f-title-2 mb-2">{{ $t("onboarding.friend.step_1") }}</div>
-      <div class="f-body-2 f-greyscale-3">
+      <div class="title-2 mb-2">{{ $t("onboarding.friend.step_1") }}</div>
+      <div class="body greyscale_3--text">
         <p>
           <a
             color="text--primary"
@@ -17,8 +17,8 @@
       </div>
     </div>
     <div class="sec mb-4">
-      <div class="f-title-2 mb-2">{{ $t("onboarding.friend.step_2") }}</div>
-      <ul class="f-body-2 f-greyscale-3">
+      <div class="title-2 mb-2">{{ $t("onboarding.friend.step_2") }}</div>
+      <ul class="body greyscale_3--text">
         <li>
           {{ $t("onboarding.friend.step_2.text_1") }}
           <img class="" src="/screenshots/friends-step-1.png" />
@@ -35,8 +35,8 @@
       </ul>
     </div>
     <div class="sec mb-4">
-      <div class="f-title-2 mb-2">{{ $t("onboarding.friend.step_3") }}</div>
-      <div class="f-body-2 f-greyscale-3">
+      <div class="title-2 mb-2">{{ $t("onboarding.friend.step_3") }}</div>
+      <div class="body greyscale_3--text">
         <p>
           {{ $t("onboarding.friend.step_3.text_1") }}
         </p>

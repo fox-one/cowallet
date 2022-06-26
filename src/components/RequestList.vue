@@ -1,6 +1,6 @@
 <template>
   <div v-if="hasRequests">
-    <div class="f-title-1 mx-4 mb-2">{{ $t("common.requests") }}</div>
+    <div class="title-1 mx-4 mb-2">{{ $t("common.requests") }}</div>
     <f-panel padding="0" class="mx-4 mb-4">
       <f-list>
         <f-list-item

@@ -5,6 +5,7 @@
         <f-input
           textarea
           v-model="importJson"
+          height="200"
           :label="$t('manage_vault.vault_config')"
         />
       </v-col>

@@ -10,12 +10,16 @@
 }
 
 .theme--light {
-  .v-main {
-    background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+  #app {
+    background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%);
   }
 }
 .theme--dark {
-  .v-main {
+  #app {
     background: linear-gradient(180deg, #000 0%, #222 100%);
   }
+}
+
+.narrow {
+  max-width: 660px !important;
 }

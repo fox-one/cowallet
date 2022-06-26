@@ -1,7 +1,7 @@
 <template>
   <div class="auth-page">
     <v-progress-circular :width="3" color="primary" indeterminate />
-    <div class="mt-3 f-greyscale-3">
+    <div class="mt-3 greyscale_3--text">
       {{ $t("common.authing") }}
     </div>
   </div>

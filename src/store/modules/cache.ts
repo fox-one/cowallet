@@ -66,6 +66,7 @@ const actions: ActionTree<CacheState, any> = {
 };
 
 export default {
+  namespaced: true,
   getters,
   state,
   mutations,

@@ -18,11 +18,11 @@
                     <v-avatar size="32" class="mr-2">
                       <v-img :src="receiver.avatar_url" />
                     </v-avatar>
-                    <div class="f-body-1 font-weight-bold">
+                    <div class="body-1 font-weight-bold">
                       {{ receiver.full_name || "" }}
                     </div>
                   </div>
-                  <span v-else class="f-greyscale-3">
+                  <span v-else class="greyscale_3--text">
                     {{ $t("select_a_receiver") }}
                   </span>
                 </div>

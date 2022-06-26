@@ -2,7 +2,7 @@
   <v-container class="">
     <template v-if="vault">
       <f-panel padding="0" class="pt-2 mb-4">
-        <div class="f-caption px-4">{{ $t("manage_vault.general") }}</div>
+        <div class="caption px-4">{{ $t("manage_vault.general") }}</div>
         <f-list>
           <f-list-item
             :title="$t('vault.name')"
@@ -17,7 +17,7 @@
       </f-panel>
 
       <f-panel padding="0" class="pt-2 mb-4">
-        <div class="f-caption px-4">{{ $t("manage_vault.beancount") }}</div>
+        <div class="caption px-4">{{ $t("manage_vault.beancount") }}</div>
         <f-list>
           <f-list-item
             :title="$t('beancount.variables')"
@@ -33,7 +33,7 @@
       </f-panel>
 
       <f-panel padding="0" class="pt-2 mb-4">
-        <div class="f-caption px-4">{{ $t("manage_vault.operation") }}</div>
+        <div class="caption px-4">{{ $t("manage_vault.operation") }}</div>
         <f-list>
           <f-list-item
             :title="$t('manage_vault.export')"

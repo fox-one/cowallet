@@ -22,7 +22,7 @@
             <div class="icon-wrapper mb-1" :class="[btn.color]">
               <v-icon size="28">{{ btn.icon }}</v-icon>
             </div>
-            <div class="f-caption f-greyscale-3">{{ btn.label }}</div>
+            <div class="caption greyscale_3--text">{{ btn.label }}</div>
           </div>
         </v-btn>
       </div>

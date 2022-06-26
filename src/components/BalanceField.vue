@@ -1,11 +1,11 @@
 <template>
-  <div class="my-1 f-body-2">
+  <div class="my-1 body-2">
     <span v-if="isLogged">
-      <span class="f-greyscale-3">{{ prefix }}</span>
+      <span class="greyscale_3--text">{{ prefix }}</span>
       <a class="mr-1 text--primary" @click="$emit('click:balance', balance)">{{
         meta.balance
       }}</a>
-      <span class="f-greyscale-3">{{ symbol }}</span>
+      <span class="greyscale_3--text">{{ symbol }}</span>
     </span>
     <a v-else @click="$emit('click:connect')">
       {{ connectLabal }}

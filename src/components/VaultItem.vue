@@ -1,7 +1,12 @@
 <template>
-  <div class="card px-6 pt-4 pb-2 d-flex" @click="gotoVault" :style="cardStyle">
+  <div
+    v-if="vault"
+    class="card px-4 pt-3 pb-2 d-flex"
+    @click="gotoVault"
+    :style="cardStyle"
+  >
     <div class="right">
-      <div class="f-caption opacity-80">
+      <div class="caption opacity-80">
         <span class="font-weight-bold"
           >{{
             $t("vault_item.threshold", {
@@ -12,16 +17,16 @@
         </span>
         {{ $t("vault_item.vault") }}
       </div>
-      <div class="top f-title-1 mb-1 font-weight-bold">
+      <div class="top title-1 mb-1 font-weight-bold">
         {{ vault.name || "Unnamed" }}
       </div>
 
       <div v-if="fullsize" class="d-flex justify-space-between mb-2">
         <div class="left">
-          <div class="f-caption opacity-80">
+          <div class="caption opacity-80">
             {{ $t("vault_item.total_balance") }}
           </div>
-          <div class="f-title-1 font-weight-bold">{{ balanceDisplay }}</div>
+          <div class="title-1 font-weight-bold">{{ balanceDisplay }}</div>
         </div>
       </div>
 
@@ -46,7 +51,7 @@ import { Mutation, State } from "vuex-class";
 
 @Component
 class VaultItem extends Vue {
-  @Prop({}) vault;
+  @Prop({ default: null }) vault!: any;
 
   @Prop({ default: 0 }) balance;
 
@@ -101,11 +106,8 @@ export default VaultItem;
 </script>
 <style lang="scss" scoped>
 .card {
-  // background: #df8976;
-  border-radius: 24px;
+  border-radius: 4px;
   color: white;
-
-  // box-shadow: 0px 2px 6px #ffc3b7;
 
   .opacity-80 {
     opacity: 0.8;

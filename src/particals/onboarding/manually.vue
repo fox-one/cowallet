@@ -1,23 +1,25 @@
 <template>
   <div>
     <v-row>
-      <v-col>
-        <f-input v-model="nameValue" :label="$t('manage_vault.vault_name')" />
+      <v-col cols="12">
+        <f-input
+          v-model="nameValue"
+          :label="$t('manage_vault.vault_name')"
+          hide-details
+        />
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
+      <v-col cols="12">
         <f-input
           textarea
           v-model="userIdsValue"
+          hide-details
           :label="$t('onboarding.manually.user_ids')"
         />
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
+      <v-col cols="12">
         <f-input
           v-model="thresholdValue"
+          hide-details
           :label="$t('onboarding.manually.threshold')"
         />
       </v-col>

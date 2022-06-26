@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="position.length">
-      <div class="f-title-1 mx-4 mb-2">{{ $t("common.assets") }}</div>
+      <div class="title-1 mx-4 mb-2">{{ $t("common.assets") }}</div>
       <f-panel padding="0" class="mx-4">
         <f-list>
           <f-list-item
@@ -20,8 +20,8 @@
             </template>
             <template #tail>
               <div class="">
-                <div class="f-body-1">&nbsp;</div>
-                <div class="f-caption f-greyscale-3">
+                <div class="body-1">&nbsp;</div>
+                <div class="caption greyscale_3--text">
                   {{ totalUsd(item.price_usd) }}
                 </div>
               </div>
@@ -30,7 +30,7 @@
         </f-list>
       </f-panel>
     </template>
-    <div v-else class="f-body-2 f-greyscale-3 text-center mt-10">
+    <div v-else class="body-2 greyscale_3--text text-center mt-10">
       {{ $t("hint.no_asset_1") }} <br />{{ $t("hint.no_asset_2") }}
     </div>
   </div>

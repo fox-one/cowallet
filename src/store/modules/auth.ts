@@ -56,3 +56,11 @@ export const actions: ActionTree<AuthState, any> = {
     commit("setMe", res);
   },
 };
+
+export default {
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions,
+};

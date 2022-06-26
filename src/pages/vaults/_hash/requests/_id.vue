@@ -9,15 +9,15 @@
               <v-img :src="asset.icon_url" />
             </v-avatar>
             <div class="d-flex align-center">
-              <span class="f-body-1 font-weight-bold mr-1">{{
+              <span class="body-1 font-weight-bold mr-1">{{
                 amountDisplay
               }}</span>
-              <span class="f-body-1">{{ asset.symbol }}</span>
+              <span class="body-1">{{ asset.symbol }}</span>
             </div>
           </div>
         </div>
         <div class="field-sec mb-2">
-          <div class="f-caption f-greyscale-3 mb-1">
+          <div class="caption greyscale_3--text mb-1">
             {{ $t("roles.receiver") }}
           </div>
           <div class="field-value receivers d-flex">
@@ -29,12 +29,12 @@
               <v-avatar size="28" class="">
                 <v-img :src="user.avatar_url" />
               </v-avatar>
-              <span class="f-caption">{{ user.full_name }}</span>
+              <span class="caption">{{ user.full_name }}</span>
             </div>
           </div>
         </div>
         <div class="field-sec mb-2">
-          <div class="f-caption f-greyscale-3 mb-1">
+          <div class="caption greyscale_3--text mb-1">
             {{ $t("roles.signers") }}
           </div>
           <div class="field-value signers d-flex">
@@ -46,24 +46,24 @@
               <v-avatar size="28" class="">
                 <v-img :src="user.avatar_url" />
               </v-avatar>
-              <span class="f-caption">{{ user.full_name }}</span>
+              <span class="caption">{{ user.full_name }}</span>
             </div>
           </div>
         </div>
         <div class="field-sec mb-2">
-          <div class="f-caption f-greyscale-3 mb-1">
+          <div class="caption greyscale_3--text mb-1">
             {{ $t("common.memo") }}
           </div>
-          <div class="field-value pre f-body-2">
+          <div class="field-value pre body-2">
             {{ multisig.memo || $t("common.empty") }}
           </div>
         </div>
         <div class="field-sec mb-4">
-          <div class="f-caption f-greyscale-3 mb-1">
+          <div class="caption greyscale_3--text mb-1">
             {{ $t("common.raw_transaction") }}
           </div>
           <div
-            class="field-value pre f-body-2 trim d-flex align-center justify-space-between"
+            class="field-value pre body-2 trim d-flex align-center justify-space-between"
           >
             <div class="">
               {{ multisig.raw_transaction.slice(0, 24) + "..." }}
@@ -80,7 +80,7 @@
             </div>
           </div>
         </div>
-        <div class="hint text-center f-caption">
+        <div class="hint text-center caption">
           <template v-if="!needToSign">
             {{ $t("hint.collected_enough_signatures") }}
           </template>
@@ -145,7 +145,7 @@
     </f-panel>
     <f-bottom-sheet v-model="rawDialog">
       <template #title>
-        <div class="f-title-1">{{ $t("common.raw_transaction") }}</div>
+        <div class="title-1">{{ $t("common.raw_transaction") }}</div>
       </template>
       <div class="raw-transaction-wrapper">
         <div v-if="multisig" class="raw-transaction mb-4 pa-4">

@@ -85,6 +85,7 @@ const mutations: MutationTree<VaultState> = {
 const actions: ActionTree<VaultState, any> = {};
 
 export default {
+  namespaced: true,
   getters,
   state,
   mutations,

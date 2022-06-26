@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-4">
+  <v-container class="pa-4 narrow">
     <f-panel padding="0" class="pa-4">
       <component
         v-if="innerComponent"
@@ -11,7 +11,7 @@
         :validated.sync="formValidated"
       />
       <div v-if="method !== 'friends'" class="text-center mt-6">
-        <f-button type="primary" :disabled="!validated" @click="open">{{
+        <f-button color="primary" :disabled="!validated" @click="open">{{
           $t("common.open")
         }}</f-button>
       </div>
@@ -36,8 +36,6 @@ import Manually from "@/particals/onboarding/manually.vue";
 })
 class OpenVaultPage extends Mixins(mixins.page) {
   @State((state) => state.vault.vaults) vaults;
-
-  @Mutation("vault/addVault") addVault;
 
   logo = require("@/assets/images/logo.svg");
 
@@ -97,7 +95,7 @@ class OpenVaultPage extends Mixins(mixins.page) {
     vault.members.sort();
     vault.membersHash = this.$utils.helper.sha3_256(vault.members.join(""));
     this.$store.dispatch("cache/loadUsers", vault.members);
-    this.addVault(vault);
+    this.$store.commit("vault/addVault", vault);
     this.$router.push("/");
   }
 }

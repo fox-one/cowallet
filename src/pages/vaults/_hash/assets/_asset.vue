@@ -28,8 +28,8 @@
           </template>
           <template #tail>
             <div class="tail text-right">
-              <div class="f-body-2">${{ tran.usd }}</div>
-              <div class="f-caption datetime">
+              <div class="body-2">${{ tran.usd }}</div>
+              <div class="caption datetime">
                 {{ tran.datetime_display }}
               </div>
             </div>
@@ -44,38 +44,38 @@
       </template>
       <div v-if="current" class="pa-4">
         <div class="mb-2">
-          <div class="f-caption f-greyscale-3">
+          <div class="caption greyscale_3--text">
             {{ $t("transaction.detail.amount") }}
           </div>
-          <div class="f-body-2">{{ current.amount }}</div>
+          <div class="body-2">{{ current.amount }}</div>
         </div>
         <div class="mb-2">
-          <div class="f-caption f-greyscale-3">
+          <div class="caption greyscale_3--text">
             {{ $t("transaction.detail.datetime") }}
           </div>
-          <div class="f-body-2">{{ current.datetime_display }}</div>
+          <div class="body-2">{{ current.datetime_display }}</div>
         </div>
         <div class="mb-2">
-          <div class="f-caption f-greyscale-3">
+          <div class="caption greyscale_3--text">
             {{ $t("transaction.detail.id") }}
           </div>
-          <div class="f-body-2" v-clipboard:copy="current.utxo_id">
+          <div class="body-2" v-clipboard:copy="current.utxo_id">
             <pre class="code f-bg-greyscale-5 my-1">{{ current.utxo_id }}</pre>
           </div>
         </div>
         <div class="mb-2">
-          <div class="f-caption f-greyscale-3">
+          <div class="caption greyscale_3--text">
             {{ $t("transaction.detail.memo") }}
           </div>
-          <div class="f-body-2" v-clipboard:copy="current.memo">
+          <div class="body-2" v-clipboard:copy="current.memo">
             <pre class="code f-bg-greyscale-5 my-1">{{ current.memo }}</pre>
           </div>
         </div>
         <div v-if="vault.beancount" class="mb-2">
-          <div class="f-caption f-greyscale-3">
+          <div class="caption greyscale_3--text">
             {{ $t("transaction.detail.beancount") }}
           </div>
-          <div class="f-body-2" v-clipboard:copy="currentBeancountStm">
+          <div class="body-2" v-clipboard:copy="currentBeancountStm">
             <pre class="code f-bg-greyscale-5 my-1">{{
               currentBeancountStm
             }}</pre>

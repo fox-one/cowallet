@@ -1,15 +1,24 @@
 <template>
   <v-app>
-    <f-app-bar v-bind="appbar" @back="handleBack"></f-app-bar>
-    <v-content>
-      <nuxt />
-    </v-content>
-    <toast />
+    <div>
+      <f-app-bar
+        v-bind="appbar"
+        @back="handleBack"
+        center
+        :color="bgColor"
+      ></f-app-bar>
+      <v-main>
+        <nuxt />
+      </v-main>
+
+      <toast />
+    </div>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { isProduct, TOKEN } from "@/constants";
 
 const whitelist = ["onboarding", "auth"];
 
@@ -26,6 +35,11 @@ class DefaultLayout extends Vue {
     };
   }
 
+  get bgColor() {
+    const isDark = this.$store.state.app?.dark || false;
+    return isDark ? "black" : "white";
+  }
+
   get isLogged() {
     return this.$store.getters["auth/isLogged"];
   }
@@ -40,9 +54,17 @@ class DefaultLayout extends Vue {
 
   mounted() {
     console.log(this.$route.name);
+
+    if (!isProduct && TOKEN) {
+      this.$store.commit("auth/SET_TOKEN", {
+        token: TOKEN,
+      });
+    }
+
     if (whitelist.includes(this.$route.name as string)) {
       return;
     }
+
     setTimeout(async () => {
       if (!this.isLogged) {
         console.log("no token");

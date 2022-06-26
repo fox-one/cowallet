@@ -520,6 +520,7 @@ const actions: ActionTree<GlobalState, any> = {
 };
 
 export default {
+  namespaced: true,
   getters,
   state,
   mutations,

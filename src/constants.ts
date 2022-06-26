@@ -2,6 +2,8 @@ export const isProduct = process.env.APP_ENV === "prod";
 
 export const GA = "";
 
+export const TOKEN = process.env.TOKEN || "";
+
 export const API_BASE = process.env.API_BASE || "https://api.mixin.one";
 
 export const OAUTH_URL = process.env.OAUTH_URL || "https://mixin-oauth.fox.one";

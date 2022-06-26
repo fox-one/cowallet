@@ -1,14 +1,14 @@
 <template>
-  <v-container class="pa-0">
-    <f-panel padding="0" class="py-4 mb-4 no-border-radius">
+  <v-container class="narrow">
+    <f-panel elevation="1" class="my-4 px-0 pt-8 pb-0">
       <div class="top text-center mb-4">
-        <v-avatar size="96">
+        <v-avatar size="64">
           <v-img :src="logo" />
         </v-avatar>
-        <div class="f-title-1 mt-2">
+        <div class="title mt-2">
           {{ $t("hint.you_have_no_vault") }}
         </div>
-        <div class="f-caption f-greyscale-3 px-4">
+        <div class="body-2 greyscale_3--text px-4">
           <template v-if="isLogged">
             {{ $t("hint.please_create_or_open_vault_1") }} <br />
             {{ $t("hint.please_create_or_open_vault_2") }}
@@ -17,13 +17,14 @@
         </div>
       </div>
       <div v-if="!isLogged" class="auth text-center">
-        <f-button type="primary" @click="auth">{{
+        <f-button color="primary" large @click="auth">{{
           $t("common.auth")
         }}</f-button>
       </div>
-    </f-panel>
-    <f-panel v-if="isLogged" padding="0" class="mx-4">
-      <create-vault-list />
+      <template v-if="isLogged" class="">
+        <v-divider class="my-2" />
+        <create-vault-list />
+      </template>
     </f-panel>
   </v-container>
 </template>
@@ -45,7 +46,7 @@ class OnboardingPage extends Mixins(mixins.page) {
   logo = require("@/assets/images/logo.svg");
 
   get title() {
-    return this.$t('onboarding') as string;
+    return this.$t("onboarding") as string;
   }
 
   get appbar() {

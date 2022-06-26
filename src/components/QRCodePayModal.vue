@@ -6,7 +6,7 @@
       </v-card-title>
       <v-card-text v-if="text">
         <f-qr-code :text="text" :size="200" class="my-5" />
-        <p class="f-caption ma-0">
+        <p class="caption ma-0">
           {{ $t("pay.scan_to_pay.hint") }}
         </p>
       </v-card-text>
