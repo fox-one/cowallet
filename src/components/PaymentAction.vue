@@ -1,7 +1,7 @@
 <template>
   <div>
     <f-button
-      :type="buttonType || 'primary'"
+      :color="buttonType || 'primary'"
       @click="pay"
       :disabled="disabled"
       >{{ label }}</f-button

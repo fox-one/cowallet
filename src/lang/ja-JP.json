@@ -1,4 +1,6 @@
 {
+  "settings": "Settings",
+
   "common.filter": "フィルタ",
   "common.memo": "メモ",
   "common.send": "送金",
@@ -66,7 +68,7 @@
   "manage_vault.vault_name": "金庫名",
   "manage_vault.vault_config": "金庫設定",
 
-  "vault_item.vault": "複数署名金庫",
+  "vault_item.vault": "複数署名",
   "vault_item.threshold": "{n}分の{m}",
   "vault_item.total_balance": "合計残高",
 

@@ -1,4 +1,6 @@
 {
+  "settings": "Settings",
+
   "common.filter": "Filter",
   "common.memo": "Memo",
   "common.send": "Send",
@@ -66,7 +68,7 @@
   "manage_vault.vault_name": "Vault Name",
   "manage_vault.vault_config": "Vault Config",
 
-  "vault_item.vault": "Multisig Vault",
+  "vault_item.vault": "Multisig",
   "vault_item.threshold": "{m} of {n}",
   "vault_item.total_balance": "Total Balance",
 

@@ -3,32 +3,29 @@
     <template v-if="vault">
       <f-panel padding="0" class="pa-4">
         <v-row>
-          <v-col>
+          <v-col cols="12">
             <f-asset-amount-input
               v-model="value"
               :asset.sync="asset"
               :assets="myAssets"
               :precision="8"
-              :selectable="true"
-              border
-              :singleLine="false"
-              :label="$t('common.amount')"
+              :placeholder="$t('common.amount')"
+              fullfilled
+              hide-details
             >
+              <template #tools="{ messages }">
+                <f-asset-input-tools
+                  :wallet-connected="true"
+                  :balance="currentBalance"
+                  :fiat-amount="currentFiatValue"
+                  :messages="messages"
+                  @fill="fillBalance"
+                />
+              </template>
             </f-asset-amount-input>
-            <balance-field
-              v-if="asset"
-              :is-logged="true"
-              :balance="currentBalance"
-              :symbol="asset.symbol"
-              :prefix="$t('balance_prefix')"
-              @click:balance="fillBalance"
-            />
           </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <f-input v-model="memo" :label="$t('common.memo')"></f-input>
+          <v-col cols="12">
+            <f-text-area v-model="memo" :label="$t('common.memo')" />
           </v-col>
         </v-row>
 
@@ -99,6 +96,17 @@ class DepositPage extends Mixins(mixins.page) {
       this.asset?.asset_id,
     );
     return asset ? asset.balance : "0.00";
+  }
+
+  get currentFiatValue() {
+    const asset = this.$store.getters["global/getMyAsset"](
+      this.asset?.asset_id,
+    );
+    let num = 0;
+    if (asset) {
+      num = asset.balance * asset.price_usd;
+    }
+    return this.$utils.helper.formatCurrency(this, "USD", num);
   }
 
   mounted() {

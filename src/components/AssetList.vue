@@ -1,14 +1,15 @@
 <template>
   <div>
     <template v-if="position.length">
-      <div class="title-1 mx-4 mb-2">{{ $t("common.assets") }}</div>
+      <div class="caption greyscale_3--text mx-4 mb-2 text-center">
+        {{ $t("common.assets") }}
+      </div>
       <f-panel padding="0" class="mx-4">
         <f-list>
           <f-list-item
+            class="px-0 list-item"
             v-for="item in sortedPosition"
             :key="item.asset_id"
-            :title="`${totalAmount(item.amount.toString())} ${item.symbol}`"
-            :subtitle="`${totalUsd(item.totalUsd)}`"
             @click="handleClick(item)"
           >
             <template #head>
@@ -18,9 +19,22 @@
                 class="mt-1"
               />
             </template>
+            <template #body>
+              <div class="block">
+                <div class="body-2">
+                  <strong>{{
+                    `${totalAmount(item.amount.toString())}`
+                  }}</strong>
+                  {{ `${item.symbol}` }}
+                </div>
+                <div class="caption greyscale_3--text">
+                  {{ totalUsd(item.totalUsd) }}
+                </div>
+              </div>
+            </template>
             <template #tail>
               <div class="">
-                <div class="body-1">&nbsp;</div>
+                <div class="body-2">&nbsp;</div>
                 <div class="caption greyscale_3--text">
                   {{ totalUsd(item.price_usd) }}
                 </div>
@@ -47,9 +61,9 @@ class AssetList extends Vue {
   get sortedPosition() {
     const ret = this.position.slice();
     return ret.sort((a, b) => {
-      if (a.totalUsd > b.totalUsd) {
+      if (a.totalUsd.isGreaterThan(b.totalUsd)) {
         return -1;
-      } else if (a.totalUsd < b.totalUsd) {
+      } else if (a.totalUsd.isLessThan(b.totalUsd)) {
         return 1;
       }
       return 0;
@@ -71,4 +85,11 @@ class AssetList extends Vue {
 export default AssetList;
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.block {
+  flex: 1;
+}
+.list-item {
+  min-height: 64px;
+}
+</style>

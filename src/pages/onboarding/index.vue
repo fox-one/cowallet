@@ -1,6 +1,6 @@
 <template>
   <v-container class="narrow">
-    <f-panel elevation="1" class="my-4 px-0 pt-8 pb-0">
+    <f-panel elevation="1" class="my-4 px-0 py-8">
       <div class="top text-center mb-4">
         <v-avatar size="64">
           <v-img :src="logo" />

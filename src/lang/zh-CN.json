@@ -1,4 +1,6 @@
 {
+  "settings": "设置",
+
   "common.filter": "过滤",
   "common.memo": "备注",
   "common.send": "转出",
@@ -67,7 +69,7 @@
   "manage_vault.vault_config": "钱包配置",
 
   "vault_item.threshold": "{m} / {n}",
-  "vault_item.vault": "多重签名钱包",
+  "vault_item.vault": "多签",
   "vault_item.total_balance": "总余额",
 
   "vault.name": "名称",

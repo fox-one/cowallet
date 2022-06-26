@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="vault"
-    class="card px-4 pt-3 pb-2 d-flex"
+    class="card px-3 pt-3 pb-2 d-flex"
     @click="gotoVault"
     :style="cardStyle"
   >
@@ -32,7 +32,7 @@
 
       <div class="members d-flex">
         <div
-          class="member mr-2 mb-2"
+          class="member mr-1 mb-1"
           v-for="(mem, ix) in vaultMembers"
           :key="`mem-${ix}`"
         >
@@ -106,7 +106,7 @@ export default VaultItem;
 </script>
 <style lang="scss" scoped>
 .card {
-  border-radius: 4px;
+  border-radius: 20px;
   color: white;
 
   .opacity-80 {

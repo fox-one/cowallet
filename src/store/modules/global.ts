@@ -176,6 +176,7 @@ const actions: ActionTree<GlobalState, any> = {
     }
     for (let ix = 0, len = result.length; ix < len; ix++) {
       const item = result[ix];
+      item.id = item.asset_id;
 
       // add all my assets to the cache
       commit("cache/addAsset", item, { root: true });

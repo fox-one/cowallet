@@ -2,8 +2,7 @@
   <f-panel padding="0" class="py-4 mb-4 no-border-radius text-center">
     <v-row>
       <v-col>
-        <f-input
-          textarea
+        <f-text-area
           v-model="importJson"
           height="200"
           :label="$t('manage_vault.vault_config')"

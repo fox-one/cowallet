@@ -1,7 +1,12 @@
 <template>
   <v-container class="pa-0">
     <template v-if="vault">
-      <summary-panel :assets="assets" :vault="vault" @settings="gotoSettings" />
+      <summary-panel
+        :assets="assets"
+        :vault="vault"
+        @settings="gotoSettings"
+        class="mb-4"
+      />
       <div
         v-if="loadingUTXO && position.length === 0"
         class="text-center mt-10 body-2 greyscale_3--text"

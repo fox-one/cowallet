@@ -2,21 +2,21 @@
   <v-container class="index-page">
     <f-loading :loading="loading" :fullscreen="true" />
     <template v-if="!loading">
-      <v-row>
+      <v-row dense>
         <v-col
-          cols="12"
+          cols="6"
           md="6"
           lg="4"
           v-for="(vault, ix) in vaults"
           :key="`vault-${ix}`"
         >
-          <vault-item :vault="vault" class="mb-4" />
+          <vault-item :vault="vault" />
         </v-col>
       </v-row>
 
       <f-bottom-sheet :title="$t('create_or_open_vault')">
         <template #activator="{ on }">
-          <div class="">
+          <div class="py-4">
             <f-button
               class="empty-vault greyscale_6 greyscale_3--text"
               v-on="on"
