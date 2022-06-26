@@ -1,14 +1,14 @@
 <template>
   <div class="asset d-flex flex-column align-center pa-4">
-    <v-avatar size="48" class="mb-1">
+    <v-avatar size="64" class="mb-2">
       <v-img :src="icon" />
     </v-avatar>
-    <div class="d-flex align-center mb-1">
+    <div class="d-flex align-center mb-2">
       <span class="body-1 font-weight-bold mr-1">{{ amountDisplay }}</span>
       <span class="body-1">{{ symbol }}</span>
     </div>
     <div class="d-flex align-center">
-      <span class="caption">{{ usdDisplay }}</span>
+      <span class="body-2 greyscale_3--text">{{ usdDisplay }}</span>
     </div>
   </div>
 </template>

@@ -309,6 +309,7 @@ const actions: ActionTree<GlobalState, any> = {
       ].amount.times(positionMap[utxo.asset_id].price_usd);
 
       positionMap[utxo.asset_id].logo = positionMap[utxo.asset_id].icon_url;
+      positionMap[utxo.asset_id].id = utxo.asset_id;
 
       // arrage pending requests: group related otxos by signed_by.
       if (utxo.state === "signed") {
@@ -485,6 +486,7 @@ const actions: ActionTree<GlobalState, any> = {
         ].amount.times(positionMap[ele.asset_id].price_usd);
 
         positionMap[ele.asset_id].logo = positionMap[ele.asset_id].icon_url;
+        positionMap[ele.asset_id].id = ele.asset_id;
 
         // arrage pending requests: group related otxos by signed_by.
         if (ele.state === "signed") {

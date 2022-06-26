@@ -5,8 +5,8 @@
       <v-row dense>
         <v-col
           cols="6"
-          md="6"
-          lg="4"
+          md="4"
+          lg="3"
           v-for="(vault, ix) in vaults"
           :key="`vault-${ix}`"
         >

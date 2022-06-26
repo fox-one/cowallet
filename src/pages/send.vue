@@ -4,13 +4,10 @@
     <template v-if="vault">
       <f-panel padding="0" class="pa-4">
         <v-row>
-          <v-col>
-            <f-bottom-sheet v-model="dialog">
+          <v-col cols="12">
+            <f-bottom-sheet v-model="dialog" :title="$t('select_a_receiver')">
               <template #activator="{ on }">
-                <div
-                  v-on="on"
-                  class="receiver-selector f-bg-greyscale-6 px-4 py-3"
-                >
+                <div v-on="on" class="receiver-selector greyscale_6 px-4 py-3">
                   <div
                     v-if="receiver"
                     class="d-flex align-center justify-center"
@@ -27,13 +24,13 @@
                   </span>
                 </div>
               </template>
-              <template #title> {{ $t("select_a_receiver") }} </template>
-              <template #subheader>
+              <f-bottom-sheet-subtitle>
                 <f-input
                   v-model="personFilter"
                   :label="$t('common.filter')"
+                  hide-details
                 ></f-input>
-              </template>
+              </f-bottom-sheet-subtitle>
               <div class="wrapper" style="height: 400px">
                 <f-list class="mb-4">
                   <f-list-item
@@ -54,39 +51,35 @@
               </div>
             </f-bottom-sheet>
           </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
+          <v-col cols="12">
             <f-asset-amount-input
               v-model="amount"
               :asset.sync="asset"
               :assets="position"
               :precision="8"
-              :selectable="true"
-              border
-              :label="$t('common.amount')"
+              :placeholder="$t('common.amount')"
+              hide-details
+              fullfilled
             >
+              <template #tools="{ messages }">
+                <f-asset-input-tools
+                  :wallet-connected="true"
+                  :balance="currentBalance"
+                  :fiat-amount="currentFiatValue"
+                  :messages="messages"
+                  @fill="fillBalance"
+                />
+              </template>
             </f-asset-amount-input>
-            <balance-field
-              v-if="asset"
-              :is-logged="true"
-              :balance="currentBalance"
-              :symbol="asset.symbol"
-              :prefix="$t('balance_prefix')"
-              @click:balance="fillBalance"
+          </v-col>
+          <v-col cols="12">
+            <f-text-area
+              v-model="memo"
+              :label="$t('common.memo')"
+              hide-details
             />
           </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <f-input v-model="memo" :label="$t('common.memo')"></f-input>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col class="text-center">
+          <v-col cols="12" class="text-center">
             <payment-action
               :label="$t('common.send')"
               :disabled="!validated"
@@ -183,7 +176,18 @@ class SendPage extends Mixins(mixins.page) {
     const asset = this.$store.getters["global/getPosition"](
       this.asset?.asset_id,
     );
-    return asset ? asset.amount : "0.00";
+    return asset ? asset.amount.toFixed(8) : "0.00";
+  }
+
+  get currentFiatValue() {
+    const asset = this.$store.getters["global/getPosition"](
+      this.asset?.asset_id,
+    );
+    let num = 0;
+    if (asset) {
+      num = asset.amount.times(asset.price_usd).toNumber();
+    }
+    return this.$utils.helper.formatCurrency(this, "USD", num);
   }
 
   mounted() {

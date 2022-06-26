@@ -15,10 +15,7 @@
         <f-list-item
           v-for="(tran, ix) in transactions2"
           :key="`trans-${ix}`"
-          :title="`${tran.type === 'expense' ? '-' : '+'}${tran.amount} ${
-            tran.symbol
-          }`"
-          :subtitle="tran.memo || $t('common.empty')"
+          class="trans-item"
           @click="detail(tran)"
         >
           <template #head>
@@ -26,10 +23,24 @@
               getTransIcon(tran)
             }}</v-icon>
           </template>
+          <template #body>
+            <div class="body">
+              <div class="body-2">
+                {{
+                  `${tran.type === "expense" ? "-" : "+"}${tran.amount} ${
+                    tran.symbol
+                  }`
+                }}
+              </div>
+              <div class="caption memo greyscale_3--text">
+                {{ tran.memo_short || $t("common.empty") }}
+              </div>
+            </div>
+          </template>
           <template #tail>
             <div class="tail text-right">
               <div class="body-2">${{ tran.usd }}</div>
-              <div class="caption datetime">
+              <div class="caption datetime greyscale_3--text">
                 {{ tran.datetime_display }}
               </div>
             </div>
@@ -38,10 +49,7 @@
       </f-list>
     </template>
 
-    <f-bottom-sheet v-model="detailDialog">
-      <template #title>
-        {{ $t("transaction.detail") }}
-      </template>
+    <f-bottom-sheet v-model="detailDialog" :title="$t('transaction.detail')">
       <div v-if="current" class="pa-4">
         <div class="mb-2">
           <div class="caption greyscale_3--text">
@@ -60,7 +68,7 @@
             {{ $t("transaction.detail.id") }}
           </div>
           <div class="body-2" v-clipboard:copy="current.utxo_id">
-            <pre class="code f-bg-greyscale-5 my-1">{{ current.utxo_id }}</pre>
+            <pre class="code greyscale_5 my-1">{{ current.utxo_id }}</pre>
           </div>
         </div>
         <div class="mb-2">
@@ -68,7 +76,7 @@
             {{ $t("transaction.detail.memo") }}
           </div>
           <div class="body-2" v-clipboard:copy="current.memo">
-            <pre class="code f-bg-greyscale-5 my-1">{{ current.memo }}</pre>
+            <pre class="code greyscale_5 my-1">{{ current.memo }}</pre>
           </div>
         </div>
         <div v-if="vault.beancount" class="mb-2">
@@ -76,14 +84,12 @@
             {{ $t("transaction.detail.beancount") }}
           </div>
           <div class="body-2" v-clipboard:copy="currentBeancountStm">
-            <pre class="code f-bg-greyscale-5 my-1">{{
-              currentBeancountStm
-            }}</pre>
+            <pre class="code greyscale_5 my-1">{{ currentBeancountStm }}</pre>
           </div>
         </div>
         <div class="mt-4">
           <div class="text-center">
-            <f-button type="primary" @click="detailDialog = false">{{
+            <f-button color="primary" @click="detailDialog = false">{{
               $t("common.close")
             }}</f-button>
           </div>
@@ -137,6 +143,8 @@ class AssetsPage extends Mixins(mixins.page) {
       x.datetime_beancount = dayjs(x.created_at).format("YYYY-MM-DD");
       x.symbol = this.asset.symbol;
       x.usd = new BigNumber(x.amount).times(this.asset.price_usd).toFixed(2);
+      x.memo_short =
+        x.memo.length > 10 ? x.memo.substring(0, 10) + "..." : x.memo;
       return x;
     });
     return result;
@@ -267,5 +275,11 @@ export default AssetsPage;
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
+}
+.trans-item {
+  min-height: 64px !important;
+}
+.body {
+  flex: 1;
 }
 </style>
