@@ -2,36 +2,38 @@
   <v-container class="index-page">
     <f-loading :loading="loading" :fullscreen="true" />
     <template v-if="!loading">
+      <div class="top-bar d-flex align-center mb-4">
+        <f-search-input
+          v-model="searchVault"
+          clearable
+          hide-details
+          :placeholder="$t('search.vault')"
+        />
+        <div class="">
+          <f-bottom-sheet :title="$t('create_or_open_vault')">
+            <template #activator="{ on }">
+              <f-button icon v-on="on">
+                <v-icon>$FIconAdd</v-icon>
+              </f-button>
+            </template>
+            <div class="pb-5">
+              <create-vault-list />
+            </div>
+          </f-bottom-sheet>
+        </div>
+      </div>
+
       <v-row dense>
         <v-col
           cols="6"
           md="4"
           lg="3"
-          v-for="(vault, ix) in vaults"
+          v-for="(vault, ix) in filteredVaults"
           :key="`vault-${ix}`"
         >
           <vault-item :vault="vault" />
         </v-col>
       </v-row>
-
-      <f-bottom-sheet :title="$t('create_or_open_vault')">
-        <template #activator="{ on }">
-          <div class="py-4">
-            <f-button
-              class="empty-vault greyscale_6 greyscale_3--text"
-              v-on="on"
-            >
-              {{ $t("create_or_open_vault") }}
-            </f-button>
-          </div>
-        </template>
-        <div class="pb-5">
-          <create-vault-list />
-        </div>
-      </f-bottom-sheet>
-      <div class="version caption greyscale_3--text mt-10 text-center">
-        {{ version }}
-      </div>
     </template>
   </v-container>
 </template>
@@ -43,7 +45,6 @@ import mixins from "@/mixins";
 import { State, Mutation } from "vuex-class";
 import CreateVaultList from "@/components/CreateVaultList.vue";
 import { CLIENT_ID } from "~/constants";
-import p from "../../package.json";
 
 @Component({
   components: {
@@ -54,9 +55,9 @@ import p from "../../package.json";
 class IndexPage extends Mixins(mixins.page) {
   @State((state) => state.vault.vaults) vaults;
 
-  assets: any = [];
-
   loading = true;
+
+  searchVault = "";
 
   get title() {
     return this.$t("cowallet") as string;
@@ -64,25 +65,26 @@ class IndexPage extends Mixins(mixins.page) {
 
   get appbar() {
     return {
-      align: "center",
       back: false,
     };
-  }
-
-  get version() {
-    return p.version;
   }
 
   get isLogged() {
     return this.$store.getters["auth/isLogged"];
   }
 
+  get filteredVaults() {
+    if (this.searchVault.trim().length === 0) {
+      return this.vaults;
+    }
+    const kw = this.searchVault.toUpperCase();
+    return this.vaults.filter((x) => {
+      return x.name.toUpperCase().indexOf(kw) !== -1;
+    });
+  }
+
   async mounted() {
     this.loading = true;
-    // if (this.$route.query.debug === "1") {
-    //   const VConsole = require("vconsole");
-    //   const vconsole = new VConsole();
-    // }
     setTimeout(async () => {
       // in a conversation?
       let ctx: any = null;
@@ -102,7 +104,6 @@ class IndexPage extends Mixins(mixins.page) {
       } else {
         this.loading = false;
         if (this.vaults.length === 0) {
-          console.log("no vault");
           this.$router.push("/onboarding");
           return;
         }

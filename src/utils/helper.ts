@@ -14,14 +14,17 @@ export const jsbridge = new Bridge({
   client_id: CLIENT_ID,
 });
 
-export function errorHandler(
-  vue: Vue,
-  error: { message: string; code: string | number },
-) {
-  const $toast = vue.$utils.helper.toast;
-  const fallback = "未知错误";
-  const message = `${error.code || ""} ${error.message || fallback}`;
-  $toast(vue, { message, color: "error" });
+export function errorHandler(vm: Vue, error: any) {
+  const code = error.code;
+
+  let locale = "";
+  if (code && vm.$t(`errorcode.${code}`) !== code) {
+    locale = vm.$t(`errorcode.${code}`) as string;
+  }
+
+  const message = error.message || error.msg || locale || "Unknown Error";
+
+  vm.$uikit.toast.error({ message: `${code} ${message}` });
 }
 
 export function toast(vue: Vue, data: { message: string; color?: string }) {
@@ -175,6 +178,13 @@ export function shareCard(title, description, icon_url, url) {
   window.location.href =
     "mixin://send?category=app_card&data=" +
     encodeURIComponent(Base64.encode(JSON.stringify(data)));
+}
+
+export function genVerifier() {
+  const randomCode = crypto.randomBytes(32);
+  const verifier = base64URLEncode(randomCode);
+  const challenge = base64URLEncode(sha256(randomCode));
+  return verifier
 }
 
 export function requestLogin(vue) {

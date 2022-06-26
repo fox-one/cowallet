@@ -1024,7 +1024,7 @@
   resolved "https://registry.yarnpkg.com/@foxone/pando-ui/-/pando-ui-0.0.2-14.tgz#7db76dc24d09d19208dc8ec3be73691c0e69e95c"
   integrity sha512-FOVgKloO1mMgiricZWtf4AFo6ItcU6ky6C7i3x3LCTstVWoPAoRi5CA+v1zoKs7J0t89TzQMD988byzo7TsNTQ==
 
-"@foxone/uikit@^3.1.5-0":
+"@foxone/uikit@3.1.8":
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/@foxone/uikit/-/uikit-3.1.8.tgz#141da7d5f5177627663864752685df6ee015e263"
   integrity sha512-h1y1E9sG6jqs2wqSgBeD6ZRCA4hLZro7lw83pCwrt0guEdUFcFBtu1wz+0/iWLMZETd5BNp0X6OPn1N+533yMQ==

@@ -81,6 +81,12 @@ const getters: GetterTree<GlobalState, any> = {
     };
   },
 
+  getMyAssetsTotalBal(state) {
+    return state.myAssets.reduce((total, next) => {
+      return total + +next.price_usd * +next.balance;
+    }, 0);
+  },
+
   getPosition(state) {
     return (assetId) => {
       for (let ix = 0; ix < state.position.length; ix++) {

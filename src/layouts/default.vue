@@ -1,17 +1,22 @@
 <template>
   <v-app>
     <div>
-      <f-app-bar
+      <!-- <f-app-bar
         v-bind="appbar"
         @back="handleBack"
         center
         :color="bgColor"
-      ></f-app-bar>
+      ></f-app-bar> -->
+
+      <default-app-bar />
+
       <v-main>
         <nuxt />
       </v-main>
 
       <toast />
+
+      <modals />
     </div>
   </v-app>
 </template>
@@ -19,11 +24,18 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { isProduct, TOKEN } from "@/constants";
+import DefaultAppBar from "./default/NavBar.vue";
+
+import Modals from "./modals/index.vue";
 
 const whitelist = ["onboarding", "auth"];
 
 @Component({
   middleware: "i18n",
+  components: {
+    DefaultAppBar,
+    Modals,
+  },
 })
 class DefaultLayout extends Vue {
   get appbar() {
@@ -71,11 +83,12 @@ class DefaultLayout extends Vue {
         this.$router.push("/onboarding");
         return;
       }
-      await Promise.all([
-        await this.$store.dispatch("global/loadMultisigAssets"),
-        await this.loadMe(),
-        await this.loadMyAssets(),
-      ]);
+      // await Promise.all([
+      //   await this.$store.dispatch("global/loadMultisigAssets"),
+      //   await this.loadMe(),
+      //   await this.loadMyAssets(),
+      // ]);
+      this.$utils.app.loadAppData(this);
     }, 100);
   }
 
@@ -85,6 +98,7 @@ class DefaultLayout extends Vue {
     }
     return null;
   }
+
   async loadMe() {
     return await this.$store.dispatch("auth/loadMe");
   }

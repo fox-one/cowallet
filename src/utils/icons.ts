@@ -1,5 +1,6 @@
 import {
   FIconDoneFill,
+  FIconAdd,
   FIconArrowRight4P,
   FIconChevronRight4P,
   FIconTime4P,
@@ -8,6 +9,7 @@ import {
 
 const ficons = {
   FIconDoneFill: { component: FIconDoneFill },
+  FIconAdd: { component: FIconAdd },
   FIconArrowRight4P: { component: FIconArrowRight4P },
   FIconChevronRight4P: { component: FIconChevronRight4P },
   FIconTime4P: { component: FIconTime4P },

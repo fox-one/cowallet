@@ -1,6 +1,8 @@
 {
   "settings": "Settings",
 
+  "search.vault": "Search Vault",
+
   "common.filter": "Filter",
   "common.memo": "Memo",
   "common.send": "Send",

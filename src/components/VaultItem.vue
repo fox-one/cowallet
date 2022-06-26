@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="vault"
-    class="card px-3 pt-3 pb-2 d-flex"
+    class="card px-3 pt-2 pb-2 d-flex"
     @click="gotoVault"
     :style="cardStyle"
   >

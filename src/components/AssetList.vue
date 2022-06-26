@@ -1,9 +1,6 @@
 <template>
   <div>
     <template v-if="position.length">
-      <div class="caption greyscale_3--text mx-4 mb-2 text-center">
-        {{ $t("common.assets") }}
-      </div>
       <f-panel padding="0" class="mx-4">
         <f-list>
           <f-list-item

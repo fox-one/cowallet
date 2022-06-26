@@ -61,7 +61,8 @@ class OnboardingPage extends Mixins(mixins.page) {
   }
 
   auth() {
-    this.$utils.helper.requestLogin(this);
+    // this.$utils.helper.requestLogin(this);
+    this.$utils.account.openAuth(this);
   }
 
   goto(method) {

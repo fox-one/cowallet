@@ -15,6 +15,11 @@ const state = () => ({
     flat: true,
     align: "center",
   },
+  payment: {
+    url: "",
+    modal: false,
+    checking: false,
+  },
 });
 
 const mutations = {
@@ -36,6 +41,11 @@ const mutations = {
       align: "center",
     };
     state.appbar = { ...defaultValue, ...value };
+  },
+  SET_PAYMENT(state, value) {
+    state.payment.url = value.url;
+    state.payment.modal = value.modal;
+    state.payment.checking = value.checking;
   },
 };
 
