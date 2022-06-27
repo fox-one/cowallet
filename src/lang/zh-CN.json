@@ -1,6 +1,8 @@
 {
   "settings": "设置",
 
+  "search.vault": "搜索金库",
+
   "common.filter": "过滤",
   "common.memo": "备注",
   "common.send": "转出",

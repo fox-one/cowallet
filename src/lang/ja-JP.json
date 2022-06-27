@@ -1,6 +1,8 @@
 {
   "settings": "Settings",
 
+  "search.vault": "Search Vault",
+
   "common.filter": "フィルタ",
   "common.memo": "メモ",
   "common.send": "送金",
