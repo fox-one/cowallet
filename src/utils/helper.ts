@@ -55,9 +55,10 @@ export function decodeSignedTx(signedTx) {
 
 export async function getAssetInfo(store, assetId) {
   let asset = store!.getters["cache/getAsset"](assetId);
-  const dur = Date.now() - (asset?.last_updated_at || 0);
+  const now = Date.now();
+  const dur = now - (asset?.last_updated_at || 0);
   // no such an asset, or it's timeout.
-  if (asset === null || dur < ASSET_UPDATE_TIMEOUT) {
+  if (asset === null || dur > ASSET_UPDATE_TIMEOUT) {
     asset = await store.dispatch("cache/loadAsset", assetId);
   }
   return asset;
@@ -184,7 +185,7 @@ export function genVerifier() {
   const randomCode = crypto.randomBytes(32);
   const verifier = base64URLEncode(randomCode);
   const challenge = base64URLEncode(sha256(randomCode));
-  return verifier
+  return verifier;
 }
 
 export function requestLogin(vue) {

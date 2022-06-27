@@ -12,8 +12,8 @@ export const API_BASE = process.env.API_BASE || "https://api.mixin.one";
 
 export const OAUTH_URL = process.env.OAUTH_URL || "https://mixin-oauth.fox.one";
 
-// 3 minutes timeout for the cache/asset
-export const ASSET_UPDATE_TIMEOUT = 180000;
+// 5 minutes timeout for the cache/asset
+export const ASSET_UPDATE_TIMEOUT = 300000;
 
 export const INCLUDE_ASSET_IDS = process.env.INCLUDE_ASSET_IDS || "";
 

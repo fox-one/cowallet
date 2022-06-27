@@ -65,8 +65,6 @@ class DefaultLayout extends Vue {
   }
 
   mounted() {
-    console.log(this.$route.name);
-
     if (!isProduct && TOKEN) {
       this.$store.commit("auth/SET_TOKEN", {
         token: TOKEN,
@@ -83,11 +81,6 @@ class DefaultLayout extends Vue {
         this.$router.push("/onboarding");
         return;
       }
-      // await Promise.all([
-      //   await this.$store.dispatch("global/loadMultisigAssets"),
-      //   await this.loadMe(),
-      //   await this.loadMyAssets(),
-      // ]);
       this.$utils.app.loadAppData(this);
     }, 100);
   }
