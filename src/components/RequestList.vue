@@ -1,25 +1,34 @@
 <template>
-  <div v-if="hasRequests">
-    <div class="title-1 mx-4 mb-2">{{ $t("common.requests") }}</div>
-    <f-panel padding="0" class="mx-4 mb-4">
-      <f-list>
-        <f-list-item
-          v-for="(item, ix) in requests"
-          :key="`request-${ix}`"
-          :title="`${item.asset.symbol} ${$t('common.requests')}`"
-          :subtitle="`${$t('common.tap_to_review')}`"
-          @click="gotoRequestPage(item)"
-        >
-          <template #head>
+  <div v-if="hasRequests" class="mx-0 mb-4">
+    <f-list>
+      <f-list-item
+        v-for="(item, ix) in requests"
+        :key="`request-${ix}`"
+        @click="gotoRequestPage(item)"
+      >
+        <template #head>
+          <div class="icon-wrapper">
             <f-mixin-asset-logo
               :logo="item.asset.icon_url"
-              :size="24"
+              :size="38"
               class="mt-1"
             />
-          </template>
-        </f-list-item>
-      </f-list>
-    </f-panel>
+            <v-icon class="badge" size="18">$FIconUpRight3PFill</v-icon>
+          </div>
+        </template>
+        <template #body>
+          <div class="block">
+            <div class="body-2">
+              {{ `${item.asset.symbol} ${$t("common.requests")}` }}
+            </div>
+            <div class="caption greyscale_3--text">
+              {{ `${$t("common.tap_to_review")}` }}
+            </div>
+          </div>
+        </template>
+      </f-list-item>
+    </f-list>
+    <v-divider class="divider" inset />
   </div>
 </template>
 
@@ -41,3 +50,22 @@ class RquestList extends Vue {
 }
 export default RquestList;
 </script>
+
+<style lang="scss" scoped>
+.block {
+  flex: 1;
+}
+.icon-wrapper {
+  position: relative;
+  .badge {
+    position: absolute;
+    bottom: 4px;
+    right: -2px;
+    border: 2px solid white;
+    border-radius: 1em;
+  }
+}
+.divider {
+  opacity: 0.6;
+}
+</style>

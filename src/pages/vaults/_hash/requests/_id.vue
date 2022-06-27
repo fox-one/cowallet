@@ -1,7 +1,7 @@
 <template>
   <v-container class="">
     <f-loading :loading="loading" :fullscreen="true" />
-    <f-panel v-if="!loading" padding="0" class="pa-4">
+    <f-panel v-if="!loading" elevation="1" class="pa-4">
       <template v-if="multisig && asset && requests">
         <div class="transfer">
           <div class="asset mb-2">
@@ -16,6 +16,7 @@
             </div>
           </div>
         </div>
+
         <div class="field-sec mb-2">
           <div class="caption greyscale_3--text mb-1">
             {{ $t("roles.receiver") }}
@@ -80,7 +81,7 @@
             </div>
           </div>
         </div>
-        <div class="hint text-center caption">
+        <div class="hint text-center caption greyscale_3--text">
           <template v-if="!needToSign">
             {{ $t("hint.collected_enough_signatures") }}
           </template>
@@ -109,7 +110,7 @@
             <br />
             <payment-action
               check-state="unlocked"
-              button-type="subtitle"
+              button-type="error"
               :label="$t('common.revoke')"
               @done="done"
               @error="error"
@@ -118,21 +119,21 @@
             <br />
             <f-button
               v-if="isDesktop"
-              type="subtitle"
+              type="primary"
+              outlined
               v-clipboard:copy="shareUrl"
               >{{ $t("common.copy_url") }}</f-button
             >
             <f-button
               v-else
-              type="subtitle"
-              class=""
+              color="primary"
               @click="share"
               :disabled="!validatedShareButton"
               >{{ $t("common.share") }}</f-button
             >
           </template>
           <template v-else>
-            <f-button type="primary" class="mb-4" @click="submit">{{
+            <f-button color="primary" class="mb-4" @click="submit">{{
               $t("common.submit")
             }}</f-button>
           </template>
@@ -143,16 +144,18 @@
         <div class="text-center">{{ $t("common.empty") }}</div>
       </template>
     </f-panel>
-    <f-bottom-sheet v-model="rawDialog">
-      <template #title>
-        <div class="title-1">{{ $t("common.raw_transaction") }}</div>
-      </template>
-      <div class="raw-transaction-wrapper">
-        <div v-if="multisig" class="raw-transaction mb-4 pa-4">
-          {{ multisig.raw_transaction }}
-        </div>
+    <f-bottom-sheet v-model="rawDialog" :title="$t('common.raw_transaction')">
+      <div class="raw-transaction-wrapper pb-4">
+        <f-text-area
+          v-if="multisig"
+          class="raw-transaction mb-4 pa-4"
+          readonly
+          hide-details
+          v-model="multisig.raw_transaction"
+        >
+        </f-text-area>
         <div class="text-center">
-          <f-button type="subtitle" @click="rawDialog = false">{{
+          <f-button color="primary" @click="rawDialog = false">{{
             $t("common.close")
           }}</f-button>
         </div>

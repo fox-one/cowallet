@@ -11,7 +11,7 @@
         v-if="loadingUTXO && position.length === 0"
         class="text-center mt-10 body-2 greyscale_3--text"
       >
-        {{ $t("common.loading") }} {{ UTXOCount || "" }}
+        {{ $t("common.loading") }} {{ `${UTXOCount || ""} UTXOs...` }}
       </div>
       <template v-else>
         <request-list @click="gotoRequestPage" />
@@ -51,6 +51,9 @@ class VaultPage extends Mixins(mixins.page) {
   loading = true;
 
   get title() {
+    if (this.vault) {
+      return this.vault.name;
+    }
     return this.$t("cowallet") as string;
   }
 

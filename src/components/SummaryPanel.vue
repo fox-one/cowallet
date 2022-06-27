@@ -55,20 +55,20 @@ class SummaryPanel extends Vue {
         id: "send",
         color: "purple",
         label: this.$t("common.send"),
-        icon: this.$icons.mdiArrowUpCircle,
+        icon: "$FIconShare",
         disabled: this.position.length === 0,
       },
       {
         id: "deposit",
         color: "orange",
         label: this.$t("common.deposit"),
-        icon: this.$icons.mdiArrowDownCircle,
+        icon: "$FIconImport",
       },
       {
         id: "manage",
         color: "blue",
         label: this.$t("common.manage"),
-        icon: this.$icons.mdiCog,
+        icon: "$FIconSetting",
       },
     ];
   }

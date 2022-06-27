@@ -9,7 +9,7 @@
       <div class="account">
         <account-entry />
       </div>
-      <div>CoWallet</div>
+      <div class="title-1 font-weight-bold">CoWallet</div>
     </v-layout>
   </f-app-bar>
 </template>

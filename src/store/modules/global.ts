@@ -260,12 +260,14 @@ const actions: ActionTree<GlobalState, any> = {
     utxos = utxos.concat(resp);
 
     while (resp) {
+      UTXOCount += resp.length;
+      commit("setUTXOCount", UTXOCount);
+
       if (resp.length < UTXOS_PER_PAGE) {
         break;
       }
+
       offset = resp[resp.length - 1].updated_at;
-      UTXOCount += resp.length;
-      commit("setUTXOCount", UTXOCount);
       resp = await this.$apis.getUTXOs(hash, threshold, offset, UTXOS_PER_PAGE);
       utxos = utxos.concat(resp);
     }

@@ -1,10 +1,10 @@
 <template>
   <div>
     <template v-if="position.length">
-      <f-panel padding="0" class="mx-4">
+      <div class="mx-0">
         <f-list>
           <f-list-item
-            class="px-0 list-item"
+            class="list-item"
             v-for="item in sortedPosition"
             :key="item.asset_id"
             @click="handleClick(item)"
@@ -12,7 +12,7 @@
             <template #head>
               <f-mixin-asset-logo
                 :logo="item.icon_url"
-                :size="32"
+                :size="38"
                 class="mt-1"
               />
             </template>
@@ -39,7 +39,7 @@
             </template>
           </f-list-item>
         </f-list>
-      </f-panel>
+      </div>
     </template>
     <div v-else class="body-2 greyscale_3--text text-center mt-10">
       {{ $t("hint.no_asset_1") }} <br />{{ $t("hint.no_asset_2") }}
