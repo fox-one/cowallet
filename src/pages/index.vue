@@ -44,7 +44,7 @@ import VaultItem from "@/components/VaultItem.vue";
 import mixins from "@/mixins";
 import { State, Mutation } from "vuex-class";
 import CreateVaultList from "@/components/CreateVaultList.vue";
-import { CLIENT_ID } from "~/constants";
+import { CLIENT_ID, CLIENT_ID_PROD, CLIENT_ID_DEV } from "~/constants";
 
 @Component({
   components: {
@@ -117,7 +117,7 @@ class IndexPage extends Mixins(mixins.page) {
         return x.user_id;
       })
       .filter((x) => {
-        return x !== CLIENT_ID;
+        return x !== CLIENT_ID_PROD && x !== CLIENT_ID_DEV && x !== CLIENT_ID;
       });
     const m: any = /(.+)\^(\d+)/.exec(conv.name);
     if (m === null || m.length !== 3) {
