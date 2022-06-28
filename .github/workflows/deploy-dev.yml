@@ -1,0 +1,42 @@
+name: Build and deploy to production.
+
+env:
+  AWS_REGION: us-east-1
+  APP_ENV: prod
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'fox-one'
+    steps:
+      - uses: actions/checkout@master
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
+
+      - name: Setup node env
+        uses: actions/setup-node@master
+        with:
+          node-version: "12"
+
+      - run: yarn --frozen-lockfile --non-interactive
+
+      - run: APP_ENV=${{ env.APP_ENV }} yarn build
+
+      # upload to aws
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.GLOBAL_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GLOBAL_AWS_ACCESS_KEY_SECRET }}
+      - run: aws s3 cp --recursive dist ${{ secrets.S3_URL_DEV }} --acl public-read
+      - run: aws s3 cp dist/index.html ${{ secrets.S3_URL_DEV }} --cache-control "no-cache" --acl public-read

@@ -27,7 +27,7 @@ export const CLIENT_ID =
   process.env.CLIENT_ID ||
   (isProduct
     ? "8e9e520c-b002-4bfe-b989-3f18d8d6e273"
-    : "c85a19d8-9c3b-4c79-be4c-492addba7d46");
+    : "0690b112-e607-4493-b1f0-7a39cf14bad6");
 
 export const CONFIG = {
   MIXIN_CLIENT_ID: CLIENT_ID,
