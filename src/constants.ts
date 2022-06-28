@@ -23,8 +23,8 @@ export const EVENTS = {
   OPEN_TERMS_MODAL: "OPEN_TERMS_MODAL",
 };
 
-export const CLIENT_ID_DEV = "8e9e520c-b002-4bfe-b989-3f18d8d6e273";
-export const CLIENT_ID_PROD = "0690b112-e607-4493-b1f0-7a39cf14bad6";
+export const CLIENT_ID_PROD = "8e9e520c-b002-4bfe-b989-3f18d8d6e273";
+export const CLIENT_ID_DEV = "0690b112-e607-4493-b1f0-7a39cf14bad6";
 
 export const CLIENT_ID =
   process.env.CLIENT_ID || (isProduct ? CLIENT_ID_PROD : CLIENT_ID_DEV);
