@@ -117,7 +117,7 @@ class IndexPage extends Mixins(mixins.page) {
         return x.user_id;
       })
       .filter((x) => {
-        return x !== CLIENT_ID_PROD && x !== CLIENT_ID_DEV && x !== CLIENT_ID;
+        return x !== CLIENT_ID_PROD || x !== CLIENT_ID_DEV || x !== CLIENT_ID;
       });
     const m: any = /(.+)\^(\d+)/.exec(conv.name);
     if (m === null || m.length !== 3) {
