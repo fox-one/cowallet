@@ -31,7 +31,7 @@
             </template>
             <template #tail>
               <div class="">
-                <div class="body-2">&nbsp;</div>
+                <div class="body-1">&nbsp;</div>
                 <div class="caption greyscale_3--text">
                   {{ totalUsd(item.price_usd) }}
                 </div>
@@ -72,7 +72,7 @@ class AssetList extends Vue {
   }
 
   totalUsd(num) {
-    return this.$utils.helper.formatCurrency(this, "USD", num);
+    return this.$utils.helper.fiat(this, num);
   }
 
   totalAmount(num) {

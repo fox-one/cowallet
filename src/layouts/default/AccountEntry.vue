@@ -26,7 +26,7 @@
       @disconnect="handleDisconnect"
     >
       <template #actions>
-        <!-- <account-entry-actions /> -->
+        <account-entry-actions />
       </template>
     </pando-account-overview>
   </f-bottom-sheet>

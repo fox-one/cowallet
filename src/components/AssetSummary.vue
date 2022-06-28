@@ -35,7 +35,7 @@ class AssetSummary extends Vue {
 
   get usdDisplay() {
     if (this.fiatAmount) {
-      return this.$utils.helper.formatCurrency(this, "USD", this.fiatAmount);
+      return this.$utils.helper.fiat(this, this.fiatAmount);
     }
     return "";
   }

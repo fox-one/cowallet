@@ -1,4 +1,4 @@
-name: Build and deploy to production.
+name: Build and deploy to dev.
 
 env:
   AWS_REGION: us-east-1

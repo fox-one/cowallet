@@ -15,12 +15,21 @@ const state = () => ({
     flat: true,
     align: "center",
   },
+  settings: {
+    currency: "USD",
+  },
   payment: {
     url: "",
     modal: false,
     checking: false,
   },
 });
+
+const getters = {
+  GET_SETTINGS(state) {
+    return state.settings;
+  },
+};
 
 const mutations = {
   toast(state, { message, color }) {
@@ -47,10 +56,14 @@ const mutations = {
     state.payment.modal = value.modal;
     state.payment.checking = value.checking;
   },
+  SET_SETTINGS(state, value) {
+    state.settings = value;
+  },
 };
 
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
 };

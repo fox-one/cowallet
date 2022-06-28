@@ -64,6 +64,9 @@ const mutations: MutationTree<VaultState> = {
     }
     state.vaults = vs;
   },
+  removeAllVaults(state) {
+    state.vaults.length = 0;
+  },
   updateVault(state, vault) {
     const vs = state.vaults.slice();
     for (let ix = 0; ix < vs.length; ix++) {

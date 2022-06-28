@@ -4,7 +4,7 @@ export default ({ store }) => {
   (window as any).onNuxtReady(() => {
     createPersistedState({
       key: "vuex",
-      paths: ["auth", "vault", "cache"],
+      paths: ["auth", "vault", "cache", "app.settings"],
     })(store);
   });
 };

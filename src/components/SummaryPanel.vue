@@ -7,7 +7,7 @@
         <div class="top title-1 mb-1 font-weight-bold">
           {{ vault.name || "Unnamed" }}
         </div>
-        <div class="multisig">
+        <div class="multisig text-right">
           <div class="caption opacity-60 mb-2">
             <span
               >{{
@@ -19,15 +19,21 @@
             </span>
             {{ $t("vault_item.vault") }}
           </div>
-          <div class="members d-flex justify-end align-center">
+          <div class="members d-flex align-center justify-begin">
             <div
-              class="member mr-1 mb-1"
+              class="member d-flex mb-1"
               v-for="(mem, ix) in vaultMembers"
               :key="`mem-${ix}`"
             >
-              <v-avatar size="24">
+              <v-avatar v-if="mem" size="24">
                 <v-img :src="mem ? mem.avatar_url : defaultAvatar" />
               </v-avatar>
+              <div
+                v-else
+                class="more-icon-wrapper d-flex justify-center align-center"
+              >
+                <v-icon size="20">$FIconMoreHorizon</v-icon>
+              </div>
             </div>
           </div>
         </div>
@@ -128,7 +134,7 @@ class SummaryPanel extends Vue {
   }
 
   get balanceDisplay() {
-    return this.$utils.helper.formatCurrency(this, "USD", this.totalUsd);
+    return this.$utils.helper.fiat(this, this.totalUsd);
   }
 
   get btns() {
@@ -221,6 +227,28 @@ export default SummaryPanel;
 .content {
   z-index: 1;
   position: relative;
+}
+
+.members {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  max-width: 40vw;
+  .member {
+    margin-left: -4px;
+    height: 24px;
+    width: 24px;
+    &:last-child {
+      margin-left: 0;
+    }
+    .more-icon-wrapper {
+      border-radius: 20px;
+      height: 24px;
+      width: 24px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
 }
 
 .op-button {

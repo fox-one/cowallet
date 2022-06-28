@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import { Component, Vue, PropSync, Watch } from "vue-property-decorator";
-import mixins from "@/mixins";
 
 @Component({
   components: {},

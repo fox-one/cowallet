@@ -1,13 +1,25 @@
 <template>
   <f-list>
-    <f-list-item
-      title="Export All Settings"
-      :subtitle="'Vaults, settings, tokens'"
-    >
-      <template #head>
-        <v-icon>$FIconShare</v-icon>
-      </template>
-    </f-list-item>
+    <nuxt-link to="/settings">
+      <f-list-item
+        :title="$t('settings')"
+        :subtitle="'Export data and change settings.'"
+      >
+        <template #head>
+          <v-icon>$FIconSetting</v-icon>
+        </template>
+      </f-list-item>
+    </nuxt-link>
+    <a href="https://github.com/fox-one/cowallet" target="_blank">
+      <f-list-item
+        title="View at Github"
+        :subtitle="'Fork or star our projects.'"
+      >
+        <template #head>
+          <v-icon>$FIconGithub</v-icon>
+        </template>
+      </f-list-item>
+    </a>
   </f-list>
 </template>
 

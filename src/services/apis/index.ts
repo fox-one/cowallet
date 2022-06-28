@@ -33,6 +33,10 @@ export default function (http: Http) {
       return http.get("/assets/" + assetId);
     },
 
+    getFiats(): Promise<Array<any>> {
+      return http.get(`/fiats`);
+    },
+
     getFriends(): Promise<any> {
       return http.get("/friends");
     },

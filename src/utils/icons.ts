@@ -11,6 +11,10 @@ import {
   FIconTime4P,
   FIconCrowd4P,
   FIconArrowDown,
+  FIconCrowd,
+  FIconEdit,
+  FIconGithub,
+  FIconStar,
 } from "@foxone/icons";
 
 const ficons = {
@@ -25,7 +29,11 @@ const ficons = {
   FIconChevronRight4P: { component: FIconChevronRight4P },
   FIconTime4P: { component: FIconTime4P },
   FIconCrowd4P: { component: FIconCrowd4P },
+  FIconCrowd: { component: FIconCrowd },
   FIconArrowDown: { component: FIconArrowDown },
+  FIconEdit: { component: FIconEdit },
+  FIconGithub: { component: FIconGithub },
+  FIconStar: { component: FIconStar },
 };
 
 import {

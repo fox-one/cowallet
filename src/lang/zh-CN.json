@@ -3,8 +3,18 @@
   "disconnect": "解除连接",
   "disconnect.confirm": "确定解除钱包连接吗",
   "confirm": "确认",
+  "currency": "货币单位",
+
+  "import_config": "导入配置",
+  "import_config.hint": "或者，你可以从导入一个现存的 CoWallet 配置。",
+
+  "export.title": "导出",
+  "export.subtitle": "导出金库，设置和令牌",
+  "export.config": "导出的配置",
 
   "search.vault": "搜索金库",
+
+  "onboarding.view_vaults": "查看金库",
 
   "common.filter": "过滤",
   "common.memo": "备注",
@@ -48,6 +58,8 @@
   "hint.please_create_or_open_vault_2": "或者打开一个钱包",
   "hint.no_asset_1": "还没有资产",
   "hint.no_asset_2": "轻按 \"存入\" 添加资产",
+  "hint.login": "Login to CoWallet",
+  "hint.onboarding": "Welcome on board",
 
   "pay.scan_to_pay": "扫码支付",
   "pay.scan_to_pay.hint": "使用 Mixin Messenger 扫码二维码",

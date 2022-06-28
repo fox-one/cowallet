@@ -9,14 +9,12 @@
 //   font-size: 16px;
 // }
 
-.theme--light {
-  #app {
-    background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%);
+#app {
+  &.theme--light {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%) !important;
   }
-}
-.theme--dark {
-  #app {
-    background: linear-gradient(180deg, #000 0%, #222 100%);
+  &.theme--dark {
+    background: linear-gradient(180deg, #000 0%, #161616 100%);
   }
 }
 

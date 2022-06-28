@@ -106,7 +106,7 @@ class DepositPage extends Mixins(mixins.page) {
     if (asset) {
       num = asset.balance * asset.price_usd;
     }
-    return this.$utils.helper.formatCurrency(this, "USD", num);
+    return this.$utils.helper.fiat(this, num);
   }
 
   mounted() {

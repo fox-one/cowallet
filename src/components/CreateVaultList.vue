@@ -6,7 +6,7 @@
       @click="goto('friends')"
     >
       <template #head>
-        <div class="icon">👪</div>
+        <v-icon size="28">$FIconCrowd</v-icon>
       </template>
     </f-list-item>
     <f-list-item
@@ -15,7 +15,7 @@
       @click="goto('import')"
     >
       <template #head>
-        <div class="icon">🗝</div>
+        <v-icon size="28">$FIconImport</v-icon>
       </template>
     </f-list-item>
     <f-list-item
@@ -24,7 +24,7 @@
       @click="goto('manually')"
     >
       <template #head>
-        <div class="icon">✍️</div>
+        <v-icon size="28">$FIconEdit</v-icon>
       </template>
     </f-list-item>
   </f-list>

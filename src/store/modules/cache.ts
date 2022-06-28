@@ -3,11 +3,13 @@ import { MutationTree, GetterTree, ActionTree } from "vuex";
 const state = () => ({
   users: {},
   assets: {},
+  fiats: {},
 });
 
 type CacheState = {
   users: Record<string, any>;
   assets: Record<string, any>;
+  fiats: Record<string, any>;
 };
 
 const getters: GetterTree<CacheState, any> = {
@@ -31,6 +33,10 @@ const getters: GetterTree<CacheState, any> = {
       }
       return null;
     };
+  },
+
+  GET_FIATS(state) {
+    return state.fiats;
   },
 };
 
@@ -60,6 +66,15 @@ const mutations: MutationTree<CacheState> = {
     }
     state.assets = um;
   },
+
+  SET_FIATS(state, fiats) {
+    const ret = {};
+    for (let ix = 0; ix < fiats.length; ix++) {
+      const item = fiats[ix];
+      ret[item.code] = item.rate;
+    }
+    state.fiats = ret;
+  },
 };
 
 const actions: ActionTree<CacheState, any> = {
@@ -71,6 +86,9 @@ const actions: ActionTree<CacheState, any> = {
 
   async loadAsset({ commit }, assetId) {
     const asset = await this.$apis.getAsset(assetId);
+    const fiats = await this.$apis.getFiats();
+
+    commit("SET_FIATS", fiats || []);
     commit("addAsset", asset);
     return asset;
   },

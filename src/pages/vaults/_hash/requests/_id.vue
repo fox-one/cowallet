@@ -288,7 +288,7 @@ class RequestDetailPage extends Mixins(mixins.page) {
   triggerLoadUTXOs() {
     if (this.vault) {
       setTimeout(() => {
-        this.$store.dispatch("global/loadUTXOs", {
+        this.$store.dispatch("global/loadUTXOs2", {
           members: this.vault.members,
           threshold: this.vault.threshold,
         });

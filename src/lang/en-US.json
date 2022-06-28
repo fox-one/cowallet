@@ -3,8 +3,18 @@
   "disconnect": "Disconnect",
   "disconnect.confirm": "Are you sure to disconnect?",
   "confirm": "Confirm",
+  "currency": "Currency",
+
+  "import_config": "Import",
+  "import_config.hint": "Or, you can import config from existing CoWallet.",
+
+  "export.title": "Export",
+  "export.subtitle": "Export vaults, settings & token",
+  "export.config": "Exported Config",
 
   "search.vault": "Search Vault",
+
+  "onboarding.view_vaults": "View Vaults",
 
   "common.filter": "Filter",
   "common.memo": "Memo",
@@ -48,6 +58,8 @@
   "hint.please_create_or_open_vault_2": "or open an existed one by following ways",
   "hint.no_asset_1": "No Asset",
   "hint.no_asset_2": "Tap \"Deposit\" to add some.",
+  "hint.login": "Login to CoWallet",
+  "hint.onboarding": "Welcome on board",
 
   "pay.scan_to_pay": "Scan to Pay",
   "pay.scan_to_pay.hint": "Use Mixin Messenger scan the QRCode.",

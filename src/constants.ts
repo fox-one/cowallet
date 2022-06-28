@@ -35,6 +35,20 @@ export const CONFIG = {
   FENNEC_PROVIDER_ID: "cowallet",
 };
 
+export const Currency = {
+  USD: { name: "USD", text: "US Dollar", symbol: "$" },
+  JPY: { name: "JPY", text: "日本円", symbol: "¥" },
+  EUR: { name: "EUR", text: "Euro", symbol: "€" },
+  CNY: { name: "CNY", text: "人民币", symbol: "¥" },
+  KRW: { name: "KRW", text: "한국 원", symbol: "₩" },
+  GBP: { name: "GBP", text: "British Pound", symbol: "£" },
+  AUD: { name: "AUD", text: "Australian Dollar", symbol: "A$" },
+  SGD: { name: "SGD", text: "Singapore Dollar", symbol: "S$" },
+  HKD: { name: "HKD", text: "HongKong Dollar", symbol: "HK$" },
+  MYR: { name: "MYR", text: "Malaysian Ringgit", symbol: "RM" },
+  PHP: { name: "PHP", text: "Philippine Peso", symbol: "₱" },
+};
+
 export const INCOME_TPL = `{DATE} * "{VAULT_NAME}" "{MEMO}"
   {INCOME_NAME}        -{AMOUNT} {SYMBOL}
   {ASSET_NAME}         +{AMOUNT} {SYMBOL}

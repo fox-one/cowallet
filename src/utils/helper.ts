@@ -176,35 +176,6 @@ export function shareCard(title, description, icon_url, url) {
     encodeURIComponent(Base64.encode(JSON.stringify(data)));
 }
 
-export function genVerifier() {
-  const randomCode = crypto.randomBytes(32);
-  const verifier = base64URLEncode(randomCode);
-  const challenge = base64URLEncode(sha256(randomCode));
-  return verifier;
-}
-
-export function requestLogin(vue) {
-  // if (NODE_ENV === "development" && APP_TOKEN) {
-  //   vue.$store?.commit("auth/SET_TOKEN", {
-  //     token: APP_TOKEN,
-  //     scope: APP_SCOPE,
-  //   });
-  //   initApp(vue);
-  //   return;
-  // }
-  const randomCode = crypto.randomBytes(32);
-  const verifier = base64URLEncode(randomCode);
-  const challenge = base64URLEncode(sha256(randomCode));
-  localStorage.setItem("code-verifier", verifier);
-
-  const host = window.location.origin;
-  const redirectUrl = encodeURIComponent(host + "/#/auth/");
-  localStorage.setItem("authPath", window.location.href);
-  let path = `${OAUTH_URL}/?client_id=${CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ+CONTACTS:READ&code_challenge=${challenge}&response_type=code&code_challenge_method=S256`;
-  path += `&redirect_url=${redirectUrl}`;
-  window.location.href = path;
-}
-
 export function genCheckResultProc(codeId, state, done, error) {
   const proc = async (vm) => {
     let resp: any = null;
@@ -274,6 +245,20 @@ export function formatCurrency(
     return parts[1] ? `${parts[0]}.${parts[1]}` : parts[0];
   }
   return ret;
+}
+
+export function fiat(vm, amountUsd) {
+  const fiats = vm.$store.getters["cache/GET_FIATS"];
+  const s = vm.$store.getters["app/GET_SETTINGS"];
+  let code = "USD";
+  if (s.currency) {
+    code = s.currency;
+  }
+  let amount = amountUsd;
+  if (code in fiats) {
+    amount = fiats[code] * amountUsd;
+  }
+  return formatCurrency(vm, code, amount);
 }
 
 export async function submitSignatures(vm, multisig) {

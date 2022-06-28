@@ -30,15 +30,21 @@
         </div>
       </div>
 
-      <div class="members d-flex">
+      <div class="members d-flex align-center justify-end">
         <div
-          class="member mr-1 mb-1"
+          class="member d-flex"
           v-for="(mem, ix) in vaultMembers"
           :key="`mem-${ix}`"
         >
-          <v-avatar size="24">
+          <v-avatar v-if="mem" size="24">
             <v-img :src="mem ? mem.avatar_url : defaultAvatar" />
           </v-avatar>
+          <div
+            v-else
+            class="more-icon-wrapper d-flex justify-center align-center"
+          >
+            <v-icon size="20">$FIconMoreHorizon</v-icon>
+          </div>
         </div>
       </div>
     </div>
@@ -61,9 +67,13 @@ class VaultItem extends Vue {
   vaultIconColor = "primary";
 
   get vaultMembers() {
-    const members = this.vault.members.map((x) => {
+    let members = this.vault.members.map((x) => {
       return this.$store!.getters["cache/getUser"](x) || null;
     });
+    if (members.length > 4) {
+      members = members.slice(0, 5);
+      members.unshift(null);
+    }
     return members;
   }
 
@@ -80,7 +90,7 @@ class VaultItem extends Vue {
   }
 
   get balanceDisplay() {
-    return this.$utils.helper.formatCurrency(this, "USD", this.balance);
+    return this.$utils.helper.fiat(this, this.balance);
   }
 
   gotoDeposit() {
@@ -110,10 +120,19 @@ export default VaultItem;
 .members {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row-reverse;
   .member {
-    margin-left: -10px;
-    &:first-child {
+    margin-left: -4px;
+    height: 24px;
+    width: 24px;
+    &:last-child {
       margin-left: 0;
+    }
+    .more-icon-wrapper {
+      border-radius: 20px;
+      height: 24px;
+      width: 24px;
+      background: rgba(255, 255, 255, 0.3);
     }
   }
 }

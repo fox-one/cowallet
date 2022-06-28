@@ -51,7 +51,7 @@ export const actions: ActionTree<AuthState, any> = {
     try {
       res = await this.$apis.me();
     } catch (e) {
-      return this.$utils.helper.requestLogin(this);
+      commit("SET_TOKEN", { token: "" });
     }
     commit("setMe", res);
   },
