@@ -1,5 +1,7 @@
 {
   "settings": "Settings",
+  "settings.desc": "Export data and change settings.",
+
   "disconnect": "Disconnect",
   "disconnect.confirm": "Are you sure to disconnect?",
   "confirm": "Confirm",
@@ -11,6 +13,9 @@
   "export.title": "Export",
   "export.subtitle": "Export vaults, settings & token",
   "export.config": "Exported Config",
+
+  "view_at_github": "View at Github",
+  "view_at_github.desc": "Fork and star us!",
 
   "search.vault": "Search Vault",
 

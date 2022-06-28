@@ -12,6 +12,9 @@
   "export.subtitle": "导出金库，设置和令牌",
   "export.config": "导出的配置",
 
+  "view_at_github": "查看 Github 主页",
+  "view_at_github.desc": "Fork 或者关注我们！",
+
   "search.vault": "搜索金库",
 
   "onboarding.view_vaults": "查看金库",

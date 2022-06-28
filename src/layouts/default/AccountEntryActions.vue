@@ -1,10 +1,7 @@
 <template>
   <f-list>
     <nuxt-link to="/settings">
-      <f-list-item
-        :title="$t('settings')"
-        :subtitle="'Export data and change settings.'"
-      >
+      <f-list-item :title="$t('settings')" :subtitle="$t('settings.desc')">
         <template #head>
           <v-icon>$FIconSetting</v-icon>
         </template>
@@ -12,8 +9,8 @@
     </nuxt-link>
     <a href="https://github.com/fox-one/cowallet" target="_blank">
       <f-list-item
-        title="View at Github"
-        :subtitle="'Fork or star our projects.'"
+        :title="$t('view_at_github')"
+        :subtitle="$t('view_at_github.desc')"
       >
         <template #head>
           <v-icon>$FIconGithub</v-icon>
