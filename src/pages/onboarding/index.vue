@@ -72,9 +72,12 @@
                 />
               </v-col>
               <v-col cols="12" class="text-center">
-                <f-button color="primary" @click="importConfig">{{
-                  $t("import_config")
-                }}</f-button>
+                <f-button
+                  color="primary"
+                  @click="importConfig"
+                  :disabled="!validatedImport"
+                  >{{ $t("import_config") }}</f-button
+                >
               </v-col>
             </v-row>
           </div>
@@ -121,6 +124,10 @@ class OnboardingPage extends Mixins(mixins.page) {
 
   get hasVaults() {
     return this.$store.getters["vault/getVaults"]?.length !== 0;
+  }
+
+  get validatedImport() {
+    return this.jsonConfig.trim().length !== 0;
   }
 
   auth() {
