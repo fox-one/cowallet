@@ -55,6 +55,7 @@ class AuthModal extends Vue {
 
       this.$store.commit("auth/SET_TOKEN", loginInfo);
       await this.$utils.app.loadAppData(this);
+      this.$router.replace("/");
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
     }
