@@ -5,7 +5,7 @@
       <div class="top-bar d-flex align-center mb-4">
         <f-search-input
           v-model="searchVault"
-          clearable
+          :clearable="false"
           hide-details
           :placeholder="$t('search.vault')"
         />

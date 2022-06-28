@@ -18,7 +18,7 @@
             </template>
             <template #body>
               <div class="block">
-                <div class="body-2">
+                <div class="body-1">
                   <strong>{{
                     `${totalAmount(item.amount.toString())}`
                   }}</strong>

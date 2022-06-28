@@ -36,9 +36,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import { Get } from "vuex-pathify";
 import { VERSION } from "@/constants";
+import AccountEntryActions from "./AccountEntryActions.vue";
 
 @Component({
-  components: {},
+  components: {
+    AccountEntryActions,
+  },
 })
 class AccountEntry extends Vue {
   @Get("auth/me") me!: any;

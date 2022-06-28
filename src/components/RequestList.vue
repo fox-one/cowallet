@@ -18,7 +18,7 @@
         </template>
         <template #body>
           <div class="block">
-            <div class="body-2">
+            <div class="body-1">
               {{ `${item.asset.symbol} ${$t("common.requests")}` }}
             </div>
             <div class="caption greyscale_3--text">

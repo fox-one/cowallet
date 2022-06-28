@@ -1,5 +1,8 @@
 {
   "settings": "Settings",
+  "disconnect": "Disconnect",
+  "disconnect.confirm": "Are you sure to disconnect?",
+  "confirm": "Confirm",
 
   "search.vault": "Search Vault",
 

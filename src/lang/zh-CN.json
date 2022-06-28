@@ -1,5 +1,8 @@
 {
   "settings": "设置",
+  "disconnect": "解除连接",
+  "disconnect.confirm": "确定解除钱包连接吗",
+  "confirm": "确认",
 
   "search.vault": "搜索金库",
 
