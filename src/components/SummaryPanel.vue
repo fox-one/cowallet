@@ -1,33 +1,79 @@
 <template>
-  <div class="pa-4">
-    <div class="top mb-6">
-      <vault-item :vault="vault" :balance="totalUsd" :fullsize="true" />
-    </div>
-
-    <div class="buttons d-flex px-4 justify-space-between">
-      <div
-        v-for="(btn, ix) in btns"
-        :key="`btn-${ix}`"
-        class="btn-wrapper text-center"
-      >
-        <v-btn
-          text
-          block
-          class="op-button"
-          :ripple="false"
-          :disabled="btn.disabled"
-          @click="handleButtonClick(btn)"
-        >
-          <div class="btn-inner">
-            <div class="icon-wrapper mb-1" :class="[btn.color]">
-              <v-icon size="28">{{ btn.icon }}</v-icon>
-            </div>
-            <div class="caption greyscale_3--text">{{ btn.label }}</div>
+  <f-panel elevation="1" class="can pa-0 mx-4" dark :style="cardStyle">
+    <div class="bg-1" :style="cardBgStyle"></div>
+    <div class="bg-2" :style="cardBgStyle"></div>
+    <div class="content">
+      <div class="d-flex justify-space-between px-4 pt-4 pb-2">
+        <div class="top title-1 mb-1 font-weight-bold">
+          {{ vault.name || "Unnamed" }}
+        </div>
+        <div class="multisig">
+          <div class="caption opacity-60 mb-2">
+            <span class="font-weight-bold"
+              >{{
+                $t("vault_item.threshold", {
+                  m: vault.threshold,
+                  n: vault.members.length,
+                })
+              }}
+            </span>
+            {{ $t("vault_item.vault") }}
           </div>
+          <div class="members d-flex justify-end align-center">
+            <div
+              class="member mr-1 mb-1"
+              v-for="(mem, ix) in vaultMembers"
+              :key="`mem-${ix}`"
+            >
+              <v-avatar size="24">
+                <v-img :src="mem ? mem.avatar_url : defaultAvatar" />
+              </v-avatar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-space-between align-end px-4 pb-4">
+        <div class="left">
+          <div class="caption opacity-60">
+            {{ $t("vault_item.total_balance") }}
+          </div>
+          <div class="headline font-weight-bold">{{ balanceDisplay }}</div>
+        </div>
+        <v-btn small icon @click="gotoSettings">
+          <v-icon>$FIconMoreHorizon</v-icon>
         </v-btn>
       </div>
+
+      <v-row no-gutters class="buttons">
+        <v-col
+          cols="6"
+          v-for="(btn, ix) in btns"
+          :key="`btn-${ix}`"
+          class="btn-wrapper text-center"
+        >
+          <v-btn
+            text
+            block
+            class="op-button pa-4"
+            :ripple="false"
+            :disabled="btn.disabled"
+            @click="handleButtonClick(btn)"
+          >
+            <div class="btn-inner d-flex align-center">
+              <v-icon
+                size="24"
+                class="icon mr-2"
+                :class="btn.icon_reverse ? 'reverse' : ''"
+                >{{ btn.icon }}</v-icon
+              >
+              <div class="label body-2">{{ btn.label }}</div>
+            </div>
+          </v-btn>
+        </v-col>
+      </v-row>
     </div>
-  </div>
+  </f-panel>
 </template>
 
 <script lang="ts">
@@ -49,26 +95,55 @@ class SummaryPanel extends Vue {
 
   @Prop({ default: [] }) vault;
 
+  get vaultMembers() {
+    const members = this.vault.members.map((x) => {
+      return this.$store!.getters["cache/getUser"](x) || null;
+    });
+    return members;
+  }
+
+  get cardColors() {
+    const hash = this.$utils.helper.sha3_256(
+      this.vault.members.join("") + this.vault.threshold,
+      "binary",
+    );
+    const colors = this.$utils.helper.digestColor(hash);
+    const lighterColor0 = this.$utils.helper.shadeColor(colors[0], 5);
+    return { colors, ligten0: lighterColor0 };
+  }
+
+  get cardStyle() {
+    const { colors, ligten0 } = this.cardColors;
+    return {
+      background: `linear-gradient(260deg, ${colors[0]} 0%, ${ligten0} 100%)`,
+    };
+  }
+
+  get cardBgStyle() {
+    const { colors } = this.cardColors;
+    return {
+      backgroundColor: colors[1],
+      opacity: 0.6,
+    };
+  }
+
+  get balanceDisplay() {
+    return this.$utils.helper.formatCurrency(this, "USD", this.totalUsd);
+  }
+
   get btns() {
     return [
       {
         id: "send",
-        color: "purple",
         label: this.$t("common.send"),
-        icon: "$FIconShare",
+        icon: "$FIconArrowDown",
+        icon_reverse: true,
         disabled: this.position.length === 0,
       },
       {
         id: "deposit",
-        color: "orange",
         label: this.$t("common.deposit"),
-        icon: "$FIconImport",
-      },
-      {
-        id: "manage",
-        color: "blue",
-        label: this.$t("common.manage"),
-        icon: "$FIconSetting",
+        icon: "$FIconArrowDown",
       },
     ];
   }
@@ -108,9 +183,6 @@ class SummaryPanel extends Vue {
 
   handleButtonClick(btn) {
     switch (btn.id) {
-      case "manage":
-        this.gotoSettings();
-        break;
       case "send":
         this.gotoSend();
         break;
@@ -123,35 +195,46 @@ class SummaryPanel extends Vue {
 export default SummaryPanel;
 </script>
 <style lang="scss" scoped>
-.btn-wrapper {
-  width: 33%;
+.can {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
 }
+.bg-1,
+.bg-2 {
+  position: absolute;
+  background: transparent;
+  display: block;
+  content: " ";
+  border-radius: 600em;
+  width: 150vw;
+  height: 150vw;
+  &.bg-1 {
+    margin-top: 120px;
+    margin-left: -90%;
+  }
+  &.bg-2 {
+    bottom: 120px;
+    right: -110%;
+  }
+}
+.content {
+  z-index: 1;
+  position: relative;
+}
+
 .op-button {
-  padding-left: 24px !important;
-  padding-right: 24px !important;
-  height: 64px !important;
   &:hover::before {
     background: none;
     opacity: 0 !important;
   }
-  .icon-wrapper {
-    width: 48px;
-    height: 48px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &.purple {
-      background-color: #ccace366 !important;
-      color: #a777c9;
-    }
-    &.orange {
-      background-color: #e5b38e66 !important;
-      color: #d38c63;
-    }
-    &.blue {
-      background-color: #8ecde566 !important;
-      color: #5db0d1;
+  .icon.reverse {
+    transform: rotate(180deg);
+  }
+  &.v-btn.v-btn--text.v-btn--disabled {
+    color: rgba(255, 255, 255, 0.5) !important;
+    .v-icon {
+      color: rgba(255, 255, 255, 0.5) !important;
     }
   }
 }

@@ -49,6 +49,17 @@ const mutations: MutationTree<CacheState> = {
     um[asset.asset_id]["last_updated_at"] = Date.now();
     state.assets = um;
   },
+
+  addAssets(state, assets) {
+    const um = Object.assign({}, state.assets);
+    const now = Date.now();
+    for (let ix = 0; ix < assets.length; ix++) {
+      const item = assets[ix];
+      um[item.asset_id] = item;
+      um[item.asset_id]["last_updated_at"] = now;
+    }
+    state.assets = um;
+  },
 };
 
 const actions: ActionTree<CacheState, any> = {

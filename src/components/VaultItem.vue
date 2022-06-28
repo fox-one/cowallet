@@ -6,7 +6,7 @@
     :style="cardStyle"
   >
     <div class="right">
-      <div class="caption opacity-80">
+      <div class="caption opacity-60 mb-1">
         <span class="font-weight-bold"
           >{{
             $t("vault_item.threshold", {
@@ -17,13 +17,13 @@
         </span>
         {{ $t("vault_item.vault") }}
       </div>
-      <div class="top title-1 mb-1 font-weight-bold">
+      <div class="top title-1 mb-2">
         {{ vault.name || "Unnamed" }}
       </div>
 
       <div v-if="fullsize" class="d-flex justify-space-between mb-2">
         <div class="left">
-          <div class="caption opacity-80">
+          <div class="caption opacity-60">
             {{ $t("vault_item.total_balance") }}
           </div>
           <div class="title-1 font-weight-bold">{{ balanceDisplay }}</div>
@@ -47,7 +47,6 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { Mutation, State } from "vuex-class";
 
 @Component
 class VaultItem extends Vue {
@@ -77,7 +76,6 @@ class VaultItem extends Vue {
     const lighterColor0 = this.$utils.helper.shadeColor(colors[0], 5);
     return {
       background: `linear-gradient(260deg, ${colors[0]} 0%, ${lighterColor0} 100%)`,
-      boxShadow: `0 2px 6px ${colors[1]}`,
     };
   }
 
@@ -106,16 +104,18 @@ export default VaultItem;
 </script>
 <style lang="scss" scoped>
 .card {
-  border-radius: 20px;
+  border-radius: 8px;
   color: white;
-
-  .opacity-80 {
-    opacity: 0.8;
-  }
 }
 .members {
   display: flex;
   flex-wrap: wrap;
+  .member {
+    margin-left: -10px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
 }
 .icon-wrapper {
   border-radius: 32px;

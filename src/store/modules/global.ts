@@ -173,6 +173,16 @@ const actions: ActionTree<GlobalState, any> = {
     return;
   },
 
+  async loadTopAssets({ commit, state }) {
+    const result = await this.$apis.getMyAssets();
+    const items = result.map((x) => {
+      x.id = x.asset_id;
+      x.logo = x.icon_url;
+      return x;
+    });
+    commit("cache/addAssets", items, { root: true });
+  },
+
   async loadMyAssets({ commit, state }) {
     const result = await this.$apis.getMyAssets();
     const ret: any = [];
@@ -275,9 +285,9 @@ const actions: ActionTree<GlobalState, any> = {
     // sort utxos
     utxos.sort((a: any, b: any) => {
       if (a.created_at < b.created_at) {
-        return 1;
-      } else if (a.created_at > b.created_at) {
         return -1;
+      } else if (a.created_at > b.created_at) {
+        return 1;
       }
       return 0;
     });
@@ -344,10 +354,12 @@ const actions: ActionTree<GlobalState, any> = {
         const arr: any = [];
         for (let iy = 0; iy < snapshots[utxo.transaction_hash].length; iy++) {
           const item = snapshots[utxo.transaction_hash][iy];
+
           // ignore all utxo with a change
-          if (utxo.ouput_index === item.index) {
+          if (utxo.output_index === item.index) {
             continue;
           }
+
           item.utxo_id = utxo.utxo_id;
           item.memo = utxo.memo;
           item.created_at = utxo.created_at;
@@ -390,13 +402,14 @@ const actions: ActionTree<GlobalState, any> = {
         if (decodedTx.outputs) {
           for (let iy = 0; iy < decodedTx.outputs.length; iy++) {
             items.push({
+              utxo_id: "-",
               asset_id: utxo.asset_id,
-              created_at: utxo.updated_at,
+              created_at: utxo.created_at,
               hash: utxo.signed_by,
               index: iy,
               amount: decodedTx.outputs[iy].amount,
               state: state,
-              memo: utxo.memo,
+              memo: decodedTx.extra,
               type: "expense",
             });
           }
@@ -422,11 +435,6 @@ const actions: ActionTree<GlobalState, any> = {
       }
       return 0;
     });
-
-    // for (let ix = 0; ix < result.length; ix++) {
-    //   const item = result[ix];
-    //   console.log(item);
-    // }
 
     commit("setTransactions", result);
     commit("setLoadingUTXO", false);

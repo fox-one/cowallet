@@ -127,19 +127,14 @@ export function shadeColor(color, percent: number) {
 export function digestColor(digestArray) {
   let ret = 0;
   const colors = [
-    ["#DF8976", "#FFC3B766"],
-    ["#A5C4C4", "#BDE5E566"],
-    ["#CCACE3", "#E3CCF366"],
-    ["#8ECDE5", "#BDE8F966"],
-    ["#E5AE8E", "#F9D2BC66"],
-
-    ["#9EE0B8", "#C4F5D866"],
-    ["#555555", "#B1B1B166"],
-    ["#6AD896", "#C3EFBC66"],
-    ["#7C93CD", "#AEBCE066"],
-    ["#CD7C7C", "#EBB3B366"],
-
-    // ["#E9CA9B", "#E3CFB8"],
+    ["#3683FB", "#5596FB"],
+    ["#812DD3", "#A955FC"],
+    ["#FA7D35", "#FB965F"],
+    ["#222222", "#444444"],
+    ["#33E1A3", "#55FBBF"],
+    ["#D63D3D", "#FF7C7C"],
+    ["#6936FB", "#9877F6"],
+    ["#FB36AC", "#F677D2"],
   ];
   for (let ix = 0; ix < digestArray.length; ix++) {
     const item = digestArray[ix];
@@ -264,14 +259,19 @@ export function formatCurrency(
     if (fraction !== -1) {
       opts["minimumFractionDigits"] = fraction;
     }
-    // if the amount is too small but still greater than zero, try to calculate a better fraction.
     if (amountNum < 0.01 && 0 < amountNum) {
+      // if the amount is too small but still greater than zero, try to calculate a better fraction.
       const zeroCount = -Math.floor(Math.log(amountNum) / Math.log(10) + 1);
       opts["minimumFractionDigits"] = zeroCount + 2;
     }
     ret = new Intl.NumberFormat(vm.$i18n.locale, opts).format(amountNum);
   } else {
     ret = fiatSymbol + amountNum.toFixed(2);
+  }
+  const parts = ret.split(".");
+  if (parts.length > 1) {
+    parts[1] = parts[1].replace(/0+$/, "");
+    return parts[1] ? `${parts[0]}.${parts[1]}` : parts[0];
   }
   return ret;
 }

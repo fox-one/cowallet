@@ -21,6 +21,10 @@ export default function (http: Http) {
       return http.get("/network/assets/multisig");
     },
 
+    getTopAssets(): Promise<any[]> {
+      return http.get("/network/assets/top");
+    },
+
     getMyAssets(): Promise<any[]> {
       return http.get("/assets");
     },
@@ -41,7 +45,7 @@ export default function (http: Http) {
 
     getUTXOs(membersHash, threshold, offset, limit): Promise<any> {
       return http.get(
-        `/multisigs/outputs?members=${membersHash}&threshold=${threshold}&offset=${offset}&limit=${limit}`,
+        `/multisigs/outputs?members=${membersHash}&threshold=${threshold}&offset=${offset}&limit=${limit}&order=created`,
         {},
       );
     },

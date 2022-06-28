@@ -6,7 +6,7 @@
     :scope="scope"
     :is-firesbox="false"
     :pkce="true"
-    :wallets="['mixin', 'fennec']"
+    :wallets="['mixin', 'links']"
     @auth="handleAuth"
     @error="handleError"
   />

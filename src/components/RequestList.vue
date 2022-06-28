@@ -63,6 +63,20 @@ export default RquestList;
     right: -2px;
     border: 2px solid white;
     border-radius: 1em;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding-bottom: 1px;
+  }
+}
+.theme--dark {
+  .icon-wrapper {
+    .badge {
+      background: #000;
+      border-color: #000;
+    }
   }
 }
 .divider {
