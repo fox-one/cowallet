@@ -9,7 +9,7 @@
         </div>
         <div class="multisig">
           <div class="caption opacity-60 mb-2">
-            <span class="font-weight-bold"
+            <span
               >{{
                 $t("vault_item.threshold", {
                   m: vault.threshold,
