@@ -2,6 +2,12 @@
 
 CoWallet is a cooperative crypto wallet on Mixin Network.
 
+## Notice
+
+CoWallet is a front-end web application, it doesn't manage your assets. All cryptos are managed by Mixin Network with its multisig features.
+
+If you delete a vault from CoWallet, no multisig address or assets in it will be deleted. If you are one of the vault members, you can restore the access of the vault anytime by creating a vault with the same parameters (members' id, threshod).
+
 ## How to use?
 
 ### Use CoWallet in Mixin Messenger
@@ -22,12 +28,13 @@ Visit https://cowallet.fox.one/
 - [x] Create wallet with Mixin Messenger Friends
 - [x] Revoke signature requests
 - [x] Beancount support
-- [ ] Kernel v1 transaction support
+- [x] Better cache
+- [x] Better error handlers
+- [x] Fiat currency config
+- [x] Desktop layout
+- [x] Support to export and import wallet config
 - [ ] [Fennec](https://github.com/fox-one/fennec) support
-- [ ] Better cache
-- [ ] Better error handlers
-- [ ] Fiat currency config
-- [ ] Desktop layout
+- [ ] Kernel v1 transaction support
 
 ## How to Build
 
