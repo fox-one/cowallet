@@ -107,22 +107,22 @@
               @error="error"
               @paid="sign"
             />
-            <br />
-            <f-button
-              v-if="isDesktop"
-              type="primary"
-              outlined
-              v-clipboard:copy="shareUrl"
-              >{{ $t("common.copy_url") }}</f-button
-            >
-            <f-button
-              v-else
-              color="primary"
-              @click="share"
-              :disabled="!validatedShareButton"
-              >{{ $t("common.share") }}</f-button
-            >
-            <br />
+            <div class="mb-4">
+              <f-button
+                v-if="isDesktop"
+                type="primary"
+                outlined
+                v-clipboard:copy="shareUrl"
+                >{{ $t("common.copy_url") }}</f-button
+              >
+              <f-button
+                v-else
+                color="primary"
+                @click="share"
+                :disabled="!validatedShareButton"
+                >{{ $t("common.share") }}</f-button
+              >
+            </div>
             <payment-action
               check-state="unlocked"
               button-type="error"
