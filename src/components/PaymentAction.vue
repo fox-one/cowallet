@@ -2,6 +2,7 @@
   <div>
     <f-button
       :color="buttonType || 'primary'"
+      :outlined="buttonType === 'error'"
       @click="pay"
       :disabled="disabled"
       >{{ label }}</f-button

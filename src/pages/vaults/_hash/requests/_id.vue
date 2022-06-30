@@ -108,15 +108,6 @@
               @paid="sign"
             />
             <br />
-            <payment-action
-              check-state="unlocked"
-              button-type="error"
-              :label="$t('common.revoke')"
-              @done="done"
-              @error="error"
-              @paid="cancel"
-            />
-            <br />
             <f-button
               v-if="isDesktop"
               type="primary"
@@ -131,6 +122,15 @@
               :disabled="!validatedShareButton"
               >{{ $t("common.share") }}</f-button
             >
+            <br />
+            <payment-action
+              check-state="unlocked"
+              button-type="error"
+              :label="$t('common.revoke')"
+              @done="done"
+              @error="error"
+              @paid="cancel"
+            />
           </template>
           <template v-else>
             <f-button color="primary" class="mb-4" @click="submit">{{
