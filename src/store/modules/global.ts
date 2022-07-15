@@ -277,7 +277,7 @@ const actions: ActionTree<GlobalState, any> = {
         break;
       }
 
-      offset = resp[resp.length - 1].updated_at;
+      offset = resp[resp.length - 1].created_at;
       resp = await this.$apis.getUTXOs(hash, threshold, offset, UTXOS_PER_PAGE);
       utxos = utxos.concat(resp);
     }
@@ -522,7 +522,7 @@ const actions: ActionTree<GlobalState, any> = {
       if (resp.length < UTXOS_PER_PAGE) {
         break;
       }
-      offset = resp[resp.length - 1].updated_at;
+      offset = resp[resp.length - 1].created_at;
       UTXOCount += resp.length;
       commit("setUTXOCount", UTXOCount);
       resp = await this.$apis.getUTXOs(hash, threshold, offset, UTXOS_PER_PAGE);

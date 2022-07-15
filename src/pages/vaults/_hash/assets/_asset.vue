@@ -190,7 +190,7 @@ class AssetsPage extends Mixins(mixins.page) {
         expenses.push({
           amount: `${output.amount}`,
           memo: item.memo,
-          datetime: item.updated_at,
+          datetime: item.created_at,
           utxo_id: item.utxo_id,
           type: "expense",
         });
