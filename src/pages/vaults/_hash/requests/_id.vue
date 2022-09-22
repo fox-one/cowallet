@@ -99,14 +99,16 @@
         </div>
         <div class="buttons text-center mt-4">
           <template v-if="needToSign">
-            <payment-action
-              v-if="!meSigned"
-              :label="$t('common.sign')"
-              check-state="signed"
-              @done="done"
-              @error="error"
-              @paid="sign"
-            />
+            <div class="text-center mb-4">
+              <payment-action
+                v-if="!meSigned"
+                :label="$t('common.sign')"
+                check-state="signed"
+                @done="done"
+                @error="error"
+                @paid="sign"
+              />
+            </div>
             <div class="mb-4">
               <f-button
                 v-if="isDesktop"
