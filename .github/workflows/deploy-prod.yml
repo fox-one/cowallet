@@ -1,7 +1,7 @@
 name: Build and deploy to production.
 
 env:
-  AWS_REGION: us-east-1
+  AWS_REGION: us-east-2
   APP_ENV: prod
 
 on:
@@ -36,7 +36,7 @@ jobs:
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.GLOBAL_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.GLOBAL_AWS_ACCESS_KEY_SECRET }}
+          aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.PROD_AWS_ACCESS_KEY_SECRET }}
       - run: aws s3 cp --recursive dist ${{ secrets.S3_URL_PROD }} --acl public-read
       - run: aws s3 cp dist/index.html ${{ secrets.S3_URL_PROD }} --cache-control "no-cache" --acl public-read
