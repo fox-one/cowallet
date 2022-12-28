@@ -15,8 +15,6 @@ export const OAUTH_URL = process.env.OAUTH_URL || "https://mixin-oauth.fox.one";
 // 5 minutes timeout for the cache/asset
 export const ASSET_UPDATE_TIMEOUT = 300000;
 
-export const INCLUDE_ASSET_IDS = process.env.INCLUDE_ASSET_IDS || "";
-
 export const EVENTS = {
   OPEN_AUTH: "OPEN_AUTH",
   PAY_QR_CODE: "PAY_QR_CODE",

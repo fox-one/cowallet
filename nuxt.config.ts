@@ -77,16 +77,14 @@ const config: NuxtConfig = {
     API_BASE: process.env.API_BASE || "",
     OAUTH_URL: process.env.OAUTH_URL || "",
     CLIENT_ID: process.env.CLIENT_ID || "",
-    // split with ','
-    INCLUDE_ASSET_IDS:
-      process.env.INCLUDE_ASSET_IDS || "",
   },
   pwa: {
     workbox: {
       enabled: false,
       runtimeCaching: [
         {
-          urlPattern: /^(https:\/\/images\.mixin\.one\/|https:\/\/mixin-images\.zeromesh\.net\/).*$/,
+          urlPattern:
+            /^(https:\/\/images\.mixin\.one\/|https:\/\/mixin-images\.zeromesh\.net\/).*$/,
           handler: "CacheFirst",
         },
       ],
