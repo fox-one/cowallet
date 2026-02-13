@@ -34,7 +34,7 @@
     "dayjs": "^1.10.4",
     "front-matter": "^4.0.2",
     "js-base64": "^3.6.1",
-    "markdown-it": "^13.0.1",
+    "markdown-it": "^14.1.1",
     "mockjs": "^1.1.0",
     "nuxt": "^2.14.0",
     "nuxt-i18n": "^6.26.0",
